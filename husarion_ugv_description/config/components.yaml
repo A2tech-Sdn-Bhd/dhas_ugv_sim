@@ -4,18 +4,36 @@ components: []
 
 # If you want to add for example DEV02, LDR06 and CAM01 to your robot look at the example below:
 
-# components:
-#   - type: DEV02
+components:
+  - type: DEV02
 
-#   - type: LDR06
-#     parent_link: mount_link
-#     xyz: 0.0 -0.1 0.0
-#     rpy: 0.0 0.0 0.0
-#     device_namespace: second_lidar
+  - type: LDR06
+    parent_link: mount_link
+    xyz: 0.0 -0.1 0.0
+    rpy: 0.0 0.0 0.0
+    device_namespace: second_lidar
 
-#   - type: CAM01
-#     name: camera
-#     parent_link: mount_link
-#     xyz: 0.1 0.0 0.0
-#     rpy: 0.0 0.0 0.0
-#     device_namespace: front_cam
+  - type: LDR13
+    parent_link: mount_link
+    xyz: 0.0 0.0 0.1
+    rpy: 0.0 0.0 0.0
+    device_namespace: lidar_3d
+
+  - type: CAM01
+    name: camera
+    parent_link: mount_link
+    xyz: 0.1 0.0 0.0
+    rpy: 0.0 0.0 0.0
+    device_namespace: front_cam
+
+  - type: ANT02
+    parent_link: cover_link
+    xyz: 0.0 0.15 0.0
+    rpy: 0.0 0.0 0.0
+    device_namespace: gps_left
+
+  - type: ANT02
+    parent_link: cover_link
+    xyz: 0.0 -0.15 0.0
+    rpy: 0.0 0.0 0.0
+    device_namespace: gps_right
