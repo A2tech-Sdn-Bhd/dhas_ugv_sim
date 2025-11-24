@@ -255,6 +255,15 @@ def generate_launch_description():
         condition=IfCondition(add_world_transform),
     )
 
+    # GPS relay: remap /gps_left/fix to /gps/fix for localization
+    gps_relay = Node(
+        package="topic_tools",
+        executable="relay",
+        name="gps_relay",
+        arguments=["gps_left/fix", "gps/fix"],
+        namespace=namespace,
+    )
+
     actions = [
         declare_add_world_transform_arg,
         declare_battery_config_path_arg,
@@ -273,6 +282,7 @@ def generate_launch_description():
         simulate_components,
         gz_bridge,
         world_transform,
+        gps_relay,
     ]
 
     return LaunchDescription(actions)
