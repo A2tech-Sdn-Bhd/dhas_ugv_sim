@@ -19,7 +19,7 @@ You need to modify the GPS sensor configuration in the `husarion_components_desc
 
 **File Location:**
 ```
-husarion_components_description/urdf/
+husarion_components_description/urdf/teltonika_003R-00253.urdf.xacro
 ```
 
 **Changes Required:**
