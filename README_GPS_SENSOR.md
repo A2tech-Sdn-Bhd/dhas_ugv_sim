@@ -95,6 +95,8 @@ Run these commands in separate terminals:
 # Terminal 1: Launch Gazebo simulator
 ros2 launch husarion_gz_worlds gz_sim.launch.py
 
+in search bar add "E Stop" with no name for robot
+
 # Terminal 2: Spawn robot with GPS-enabled localization
 ros2 launch husarion_ugv_gazebo simulate_robot.launch.py fuse_gps:=True localization_mode:=enu
 
