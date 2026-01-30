@@ -2,6 +2,13 @@
 
 ## Installation Steps
 
+```bash
+mkdir ~/dhas_ugv_sim
+cd ~/dhas_ugv_sim
+git clone -b humble [https://github.com/husarion/husarion_ugv_ros.git](https://github.com/A2tech-Sdn-Bhd/dhas_ugv_sim.git) src/husarion_ugv_ros
+```
+
+
 After running the following commands:
 
 ```bash
