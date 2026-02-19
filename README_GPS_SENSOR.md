@@ -8,6 +8,16 @@ cd ~/dhas_ugv_sim
 git clone -b humble https://github.com/A2tech-Sdn-Bhd/dhas_ugv_sim.git src/husarion_ugv_ros
 ```
 
+### Configure environment
+
+The repository is used to run the code both on the real robot and in the simulation. Specify `HUSARION_ROS_BUILD_TYPE` the variable according to your needs.
+
+Simulation:
+
+```bash
+export HUSARION_ROS_BUILD_TYPE=simulation
+```
+
 
 After running the following commands:
 
