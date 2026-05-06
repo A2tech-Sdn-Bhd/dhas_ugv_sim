@@ -17,22 +17,18 @@ x-gpu-config: &gpu-config
 
 services:
   husarion_ugv_gazebo:
-    build:
-      context: ../..
-      dockerfile: docker/Dockerfile.simulation
-      args:
-        ROS_DISTRO: humble
-        BUILD_TEST: OFF
-    image: husarion/husarion-ugv-gazebo:local
+    image: husarion/husarion-ugv-gazebo:humble-2.2.2-20250702
     container_name: husarion_ugv_gazebo
     <<:
       - *common-config
-      - *cpu-config
+      - *gpu-config
     devices:
       - /dev/dri:/dev/dri
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - gps_logs:/ros2_ws/gps_logs
+      - ../../husarion_ugv_gazebo/launch/simulation.launch.py:/ros2_ws/install/husarion_ugv_gazebo/share/husarion_ugv_gazebo/launch/simulation.launch.py:ro
+      - ../../husarion_ugv/package.xml:/ros2_ws/install/husarion_ugv/share/husarion_ugv/package.xml:ro
       - ../../husarion_ugv_description/config/components.yaml:/ros2_ws/install/husarion_ugv_description/share/husarion_ugv_description/config/components.yaml:ro
       - ../../worlds:/ros2_ws/worlds:ro
     command: >
@@ -44,17 +40,11 @@ services:
       "
 
   rviz:
-    build:
-      context: ../..
-      dockerfile: docker/Dockerfile.simulation
-      args:
-        ROS_DISTRO: humble
-        BUILD_TEST: OFF
-    image: husarion/husarion-ugv-gazebo:local
+    image: husarion/husarion-ugv-gazebo:humble-2.2.2-20250702
     container_name: husarion_rviz
     <<:
       - *common-config
-      - *cpu-config
+      - *gpu-config
     depends_on:
       - husarion_ugv_gazebo
     devices:
@@ -65,13 +55,7 @@ services:
       bash -c "sleep 40 && ros2 launch husarion_ugv_description rviz.launch.py"
 
   gps_monitor:
-    build:
-      context: ../..
-      dockerfile: docker/Dockerfile.simulation
-      args:
-        ROS_DISTRO: humble
-        BUILD_TEST: OFF
-    image: husarion/husarion-ugv-gazebo:local
+    image: husarion/husarion-ugv-gazebo:humble-2.2.2-20250702
     container_name: gps_monitor
     <<:
       - *common-config

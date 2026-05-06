@@ -21,14 +21,14 @@ components:
   #   rpy: 0.0 0.0 0.0
   #   device_namespace: second_lidar
 
-  3D LiDAR (Ouster OS1-32)
+  # 3D LiDAR (Ouster OS1-32)
   - type: LDR13
     parent_link: mount_link
     xyz: 0.0 0.0 0.1
     rpy: 0.0 0.0 0.0
     device_namespace: lidar_3d
 
-  RGB-D Camera (Orbbec Astra)
+  # RGB-D Camera (Orbbec Astra)
   - type: CAM01
     name: camera
     parent_link: mount_link
