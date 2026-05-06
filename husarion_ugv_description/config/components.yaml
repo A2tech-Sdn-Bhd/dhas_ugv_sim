@@ -1,24 +1,34 @@
-# By default Husarion UGV is loaded without any components.
-
-components: []
-
-# If you want to add for example DEV02, LDR06 and CAM01 to your robot look at the example below:
+# Husarion UGV Components Configuration
+# Add robot components (sensors, manipulators, etc.) in this file
 
 components:
-  - type: DEV02
-
-  - type: LDR06
-    parent_link: mount_link
-    xyz: 0.0 -0.1 0.0
+  # GPS Antenna for localization
+  - type: ANT02
+    parent_link: cover_link
+    xyz: 0.0 0.15 0.0
     rpy: 0.0 0.0 0.0
-    device_namespace: second_lidar
+    device_namespace: gps
 
+  # Uncomment the examples below to add more components
+
+  # Developer Mount
+  # - type: DEV02
+
+  # 2D LiDAR (RPLIDAR S3)
+  # - type: LDR06
+  #   parent_link: mount_link
+  #   xyz: 0.0 -0.1 0.0
+  #   rpy: 0.0 0.0 0.0
+  #   device_namespace: second_lidar
+
+  3D LiDAR (Ouster OS1-32)
   - type: LDR13
     parent_link: mount_link
     xyz: 0.0 0.0 0.1
     rpy: 0.0 0.0 0.0
     device_namespace: lidar_3d
 
+  RGB-D Camera (Orbbec Astra)
   - type: CAM01
     name: camera
     parent_link: mount_link
@@ -26,14 +36,9 @@ components:
     rpy: 0.0 0.0 0.0
     device_namespace: front_cam
 
-  - type: ANT02
-    parent_link: cover_link
-    xyz: 0.0 0.15 0.0
-    rpy: 0.0 0.0 0.0
-    device_namespace: gps_left
-
-  - type: ANT02
-    parent_link: cover_link
-    xyz: 0.0 -0.15 0.0
-    rpy: 0.0 0.0 0.0
-    device_namespace: gps_right
+  # Second GPS Antenna
+  # - type: ANT02
+  #   parent_link: cover_link
+  #   xyz: 0.0 -0.15 0.0
+  #   rpy: 0.0 0.0 0.0
+  #   device_namespace: gps_right

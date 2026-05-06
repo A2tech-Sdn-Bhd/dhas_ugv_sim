@@ -61,19 +61,32 @@ def generate_launch_description():
         description="Run RViz simultaneously.",
         choices=["True", "true", "False", "false"],
     )
-
+    gz_world = LaunchConfiguration("gz_world")
+    declare_gz_world_arg = DeclareLaunchArgument(
+        "gz_world",
+        default_value="/ros2_ws/worlds/parking_lot.sdf",
+        description="Absolute path to SDF world file.",
+    )
     namespaced_gz_gui = ReplaceString(
         source_file=gz_gui,
         replacements={"{namespace}": namespace},
     )
 
+    # gz_sim = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         PathJoinSubstitution(
+    #             [FindPackageShare("husarion_gz_worlds"), "launch", "gz_sim.launch.py"]
+    #         )
+    #     ),
+    #     launch_arguments={"gz_gui": namespaced_gz_gui, "gz_log_level": "1"}.items(),
+    # )
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution(
                 [FindPackageShare("husarion_gz_worlds"), "launch", "gz_sim.launch.py"]
             )
         ),
-        launch_arguments={"gz_gui": namespaced_gz_gui, "gz_log_level": "1"}.items(),
+        launch_arguments={"gz_gui": namespaced_gz_gui, "gz_world": gz_world, "gz_log_level": "1"}.items(),
     )
 
     rviz_launch = IncludeLaunchDescription(
@@ -107,6 +120,7 @@ def generate_launch_description():
         declare_log_level_arg,
         declare_namespace_arg,
         declare_use_rviz_arg,
+        declare_gz_world_arg,
         # Sets use_sim_time for all nodes started below (doesn't work for nodes started from ignition gazebo)
         SetUseSimTime(True),
         gz_sim,

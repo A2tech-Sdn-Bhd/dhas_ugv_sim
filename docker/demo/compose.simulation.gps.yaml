@@ -1,0 +1,100 @@
+x-common-config: &common-config
+  network_mode: host
+  ipc: host
+  environment:
+    - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    - ROBOT_MODEL_NAME=${ROBOT_MODEL_NAME:-panther}
+    - ROBOT_NAMESPACE=${ROBOT_NAMESPACE:-${ROBOT_MODEL_NAME:-panther}}
+    - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+    - HUSARION_ROS_BUILD_TYPE=simulation
+
+x-cpu-config: &cpu-config
+  env_file: .env.cpu
+
+x-gpu-config: &gpu-config
+  runtime: nvidia
+  env_file: .env.gpu
+
+services:
+  husarion_ugv_gazebo:
+    build:
+      context: ../..
+      dockerfile: docker/Dockerfile.simulation
+      args:
+        ROS_DISTRO: humble
+        BUILD_TEST: OFF
+    image: husarion/husarion-ugv-gazebo:local
+    container_name: husarion_ugv_gazebo
+    <<:
+      - *common-config
+      - *cpu-config
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - gps_logs:/ros2_ws/gps_logs
+      - ../../husarion_ugv_description/config/components.yaml:/ros2_ws/install/husarion_ugv_description/share/husarion_ugv_description/config/components.yaml:ro
+      - ../../worlds:/ros2_ws/worlds:ro
+    command: >
+      bash -c "
+        ros2 launch husarion_ugv_gazebo simulation.launch.py \
+          fuse_gps:=True \
+          localization_mode:=enu \
+          log_level:=DEBUG
+      "
+
+  rviz:
+    build:
+      context: ../..
+      dockerfile: docker/Dockerfile.simulation
+      args:
+        ROS_DISTRO: humble
+        BUILD_TEST: OFF
+    image: husarion/husarion-ugv-gazebo:local
+    container_name: husarion_rviz
+    <<:
+      - *common-config
+      - *cpu-config
+    depends_on:
+      - husarion_ugv_gazebo
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    command: >
+      bash -c "sleep 40 && ros2 launch husarion_ugv_description rviz.launch.py"
+
+  gps_monitor:
+    build:
+      context: ../..
+      dockerfile: docker/Dockerfile.simulation
+      args:
+        ROS_DISTRO: humble
+        BUILD_TEST: OFF
+    image: husarion/husarion-ugv-gazebo:local
+    container_name: gps_monitor
+    <<:
+      - *common-config
+      - *gpu-config
+    depends_on:
+      - husarion_ugv_gazebo
+    volumes:
+      - gps_logs:/ros2_ws/gps_logs
+    command: >
+      bash -c "
+        sleep 10 &&
+        echo '=== GPS Monitor Started ===' &&
+        ros2 topic echo /gps/fix --no-arr > /ros2_ws/gps_logs/gps_fix.log 2>&1 &
+        ros2 topic echo /odometry/filtered --no-arr > /ros2_ws/gps_logs/odometry.log 2>&1 &
+        while true; do
+          echo '=== GPS Data Sample ===' >> /ros2_ws/gps_logs/gps_status.log
+          date >> /ros2_ws/gps_logs/gps_status.log
+          ros2 topic echo /gps/fix -1 2>/dev/null | head -20 >> /ros2_ws/gps_logs/gps_status.log
+          echo '---' >> /ros2_ws/gps_logs/gps_status.log
+          sleep 30
+        done
+      "
+
+volumes:
+  gps_logs:
+    driver: local

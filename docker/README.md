@@ -69,3 +69,41 @@ docker compose -f compose.simulation.yaml up
 >
 > 1. You can change robot model and namespace by editing the launch command in `compose.simulation.yaml`.
 > 2. If you have an NVIDIA GPU, it is worth changing the compose configuration from `cpu-config` to `gpu-config`. For this purpose, it is necessary to install [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html). With NVIDIA Container Toolkit installed, modify following Docker compose file by replacing `*cpu-config` with `*gpu-config`: [compose.simulation.yaml](./demo/compose.simulation.yaml).
+
+### 📡 Gazebo Simulation with GPS
+
+To run the simulation with GPS data fusion enabled:
+
+```bash
+xhost local:docker
+cd docker/demo
+docker compose -f compose.simulation.gps.yaml up -d
+```
+
+This configuration launches:
+- **Gazebo Simulation** with GPS fusion enabled
+- **RViz** for 3D visualization
+- **GPS Monitor** for logging GPS and odometry data
+
+Monitor GPS data in real-time:
+
+```bash
+# View GPS fix topic
+docker exec -it husarion_ugv_gazebo ros2 topic echo /gps/fix
+
+# View filtered odometry (GPS-fused)
+docker exec -it husarion_ugv_gazebo ros2 topic echo /odometry/filtered
+
+# View GPS logs
+tail -f docker/demo/gps_logs/gps_status.log
+```
+
+**Quick Setup Script:**
+
+```bash
+cd docker/demo
+chmod +x gps_setup.sh
+./gps_setup.sh
+```
+
+For detailed GPS testing guide, see [GPS_DOCKER_GUIDE.md](./demo/GPS_DOCKER_GUIDE.md).

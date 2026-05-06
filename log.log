@@ -1,0 +1,153 @@
+[INFO] [launch]: All log files can be found below /root/.ros/log/2026-05-06-04-48-25-361285-a2tech-90
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: 
+ ____             _   _
+|  _ \ __ _ _ __ | |_| |__   ___ _ __
+| |_) / _` | '_ \| __| '_ \ / _ \ '__|
+|  __/ (_| | | | | |_| | | |  __/ |
+|_|   \__,_|_| |_|\__|_| |_|\___|_|
+
+Serial Number: ----
+Robot Version: simulation
+ROS Driver Version: 2.2.2
+
+Robot namespace: panther
+Initial pose: (0.0, -2.0, 0.2, 0.0, 0.0, 0.0)
+Website: https://husarion.com
+Support: https://community.husarion.com/
+Bug Tracker: https://github.com/husarion/husarion_ugv_ros/issues
+
+[INFO] [robot_state_publisher-3]: process started with pid [108]
+[INFO] [create-4]: process started with pid [110]
+[INFO] [component_container-5]: process started with pid [112]
+[INFO] [lights_manager_node-6]: process started with pid [114]
+[INFO] [spawner-7]: process started with pid [116]
+[INFO] [parameter_bridge-9]: process started with pid [120]
+[INFO] [ign gazebo-1]: process started with pid [103]
+[INFO] [rviz2-2]: process started with pid [105]
+[INFO] [ekf_node-8]: process started with pid [118]
+[robot_state_publisher-3] [INFO] [1778042905.924797359] [panther.robot_state_publisher]: got segment base_footprint
+[robot_state_publisher-3] [INFO] [1778042905.924888631] [panther.robot_state_publisher]: got segment base_link
+[robot_state_publisher-3] [INFO] [1778042905.924902015] [panther.robot_state_publisher]: got segment body_link
+[robot_state_publisher-3] [INFO] [1778042905.924911724] [panther.robot_state_publisher]: got segment cover_link
+[robot_state_publisher-3] [INFO] [1778042905.924920148] [panther.robot_state_publisher]: got segment fl_wheel_base_link
+[robot_state_publisher-3] [INFO] [1778042905.924927263] [panther.robot_state_publisher]: got segment fl_wheel_link
+[robot_state_publisher-3] [INFO] [1778042905.924932692] [panther.robot_state_publisher]: got segment fr_wheel_base_link
+[robot_state_publisher-3] [INFO] [1778042905.924937646] [panther.robot_state_publisher]: got segment fr_wheel_link
+[robot_state_publisher-3] [INFO] [1778042905.924944986] [panther.robot_state_publisher]: got segment front_bumper_link
+[robot_state_publisher-3] [INFO] [1778042905.924952084] [panther.robot_state_publisher]: got segment imu_link
+[robot_state_publisher-3] [INFO] [1778042905.924960294] [panther.robot_state_publisher]: got segment lights_channel_1_link
+[robot_state_publisher-3] [INFO] [1778042905.924968917] [panther.robot_state_publisher]: got segment lights_channel_2_link
+[robot_state_publisher-3] [INFO] [1778042905.924977232] [panther.robot_state_publisher]: got segment mount_link
+[robot_state_publisher-3] [INFO] [1778042905.924982387] [panther.robot_state_publisher]: got segment rear_bumper_link
+[robot_state_publisher-3] [INFO] [1778042905.924987176] [panther.robot_state_publisher]: got segment rl_wheel_base_link
+[robot_state_publisher-3] [INFO] [1778042905.924992193] [panther.robot_state_publisher]: got segment rl_wheel_link
+[robot_state_publisher-3] [INFO] [1778042905.924997545] [panther.robot_state_publisher]: got segment rr_wheel_base_link
+[robot_state_publisher-3] [INFO] [1778042905.925002501] [panther.robot_state_publisher]: got segment rr_wheel_link
+[lights_manager_node-6] [INFO] [1778042905.929249337] [panther.lights_manager]: Constructing node.
+[lights_manager_node-6] [INFO] [1778042905.929589774] [panther.lights_manager]: Blackboard created.
+[lights_manager_node-6] [INFO] [1778042905.929633200] [panther.lights_manager]: Node constructed successfully.
+[lights_manager_node-6] [INFO] [1778042905.929661673] [panther.lights_manager]: Initializing.
+[lights_manager_node-6] [INFO] [1778042905.931117020] [panther.lights_manager]: BehaviorTree registered from path '/ros2_ws/install/husarion_ugv_manager/share/husarion_ugv_manager/behavior_trees/LightsBT.btproj'
+[lights_manager_node-6] [INFO] [1778042905.932518667] [panther.lights_manager]: Node [SetErrorAnimation] created service client [lights/set_animation]
+[create-4] [INFO] [1778042905.932627709] [panther.ros_gz_sim]: Requesting list of world names.
+[rviz2-2] QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+[rviz2-2] [INFO] [1778042906.102044822] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-2] [INFO] [1778042906.102103384] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-2] [INFO] [1778042906.122631274] [rviz2]: Stereo is NOT SUPPORTED
+[spawner-7] [INFO] [1778042906.132315297] [panther.spawner_joint_state_broadcaster]: waiting for service /panther/controller_manager/list_controllers to become available...
+[component_container-5] [INFO] [1778042906.150909824] [panther.lights_container]: Load Library: /ros2_ws/install/husarion_ugv_lights/lib/liblights_controller_node_component.so
+[ign gazebo-1] QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+[component_container-5] [INFO] [1778042906.151993233] [panther.lights_container]: Found class: rclcpp_components::NodeFactoryTemplate<husarion_ugv_lights::LightsControllerNode>
+[component_container-5] [INFO] [1778042906.152020138] [panther.lights_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<husarion_ugv_lights::LightsControllerNode>
+[component_container-5] [INFO] [1778042906.155229426] [panther.lights_controller]: Initializing.
+[component_container-5] [INFO] [1778042906.161157353] [panther.lights_controller]: Loaded default animations.
+[component_container-5] [INFO] [1778042906.161309841] [panther.lights_controller]: Loaded user's animations.
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/panther/lights_controller' in container '/panther/lights_container'
+[component_container-5] [INFO] [1778042906.161907309] [panther.lights_controller]: Initialized successfully.
+[lights_manager_node-6] [INFO] [1778042906.162968534] [BehaviorTreeManager]: Groot2 publisher started on port 5555
+[lights_manager_node-6] [INFO] [1778042906.165406268] [panther.lights_manager]: Initialized successfully.
+[create-4] [INFO] [1778042906.401657975] [panther.ros_gz_sim]: Waiting messages on topic [robot_description].
+[create-4] [INFO] [1778042906.501591701] [panther.ros_gz_sim]: Requested creation of entity.
+[create-4] [INFO] [1778042906.501678618] [panther.ros_gz_sim]: OK creation of entity.
+[INFO] [create-4]: process has finished cleanly [pid 110]
+[parameter_bridge-9] [INFO] [1778042906.955788542] [panther.gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[parameter_bridge-9] [INFO] [1778042906.956333865] [panther.gz_bridge]: Creating GZ->ROS Bridge: [/model/panther/battery/panther/battery/state (gz.msgs.BatteryState) -> battery/battery_status (sensor_msgs/msg/BatteryState)] (Lazy 0)
+[parameter_bridge-9] [INFO] [1778042906.957163822] [panther.gz_bridge]: Creating GZ->ROS Bridge: [cmd_vel (gz.msgs.Twist) -> cmd_vel (geometry_msgs/msg/Twist)] (Lazy 0)
+[parameter_bridge-9] [INFO] [1778042906.957605450] [panther.gz_bridge]: Creating ROS->GZ Bridge: [lights/channel_1_frame (sensor_msgs/msg/Image) -> panther/lights/channel_1_frame (gz.msgs.Image)] (Lazy 0)
+[parameter_bridge-9] [INFO] [1778042906.958004905] [panther.gz_bridge]: Creating ROS->GZ Bridge: [lights/channel_2_frame (sensor_msgs/msg/Image) -> panther/lights/channel_2_frame (gz.msgs.Image)] (Lazy 0)
+[parameter_bridge-9] [INFO] [1778042906.962211857] [panther.gz_bridge]: Passing message from ROS sensor_msgs/msg/Image to Gazebo gz.msgs.Image (showing msg only once per type)
+[ign gazebo-1] libEGL warning: egl: failed to create dri2 screen
+[ign gazebo-1] libEGL warning: egl: failed to create dri2 screen
+[ign gazebo-1] [INFO] [1778042908.108978547] [GazeboSimROS2ControlPlugin]: robot_param_node is robot_state_publisher
+[ign gazebo-1] [INFO] [1778042908.109005001] [GazeboSimROS2ControlPlugin]: robot_param_node is robot_description
+[ign gazebo-1] [INFO] [1778042908.119106603] [panther.gz_ros2_control]: connected to service!! /panther/robot_state_publisher asking for robot_description
+[ign gazebo-1] [INFO] [1778042908.119800425] [panther.gz_ros2_control]: Received URDF from param server
+[ign gazebo-1] [INFO] [1778042908.124965676] [panther.gz_ros2_control]: The position_proportional_gain has been set to: 0.1
+[ign gazebo-1] [INFO] [1778042908.125078751] [panther.gz_ros2_control]: Loading joint: fl_wheel_joint
+[ign gazebo-1] [INFO] [1778042908.125087045] [panther.gz_ros2_control]:         State:
+[ign gazebo-1] [INFO] [1778042908.125093518] [panther.gz_ros2_control]:                  position
+[ign gazebo-1] [INFO] [1778042908.125099973] [panther.gz_ros2_control]:                  velocity
+[ign gazebo-1] [INFO] [1778042908.125104666] [panther.gz_ros2_control]:                  effort
+[ign gazebo-1] [INFO] [1778042908.125109145] [panther.gz_ros2_control]:         Command:
+[ign gazebo-1] [INFO] [1778042908.125114661] [panther.gz_ros2_control]:                  velocity
+[ign gazebo-1] [INFO] [1778042908.125132154] [panther.gz_ros2_control]: Loading joint: fr_wheel_joint
+[ign gazebo-1] [INFO] [1778042908.125138850] [panther.gz_ros2_control]:         State:
+[ign gazebo-1] [INFO] [1778042908.125144304] [panther.gz_ros2_control]:                  position
+[ign gazebo-1] [INFO] [1778042908.125149843] [panther.gz_ros2_control]:                  velocity
+[ign gazebo-1] [INFO] [1778042908.125153781] [panther.gz_ros2_control]:                  effort
+[ign gazebo-1] [INFO] [1778042908.125157645] [panther.gz_ros2_control]:         Command:
+[ign gazebo-1] [INFO] [1778042908.125161265] [panther.gz_ros2_control]:                  velocity
+[ign gazebo-1] [INFO] [1778042908.125169241] [panther.gz_ros2_control]: Loading joint: rl_wheel_joint
+[ign gazebo-1] [INFO] [1778042908.125173115] [panther.gz_ros2_control]:         State:
+[ign gazebo-1] [INFO] [1778042908.125176700] [panther.gz_ros2_control]:                  position
+[ign gazebo-1] [INFO] [1778042908.125180272] [panther.gz_ros2_control]:                  velocity
+[ign gazebo-1] [INFO] [1778042908.125184070] [panther.gz_ros2_control]:                  effort
+[ign gazebo-1] [INFO] [1778042908.125188063] [panther.gz_ros2_control]:         Command:
+[ign gazebo-1] [INFO] [1778042908.125191862] [panther.gz_ros2_control]:                  velocity
+[ign gazebo-1] [INFO] [1778042908.125204713] [panther.gz_ros2_control]: Loading joint: rr_wheel_joint
+[ign gazebo-1] [INFO] [1778042908.125225675] [panther.gz_ros2_control]:         State:
+[ign gazebo-1] [INFO] [1778042908.125230885] [panther.gz_ros2_control]:                  position
+[ign gazebo-1] [INFO] [1778042908.125235380] [panther.gz_ros2_control]:                  velocity
+[ign gazebo-1] [INFO] [1778042908.125239793] [panther.gz_ros2_control]:                  effort
+[ign gazebo-1] [INFO] [1778042908.125244261] [panther.gz_ros2_control]:         Command:
+[ign gazebo-1] [INFO] [1778042908.125248602] [panther.gz_ros2_control]:                  velocity
+[ign gazebo-1] [INFO] [1778042908.125317458] [panther.gz_ros2_control]: Loading sensor: panther/imu
+[ign gazebo-1] [INFO] [1778042908.125328033] [panther.gz_ros2_control]:         State:
+[ign gazebo-1] [INFO] [1778042908.125348921] [panther.gz_ros2_control]:                  orientation.x
+[ign gazebo-1] [INFO] [1778042908.125354404] [panther.gz_ros2_control]:                  orientation.y
+[ign gazebo-1] [INFO] [1778042908.125358837] [panther.gz_ros2_control]:                  orientation.z
+[ign gazebo-1] [INFO] [1778042908.125363250] [panther.gz_ros2_control]:                  orientation.w
+[ign gazebo-1] [INFO] [1778042908.125367886] [panther.gz_ros2_control]:                  angular_velocity.x
+[ign gazebo-1] [INFO] [1778042908.125372883] [panther.gz_ros2_control]:                  angular_velocity.y
+[ign gazebo-1] [INFO] [1778042908.125377466] [panther.gz_ros2_control]:                  angular_velocity.z
+[ign gazebo-1] [INFO] [1778042908.125381918] [panther.gz_ros2_control]:                  linear_acceleration.x
+[ign gazebo-1] [INFO] [1778042908.125386485] [panther.gz_ros2_control]:                  linear_acceleration.y
+[ign gazebo-1] [INFO] [1778042908.125391019] [panther.gz_ros2_control]:                  linear_acceleration.z
+[ign gazebo-1] [INFO] [1778042908.125411527] [resource_manager]: Initialize hardware 'panther/panther_system' 
+[ign gazebo-1] [INFO] [1778042908.125499168] [resource_manager]: Successful initialization of hardware 'panther/panther_system'
+[ign gazebo-1] [INFO] [1778042908.125537793] [resource_manager]: 'configure' hardware 'panther/panther_system' 
+[ign gazebo-1] [INFO] [1778042908.127233813] [resource_manager]: Successful 'configure' of hardware 'panther/panther_system'
+[ign gazebo-1] [INFO] [1778042908.127251400] [resource_manager]: 'activate' hardware 'panther/panther_system' 
+[ign gazebo-1] [INFO] [1778042908.127273966] [resource_manager]: Successful 'activate' of hardware 'panther/panther_system'
+[ign gazebo-1] [INFO] [1778042908.127279937] [panther.gz_ros2_control]: Loading controller_manager
+[ign gazebo-1] [INFO] [1778042908.137430879] [panther.controller_manager]: Loading controller 'joint_state_broadcaster'
+[spawner-7] [INFO] [1778042908.150247256] [panther.spawner_joint_state_broadcaster]: Loaded joint_state_broadcaster
+[ign gazebo-1] [INFO] [1778042908.151498129] [panther.controller_manager]: Configuring controller 'joint_state_broadcaster'
+[ign gazebo-1] [INFO] [1778042908.151669168] [panther.joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[ign gazebo-1] [WARN] [1778042908.167595736] [panther.gz_ros2_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.001 s).
+[ign gazebo-1] [INFO] [1778042908.176810048] [panther.gz_ros2_control]: IMU panther/imu has a topic name: panther/imu/data_raw
+[spawner-7] [INFO] [1778042908.188186773] [panther.spawner_joint_state_broadcaster]: Configured and activated joint_state_broadcaster
+[INFO] [spawner-7]: process has finished cleanly [pid 116]
+[INFO] [spawner-10]: process started with pid [495]
+[ign gazebo-1] [INFO] [1778042908.483215723] [panther.controller_manager]: Loading controller 'drive_controller'
+[spawner-10] [INFO] [1778042908.511975532] [panther.spawner_drive_controller]: Loaded drive_controller
+[ign gazebo-1] [INFO] [1778042908.512532626] [panther.controller_manager]: Configuring controller 'drive_controller'
+[spawner-10] [INFO] [1778042908.539104665] [panther.spawner_drive_controller]: Configured and activated drive_controller
+[INFO] [spawner-10]: process has finished cleanly [pid 495]
+[INFO] [spawner-11]: process started with pid [508]
+[ign gazebo-1] [INFO] [1778042908.853436580] [panther.controller_manager]: Loading controller 'imu_broadcaster'
+[spawner-11] [INFO] [1778042908.875863697] [panther.spawner_imu_broadcaster]: Loaded imu_broadcaster
+[ign gazebo-1] [INFO] [1778042908.876684744] [panther.controller_manager]: Configuring controller 'imu_broadcaster'
+[spawner-11] [INFO] [1778042908.907171791] [panther.spawner_imu_broadcaster]: Configured and activated imu_broadcaster
+[INFO] [spawner-11]: process has finished cleanly [pid 508]

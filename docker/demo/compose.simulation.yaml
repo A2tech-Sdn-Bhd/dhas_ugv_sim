@@ -25,5 +25,6 @@ services:
       - /dev/dri:/dev/dri
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ../../worlds:/ros2_ws/worlds:ro
     command: >
       ros2 launch husarion_ugv_gazebo simulation.launch.py
