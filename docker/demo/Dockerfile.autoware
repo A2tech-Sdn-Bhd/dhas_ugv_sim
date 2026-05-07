@@ -1,0 +1,30 @@
+ARG AUTOWARE_BASE_IMAGE=ghcr.io/autowarefoundation/autoware:universe-cuda-humble
+FROM ${AUTOWARE_BASE_IMAGE}
+
+SHELL ["/bin/bash", "-c"]
+
+RUN cat <<'EOF' >/etc/profile.d/autoware_setup.sh
+#!/usr/bin/env bash
+
+__had_u=0
+[[ "$-" == *u* ]] && __had_u=1
+set +u
+
+if [[ -f /opt/ros/humble/setup.bash ]]; then
+  source /opt/ros/humble/setup.bash
+fi
+
+if [[ -f /opt/autoware/setup.bash ]]; then
+  source /opt/autoware/setup.bash
+fi
+
+if [[ $__had_u -eq 1 ]]; then
+  set -u
+fi
+unset __had_u
+EOF
+
+RUN chmod +x /etc/profile.d/autoware_setup.sh
+
+# Interactive shells opened with `docker exec -it ... bash` read ~/.bashrc.
+RUN printf '\nsource /etc/profile.d/autoware_setup.sh\n' >> /root/.bashrc

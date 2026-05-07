@@ -33,7 +33,10 @@ services:
       - ../../worlds:/ros2_ws/worlds:ro
     command: >
       bash -c "
+        apt-get update &&
+        apt-get install -y ros-humble-rqt-image-view &&
         ros2 launch husarion_ugv_gazebo simulation.launch.py \
+          gz_world:=${GZ_WORLD:-/ros2_ws/worlds/parking_lot.sdf} \
           fuse_gps:=True \
           localization_mode:=enu \
           log_level:=DEBUG

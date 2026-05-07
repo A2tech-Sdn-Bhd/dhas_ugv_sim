@@ -1,0 +1,27 @@
+x-common-config: &common-config
+  network_mode: host
+  ipc: host
+  environment:
+    - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    - ROBOT_MODEL_NAME=${ROBOT_MODEL_NAME:-panther}
+    - ROBOT_NAMESPACE=${ROBOT_NAMESPACE:-${ROBOT_MODEL_NAME:-panther}}
+    - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+
+x-cpu-config: &cpu-config
+  env_file: .env.cpu
+
+services:
+  autoware_topic_bridge:
+    image: husarion/husarion-ugv-gazebo:humble-2.2.2-20250702
+    container_name: autoware_topic_bridge
+    <<:
+      - *common-config
+      - *cpu-config
+    command: >
+      bash -c "apt-get update &&
+      apt-get install -y ros-humble-topic-tools &&
+      bash /bridge/perception_bridge.sh"
+    volumes:
+      - ./perception_bridge.sh:/bridge/perception_bridge.sh:ro
+      - ./lidar_point_type_adapter.py:/bridge/lidar_point_type_adapter.py:ro
+    restart: unless-stopped

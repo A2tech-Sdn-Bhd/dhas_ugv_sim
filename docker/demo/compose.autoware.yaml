@@ -1,0 +1,38 @@
+x-common-config: &common-config
+  network_mode: host
+  ipc: host
+  environment:
+    - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+    - ROBOT_NAMESPACE=${ROBOT_NAMESPACE:-panther}
+    - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY:-0}
+    - ROS_DISTRO=${ROS_DISTRO:-humble}
+    - QT_X11_NO_MITSHM=1
+    - CYCLONEDDS_URI=<CycloneDDS><Domain><General><NetworkInterfaceAddress>${CYCLONE_IFACE:-wlo1}</NetworkInterfaceAddress><AllowMulticast>true</AllowMulticast></General></Domain></CycloneDDS>
+  tty: true
+  stdin_open: true
+
+x-gpu-config: &gpu-config
+  gpus: all
+  env_file: .env.gpu
+
+services:
+  autoware:
+    image: ${AUTOWARE_RUNTIME_IMAGE:-local/autoware-universe:humble-gpu}
+    build:
+      context: .
+      dockerfile: Dockerfile.autoware
+      args:
+        AUTOWARE_BASE_IMAGE: ${AUTOWARE_IMAGE:-ghcr.io/autowarefoundation/autoware:universe-cuda-humble}
+    container_name: autoware_universe
+    <<:
+      - *common-config
+      - *gpu-config
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./autoware_map:/autoware_map:rw
+      - ./autoware_data:/autoware_data:rw
+      - ../../:/dhas_ugv_sim:ro
+    command: >
+      bash -lc "${AUTOWARE_START_CMD:-sleep infinity}"
+    restart: unless-stopped

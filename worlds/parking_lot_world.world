@@ -1,0 +1,3662 @@
+<?xml version="1.0" ?>
+<!--
+  Gazebo Classic (gazebo 11) world — Dense Vehicle Storage Lot
+  ============================================================
+  Mimics the satellite-view of a car marshalling yard / port storage lot.
+
+  HOW TO USE
+  ==========
+  1. Copy this file to your ROS/Gazebo workspace:
+       cp parking_lot_world.world /home/user/catkin_ws/src/my_pkg/worlds/
+
+  2. Launch with Gazebo:
+       gazebo parking_lot_world.world
+
+  3. (Optional) For high-fidelity Prius models, install from Fuel:
+       gz fuel download ==url https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius%20Hybrid
+     Then replace every <uri>model://car_box_*</uri> with:
+       <uri>model://Prius Hybrid</uri>
+
+  NOTES
+  ====-
+  - Ground plane has NO road markings or parking lines.
+  - Cars are placed in dense irregular clusters matching the reference image.
+  - Each car is a static model (no physics / joints needed for a static lot).
+  - Sun + ambient light configured for overhead daylight rendering.
+-->
+<sdf version="1.6">
+  <world name="parking_lot">
+
+    <!-- ═══════════════════ PHYSICS ═══════════════════ -->
+    <physics type="ode">
+      <real_time_update_rate>1000</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+    </physics>
+
+    <!-- ═══════════════════ SCENE ════════════════════ -->
+    <scene>
+      <sky>
+        <clouds>
+          <speed>12</speed>
+        </clouds>
+      </sky>
+      <ambient>0.7 0.7 0.7 1</ambient>
+      <background>0.55 0.55 0.58 1</background>
+      <shadows>false</shadows>
+    </scene>
+
+    <!-- ═══════════════════ SUN ══════════════════════ -->
+    <light name="sun" type="directional">
+      <cast_shadows>false</cast_shadows>
+      <pose>0 0 100 0 -0 0</pose>
+      <diffuse>0.9 0.9 0.85 1</diffuse>
+      <specular>0.3 0.3 0.3 1</specular>
+      <direction>-0.3 0.2 -0.9</direction>
+    </light>
+
+    <!-- ═══════════════════ GROUND PLANE (bare asphalt) ══════════════════ -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>400 300</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction><ode><mu>0.8</mu><mu2>0.8</mu2></ode></friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>400 300</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+            <!-- Asphalt-grey colour override -->
+            <ambient>0.28 0.28 0.27 1</ambient>
+            <diffuse>0.32 0.32 0.30 1</diffuse>
+            <specular>0.01 0.01 0.01 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ═══════════════════ CAR MODEL DEFINITIONS ════════════════════════
+         We define 4 reusable car appearance variants as inline models.
+         Body: box 4.45 × 1.80 × 0.55 m  (sedan silhouette)
+         Roof: box 1.80 × 1.40 × 0.40 m  (cabin)
+         Wheels: 4 cylinders r=0.32 h=0.22
+         All static (no joints/physics).
+    ════════════════════════════════════════════════════════════════════ -->
+
+    <model name="car_0000">
+      <static>true</static>
+      <pose>-74.930 47.763 0 0 0 0.6667</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0001">
+      <static>true</static>
+      <pose>-70.288 48.118 0 0 0 0.7228</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0002">
+      <static>true</static>
+      <pose>-65.104 47.793 0 0 0 0.6872</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0003">
+      <static>true</static>
+      <pose>-75.235 50.009 0 0 0 0.6989</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.12 0.12 0.12 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.08 0.08 0.08 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0004">
+      <static>true</static>
+      <pose>-70.387 49.999 0 0 0 0.7191</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0005">
+      <static>true</static>
+      <pose>-65.278 50.010 0 0 0 0.7106</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0006">
+      <static>true</static>
+      <pose>-63.845 47.753 0 0 0 0.7408</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0007">
+      <static>true</static>
+      <pose>-59.051 47.920 0 0 0 0.6500</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0008">
+      <static>true</static>
+      <pose>-54.071 47.918 0 0 0 0.6413</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.78 0.12 0.10 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.10 0.08 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0009">
+      <static>true</static>
+      <pose>-64.202 50.324 0 0 0 0.7126</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0010">
+      <static>true</static>
+      <pose>-58.996 50.265 0 0 0 0.7032</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.82 0.75 0.60 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.72 0.66 0.52 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0011">
+      <static>true</static>
+      <pose>-54.063 50.089 0 0 0 0.7054</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.78 0.12 0.10 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.10 0.08 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0012">
+      <static>true</static>
+      <pose>-52.835 48.059 0 0 0 0.7486</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0013">
+      <static>true</static>
+      <pose>-48.111 48.102 0 0 0 0.6347</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.78 0.12 0.10 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.10 0.08 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0014">
+      <static>true</static>
+      <pose>-43.436 47.895 0 0 0 0.6395</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0015">
+      <static>true</static>
+      <pose>-53.134 49.951 0 0 0 0.6671</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0016">
+      <static>true</static>
+      <pose>-48.082 50.082 0 0 0 0.6800</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0017">
+      <static>true</static>
+      <pose>-43.445 50.033 0 0 0 0.7591</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0018">
+      <static>true</static>
+      <pose>-41.926 48.055 0 0 0 0.6522</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.78 0.12 0.10 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.10 0.08 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0019">
+      <static>true</static>
+      <pose>-37.035 47.832 0 0 0 0.6813</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0020">
+      <static>true</static>
+      <pose>-32.055 48.070 0 0 0 0.7061</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0021">
+      <static>true</static>
+      <pose>-41.908 50.321 0 0 0 0.7367</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0022">
+      <static>true</static>
+      <pose>-37.285 49.916 0 0 0 0.6724</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0023">
+      <static>true</static>
+      <pose>-32.416 50.005 0 0 0 0.7600</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.78 0.12 0.10 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.10 0.08 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0024">
+      <static>true</static>
+      <pose>-30.812 47.907 0 0 0 0.7198</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0025">
+      <static>true</static>
+      <pose>-26.202 48.207 0 0 0 0.6924</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0026">
+      <static>true</static>
+      <pose>-21.418 47.873 0 0 0 0.7067</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0027">
+      <static>true</static>
+      <pose>-31.119 50.192 0 0 0 0.7537</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.78 0.12 0.10 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.10 0.08 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0028">
+      <static>true</static>
+      <pose>-26.200 50.010 0 0 0 0.7676</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0029">
+      <static>true</static>
+      <pose>-21.295 49.945 0 0 0 0.6349</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.15 0.30 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.10 0.22 0.60 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0030">
+      <static>true</static>
+      <pose>-20.195 48.064 0 0 0 0.7389</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0031">
+      <static>true</static>
+      <pose>-15.189 47.782 0 0 0 0.6816</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0032">
+      <static>true</static>
+      <pose>-10.052 48.015 0 0 0 0.7639</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0033">
+      <static>true</static>
+      <pose>-19.820 49.906 0 0 0 0.7290</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0034">
+      <static>true</static>
+      <pose>-15.059 50.168 0 0 0 0.6656</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0035">
+      <static>true</static>
+      <pose>-10.230 49.956 0 0 0 0.6890</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0036">
+      <static>true</static>
+      <pose>-9.023 48.227 0 0 0 0.7506</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0037">
+      <static>true</static>
+      <pose>-4.268 48.000 0 0 0 0.6533</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0038">
+      <static>true</static>
+      <pose>0.906 48.185 0 0 0 0.6700</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0039">
+      <static>true</static>
+      <pose>-8.931 50.204 0 0 0 0.6497</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0040">
+      <static>true</static>
+      <pose>-4.019 50.170 0 0 0 0.7370</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0041">
+      <static>true</static>
+      <pose>0.715 49.900 0 0 0 0.6736</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.82 0.75 0.60 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.72 0.66 0.52 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0042">
+      <static>true</static>
+      <pose>1.760 48.215 0 0 0 0.7510</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0043">
+      <static>true</static>
+      <pose>7.016 47.904 0 0 0 0.6364</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.12 0.12 0.12 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.08 0.08 0.08 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0044">
+      <static>true</static>
+      <pose>11.889 48.223 0 0 0 0.6403</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.92 0.92 0.92 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.88 0.88 0.88 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0045">
+      <static>true</static>
+      <pose>1.993 49.935 0 0 0 0.7345</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0046">
+      <static>true</static>
+      <pose>6.983 49.964 0 0 0 0.6947</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.82 0.75 0.60 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.72 0.66 0.52 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0047">
+      <static>true</static>
+      <pose>11.725 50.033 0 0 0 0.7501</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.15 0.30 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.10 0.22 0.60 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0048">
+      <static>true</static>
+      <pose>12.962 47.856 0 0 0 0.7036</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.70 0.70 0.72 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.65 0.65 0.67 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="car_0049">
+      <static>true</static>
+      <pose>17.965 47.851 0 0 0 0.6718</pose>
+
+      <!-- Body -->
+      <link name="body">
+        <visual name="body_vis">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 0.55</size></box></geometry>
+          <material>
+            <ambient>0.15 0.15 0.15 1</ambient>
+            <diffuse>0.12 0.12 0.12 1</diffuse>
+            <specular>0.4 0.4 0.4 1</specular>
+          </material>
+        </visual>
+        <!-- Cabin/roof -->
+        <visual name="roof_vis">
+          <pose>0.10 0 1.12 0 0 0</pose>
+          <geometry><box><size>2.10 1.40 0.40</size></box></geometry>
+          <material>
+            <ambient>0.10 0.10 0.10 1</ambient>
+            <diffuse>0.08 0.08 0.08 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <!-- Windscreen tint -->
+        <visual name="glass_f">
+          <pose>1.02 0 0.95 0 -0.45 0</pose>
+          <geometry><box><size>0.05 1.35 0.38</size></box></geometry>
+          <material><diffuse>0.50 0.60 0.70 0.6</diffuse></material>
+        </visual>
+        <!-- Front bumper -->
+        <visual name="bumper_f">
+          <pose>2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Rear bumper -->
+        <visual name="bumper_r">
+          <pose>-2.28 0 0.42 0 0 0</pose>
+          <geometry><box><size>0.12 1.72 0.28</size></box></geometry>
+          <material><diffuse>0.18 0.18 0.18 1</diffuse></material>
+        </visual>
+        <!-- Wheels (4) -->
+        <visual name="wfl">
+          <pose>1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wfr">
+          <pose>1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrl">
+          <pose>-1.45 0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <visual name="wrr">
+          <pose>-1.45 -0.85 0.32 1.5708 0 0</pose>
+          <geometry><cylinder><radius>0.32</radius><length>0.44</length></cylinder></geometry>
+          <material><diffuse>0.08 0.08 0.08 1</diffuse></material>
+        </visual>
+        <!-- Collision (simplified box) -->
+        <collision name="col">
+          <pose>0 0 0.55 0 0 0</pose>
+          <geometry><box><size>4.45 1.80 1.30</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+    <!-- GUI camera: top-down aerial view -->
+    <gui fullscreen="0">
+      <camera name="user_camera">
+        <pose>0 0 200 0 1.5707 0</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>orthographic</projection_type>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>

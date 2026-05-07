@@ -107,3 +107,7 @@ chmod +x gps_setup.sh
 ```
 
 For detailed GPS testing guide, see [GPS_DOCKER_GUIDE.md](./demo/GPS_DOCKER_GUIDE.md).
+
+## Autoware Integration
+
+For GPS simulation with Autoware on NVIDIA GPU, see [README_AUTOWARE_GPU_GPS.md](./README_AUTOWARE_GPU_GPS.md).

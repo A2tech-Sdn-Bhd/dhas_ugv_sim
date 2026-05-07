@@ -1,0 +1,3549 @@
+Arguments (pass arguments as '<name>:=<value>'):
+
+    'map_path':
+        point cloud and lanelet2 map directory path
+
+    'vehicle_model':
+        vehicle model name
+        (default: 'sample_vehicle')
+
+    'sensor_model':
+        sensor model name
+        (default: 'sample_sensor_kit')
+
+    'pointcloud_container_name':
+        no description given
+        (default: 'pointcloud_container')
+
+    'data_path':
+        packages data and artifacts directory path
+        (default: EnvVar('HOME') + '/autoware_data/ml_models')
+
+    'planning_setting':
+        planning setting diffusion_planner / rule_based
+        (default: 'rule_based')
+
+    'planning_module_preset':
+        planning module preset
+        (default: 'default')
+
+    'control_module_preset':
+        control module preset
+        (default: 'default')
+
+    'launch_vehicle':
+        launch vehicle
+        (default: 'true')
+
+    'launch_system':
+        launch system
+        (default: 'true')
+
+    'launch_map':
+        launch map
+        (default: 'true')
+
+    'launch_sensing':
+        launch sensing
+        (default: 'true')
+
+    'launch_sensing_driver':
+        launch sensing driver
+        (default: 'true')
+
+    'launch_localization':
+        launch localization
+        (default: 'true')
+
+    'launch_perception':
+        launch perception
+        (default: 'true')
+
+    'launch_planning':
+        launch planning
+        (default: 'true')
+
+    'launch_control':
+        launch control
+        (default: 'true')
+
+    'launch_api':
+        launch api
+        (default: 'true')
+
+    'use_sim_time':
+        use_sim_time
+        (default: 'false')
+
+    'vehicle_id':
+        vehicle specific ID
+        (default: EnvVar('VEHICLE_ID'))
+
+    'launch_vehicle_interface':
+        launch vehicle interface
+        (default: 'true')
+
+    'check_external_emergency_heartbeat':
+        no description given
+        (default: 'false')
+
+    'lanelet2_map_file':
+        lanelet2 map file name
+        (default: 'lanelet2_map.osm')
+
+    'pointcloud_map_file':
+        pointcloud map file name
+        (default: 'pointcloud_map.pcd')
+
+    'system_run_mode':
+        run mode in system
+        (default: 'online')
+
+    'launch_system_monitor':
+        launch system monitor
+        (default: 'true')
+
+    'launch_dummy_diag_publisher':
+        launch dummy diag publisher
+        (default: 'false')
+
+    'diagnostic_graph_aggregator_graph_path':
+        diagnostic graph config
+        (default: FindPackageShare(pkg='autoware_launch') + '/config/system/diagnostics/autoware-main.yaml')
+
+    'rviz':
+        launch rviz
+        (default: 'true')
+
+    'rviz_config_name':
+        rviz config name
+        (default: 'autoware.rviz')
+
+    'rviz_config':
+        rviz config path
+        (default: FindPackageShare(pkg='autoware_launch') + '/rviz/' + LaunchConfig('rviz_config_name'))
+
+    'rviz_respawn':
+        no description given
+        (default: 'true')
+
+    'perception_mode':
+        select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar
+        (default: 'lidar')
+
+    'traffic_light_recognition/use_high_accuracy_detection':
+        enable to use high accuracy detection for traffic light recognition
+        (default: 'true')
+
+    'enable_all_modules_auto_mode':
+        enable all module's auto mode
+        (default: 'false')
+
+    'is_simulation':
+        Autoware's behavior will change depending on whether this is a simulation or not.
+        (default: 'false')
+
+    'use_multithread':
+        no description given
+        (default: 'false')
+
+    'container_name':
+        no description given
+        (default: 'pointcloud_container')
+
+    'agnocast_heaphook_path':
+        no description given
+        (default: '/opt/ros/humble/lib/libagnocast_heaphook.so')
+
+    'initial_engage_state':
+        /vehicle/engage state after starting Autoware
+        (default: 'false')
+
+    'config_dir':
+        path to dir where sensors_calibration.yaml, etc. are located
+        (default: FindPackageShare(pkg=LaunchConfig('sensor_model') + '_description') + '/config')
+
+    'raw_vehicle_cmd_converter_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_raw_vehicle_cmd_converter') + '/config/raw_vehicle_cmd_converter.param.yaml')
+
+    'model_file':
+        path to the file of model settings (*.xacro)
+        (default: FindPackageShare(pkg='tier4_vehicle_launch') + '/urdf/vehicle.xacro')
+
+    'diagnostic_graph_aggregator_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_diagnostic_graph_aggregator') + '/config/default.param.yaml')
+
+    'component_state_monitor_topic_path':
+        no description given
+
+    'duplicated_node_checker_param_path':
+        no description given
+
+    'processing_time_checker_param_path':
+        no description given
+
+    'pipeline_latency_monitor_param_path':
+        no description given
+
+    'mrm_comfortable_stop_operator_param_path':
+        no description given
+
+    'mrm_emergency_stop_operator_param_path':
+        no description given
+
+    'dummy_diag_publisher_param_path':
+        no description given
+
+    'system_monitor_cpu_monitor_param_path':
+        no description given
+
+    'system_monitor_gpu_monitor_param_path':
+        no description given
+
+    'system_monitor_hdd_monitor_param_path':
+        no description given
+
+    'system_monitor_mem_monitor_param_path':
+        no description given
+
+    'system_monitor_net_monitor_param_path':
+        no description given
+
+    'system_monitor_ntp_monitor_param_path':
+        no description given
+
+    'system_monitor_process_monitor_param_path':
+        no description given
+
+    'system_monitor_voltage_monitor_param_path':
+        no description given
+
+    'run_mode':
+        options: online, logging_simulation, planning_simulation
+        (default: 'online')
+
+    'mrm_handler_param_path':
+        no description given
+
+    'diagnostic_graph_aggregator_graph_vars':
+        no description given
+        (default: '')
+
+    'launch_fault_injection':
+        no description given
+        (default: 'false')
+
+    'fault_injection_output_diagnostics':
+        no description given
+        (default: '/diagnostics/fault_injection')
+
+    'diag_struct_topic':
+        no description given
+        (default: '/diagnostics_graph/struct')
+
+    'diag_status_topic':
+        no description given
+        (default: '/diagnostics_graph/status')
+
+    'diag_reset_srv':
+        no description given
+        (default: '/diagnostics_graph/reset')
+
+    'availability_converter_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_diagnostic_graph_aggregator') + '/config/converter.param.yaml')
+
+    'command_mode_switcher_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_command_mode_switcher') + '/config/default.param.yaml')
+
+    'command_mode_decider_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_command_mode_decider') + '/config/default.param.yaml')
+
+    'mrm_state_topic':
+        no description given
+        (default: '/system/fail_safe/mrm_state')
+
+    'change_operation_mode_srv':
+        no description given
+        (default: '/system/operation_mode/change_operation_mode')
+
+    'change_autoware_control_srv':
+        no description given
+        (default: '/system/operation_mode/change_autoware_control')
+
+    'launch_rqt_reconfigure':
+        no description given
+        (default: 'false')
+
+    'launch_rqt_runtime_monitor':
+        no description given
+        (default: 'false')
+
+    'launch_rqt_robot_monitor':
+        no description given
+        (default: 'false')
+
+    'launch_rqt_runtime_monitor_err':
+        no description given
+        (default: 'false')
+
+    'use_control_command_gate':
+        no description given
+        (default: 'false')
+
+    'config':
+        no description given
+        (default: FindPackageShare(pkg='autoware_command_mode_switcher') + '/config/default.param.yaml')
+
+    '~/command_mode/status':
+        no description given
+        (default: '/system/command_mode/status')
+
+    '~/command_mode/request':
+        no description given
+        (default: '/system/command_mode/request')
+
+    '~/command_mode/transition/completed':
+        no description given
+        (default: '/system/command_mode/transition/completed')
+
+    '~/source/status':
+        no description given
+        (default: '/control/control_command_gate/source/status')
+
+    '~/source/select':
+        no description given
+        (default: '/control/control_command_gate/source/select')
+
+    '~/election/status':
+        no description given
+        (default: '/system/election/status')
+
+    '~/control_mode/report':
+        no description given
+        (default: '/vehicle/status/control_mode')
+
+    '~/control_mode/request':
+        no description given
+        (default: '/control/control_mode_request')
+
+    '~/command_mode/transition/available':
+        no description given
+        (default: '/system/command_mode/transition/available')
+
+    '~/command_mode/availability':
+        no description given
+        (default: '/system/command_mode/availability')
+
+    '~/operation_mode/state':
+        no description given
+        (default: '/system/operation_mode/state')
+
+    '~/operation_mode/change_operation_mode':
+        no description given
+        (default: '/system/operation_mode/change_operation_mode')
+
+    '~/operation_mode/change_autoware_control':
+        no description given
+        (default: '/system/operation_mode/change_autoware_control')
+
+    '~/mrm/state':
+        no description given
+        (default: '/system/fail_safe/mrm_state')
+
+    'cpu_monitor_config_file':
+        no description given
+        (default: FindPackageShare(pkg='autoware_system_monitor') + '/config/cpu_monitor.param.yaml')
+
+    'hdd_monitor_config_file':
+        no description given
+        (default: FindPackageShare(pkg='autoware_system_monitor') + '/config/hdd_monitor.param.yaml')
+
+    'mem_monitor_config_file':
+        no description given
+        (default: FindPackageShare(pkg='autoware_system_monitor') + '/config/mem_monitor.param.yaml')
+
+    'net_monitor_config_file':
+        no description given
+        (default: FindPackageShare(pkg='autoware_system_monitor') + '/config/net_monitor.param.yaml')
+
+    'ntp_monitor_config_file':
+        no description given
+        (default: FindPackageShare(pkg='autoware_system_monitor') + '/config/ntp_monitor.param.yaml')
+
+    'process_monitor_config_file':
+        no description given
+        (default: FindPackageShare(pkg='autoware_system_monitor') + '/config/process_monitor.param.yaml')
+
+    'gpu_monitor_config_file':
+        no description given
+        (default: FindPackageShare(pkg='autoware_system_monitor') + '/config/gpu_monitor.param.yaml')
+
+    'voltage_monitor_config_file':
+        no description given
+        (default: FindPackageShare(pkg='autoware_system_monitor') + '/config/voltage_monitor.param.yaml')
+
+    'config_file':
+        no description given
+        (default: FindPackageShare(pkg='autoware_duplicated_node_checker') + '/config/duplicated_node_checker.param.yaml')
+
+    'output_metrics':
+        no description given
+        (default: 'false')
+
+    'file':
+        no description given
+
+    'mode':
+        no description given
+
+    'converter_param_file':
+        no description given
+        (default: FindPackageShare(pkg='autoware_diagnostic_graph_aggregator') + '/config/converter.param.yaml')
+
+    'param_file':
+        no description given
+        (default: FindPackageShare(pkg='autoware_diagnostic_graph_aggregator') + '/config/default.param.yaml')
+
+    'graph_file':
+        no description given
+
+    'graph_vars':
+        no description given
+        (default: '')
+
+    '~/diagnostics':
+        no description given
+        (default: '/diagnostics')
+
+    '~/struct':
+        no description given
+        (default: '/diagnostics_graph/struct')
+
+    '~/status':
+        no description given
+        (default: '/diagnostics_graph/status')
+
+    '~/unknowns':
+        no description given
+        (default: '/diagnostics_graph/unknowns')
+
+    '~/reset':
+        no description given
+        (default: '/diagnostics_graph/reset')
+
+    '~/availability':
+        no description given
+        (default: '/system/command_mode/availability')
+
+    'input_operation_mode_availability':
+        no description given
+        (default: '/system/operation_mode/availability')
+
+    'input_odometry':
+        no description given
+        (default: '/localization/kinematic_state')
+
+    'input_control_mode':
+        no description given
+        (default: '/vehicle/status/control_mode')
+
+    'input_mrm_pull_over_state':
+        no description given
+        (default: '/system/mrm/pull_over_manager/status')
+
+    'input_mrm_comfortable_stop_state':
+        no description given
+        (default: '/system/mrm/comfortable_stop/status')
+
+    'input_mrm_emergency_stop_state':
+        no description given
+        (default: '/system/mrm/emergency_stop/status')
+
+    'input_api_operation_mode_state':
+        no description given
+        (default: '/api/operation_mode/state')
+
+    'input_gear':
+        no description given
+        (default: '/control/command/gear_cmd')
+
+    'output_gear':
+        no description given
+        (default: '/system/emergency/gear_cmd')
+
+    'output_turn_indicators':
+        no description given
+        (default: '/system/emergency/turn_indicators_cmd')
+
+    'output_hazard':
+        no description given
+        (default: '/system/emergency/hazard_lights_cmd')
+
+    'output_mrm_state':
+        no description given
+        (default: '/system/fail_safe/mrm_state')
+
+    'output_emergency_holding':
+        no description given
+        (default: '/system/emergency_holding')
+
+    'output_mrm_pull_over_operate':
+        no description given
+        (default: '/system/mrm/pull_over_manager/operate')
+
+    'output_mrm_comfortable_stop_operate':
+        no description given
+        (default: '/system/mrm/comfortable_stop/operate')
+
+    'output_mrm_emergency_stop_operate':
+        no description given
+        (default: '/system/mrm/emergency_stop/operate')
+
+    'extra_config_file_sensor':
+        no description given
+        (default: FindPackageShare(pkg='autoware_dummy_diag_publisher') + '/config/_empty.param.yaml')
+
+    'update_rate':
+        no description given
+        (default: '10.0')
+
+    'root_path':
+        no description given
+        (default: '/autoware/modes/autonomous')
+
+    'max_depth':
+        no description given
+        (default: '3')
+
+    'show_rate':
+        no description given
+        (default: '1.0')
+
+    'enable_terminal_log':
+        no description given
+        (default: 'false')
+
+    'ignore_dependent_error':
+        no description given
+        (default: 'false')
+
+    'pointcloud_map_path':
+        no description given
+
+    'pointcloud_map_metadata_path':
+        no description given
+
+    'lanelet2_map_path':
+        no description given
+
+    'map_projector_info_path':
+        no description given
+
+    'pointcloud_map_loader_param_path':
+        no description given
+
+    'lanelet2_map_loader_param_path':
+        no description given
+
+    'map_tf_generator_param_path':
+        no description given
+
+    'map_projection_loader_param_path':
+        no description given
+
+    'param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_map_projection_loader') + '/config/map_projection_loader.param.yaml')
+
+    'launch_pointcloud_container':
+        if true, launch pointcloud container. Please note that it is not intended to launch pointcloud_container_name with the same name in other launch files.
+        (default: 'false')
+
+    'launch_driver':
+        do launch driver
+        (default: 'true')
+
+    'vehicle_mirror_param_file':
+        path to the file of vehicle mirror position yaml
+        (default: FindPackageShare(pkg='autoware_vehicle_info_utils') + '/config/vehicle_mirror.param.yaml')
+
+    'loc_config_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_launch') + '/config/localization')
+
+    'pose_source':
+        select pose_estimator: ndt, yabloc, eagleye
+        (default: 'ndt')
+
+    'twist_source':
+        select twist_estimator. gyro_odom, eagleye
+        (default: 'gyro_odom')
+
+    'input_pointcloud':
+        The topic will be used in the localization util module
+        (default: '/sensing/lidar/concatenated/pointcloud')
+
+    'localization_pointcloud_container_name':
+        The target container to which pointcloud preprocessing nodes in localization be attached
+        (default: '/pointcloud_container')
+
+    'initial_pose':
+        initial pose (x, y, z, quat_x, quat_y, quat_z, quat_w)
+        (default: '[]')
+
+    'ndt_scan_matcher/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path':
+        no description given
+
+    'ndt_scan_matcher/pointcloud_preprocessor/voxel_grid_downsample_filter_param_path':
+        no description given
+
+    'ndt_scan_matcher/pointcloud_preprocessor/random_downsample_filter_param_path':
+        no description given
+
+    'ndt_scan_matcher/ndt_scan_matcher_param_path':
+        no description given
+
+    'localization_error_monitor_param_path':
+        no description given
+
+    'ekf_localizer_param_path':
+        no description given
+
+    'stop_filter_param_path':
+        no description given
+
+    'pose_instability_detector_param_path':
+        no description given
+
+    'pose_initializer_param_path':
+        no description given
+
+    'eagleye_param_path':
+        no description given
+
+    'ar_tag_based_localizer_param_path':
+        no description given
+
+    'lidar_marker_localizer/lidar_marker_localizer_param_path':
+        no description given
+
+    'lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path':
+        no description given
+
+    'lidar_marker_localizer/pointcloud_preprocessor/ring_filter_param_path':
+        no description given
+
+    'use_autoware_pose_covariance_modifier':
+        no description given
+        (default: 'false')
+
+    'gnss_enabled':
+        gnss availability for initial position estimation
+        (default: 'true')
+
+    'output_pose_with_covariance_topic':
+        no description given
+        (default: '/localization/pose_estimator/pose_with_covariance')
+
+    'input_initial_pose_topic':
+        Initial position topic to align
+        (default: 'ekf_pose_with_covariance')
+
+    'input_regularization_pose_topic':
+        Regularization pose topic
+        (default: 'regularization_pose_with_covariance')
+
+    'input_service_trigger_node':
+        Trigger node service name
+        (default: 'trigger_node')
+
+    'output_pose_topic':
+        Estimated self position
+        (default: 'ndt_pose')
+
+    'client_map_loader':
+        Trigger node service name
+        (default: 'pcd_loader_service')
+
+    'node_name':
+        Use a different name for this node
+        (default: 'ndt_scan_matcher')
+
+    'autoware_pose_covariance_modifier/input_gnss_pose_with_cov_topic':
+        no description given
+        (default: '/sensing/gnss/pose_with_covariance')
+
+    'autoware_pose_covariance_modifier/input_ndt_pose_with_cov_topic':
+        no description given
+        (default: '/localization/pose_estimator/ndt_scan_matcher/pose_with_covariance')
+
+    'autoware_pose_covariance_modifier/output_pose_with_covariance_topic':
+        no description given
+        (default: '/localization/pose_estimator/pose_with_covariance')
+
+    'src_image':
+        no description given
+        (default: '/sensing/camera/traffic_light/image_raw')
+
+    'src_info':
+        no description given
+        (default: '/sensing/camera/traffic_light/camera_info')
+
+    'camera_pose_initializer_param_path':
+        no description given
+        (default: FindPackageShare(pkg='yabloc_pose_initializer') + '/config/camera_pose_initializer.param.yaml')
+
+    'camera_particle_corrector_param_path':
+        no description given
+        (default: FindPackageShare(pkg='yabloc_particle_filter') + '/config/camera_particle_corrector.param.yaml')
+
+    'gnss_particle_corrector_param_path':
+        no description given
+        (default: FindPackageShare(pkg='yabloc_particle_filter') + '/config/gnss_particle_corrector.param.yaml')
+
+    'predictor_param_path':
+        no description given
+        (default: FindPackageShare(pkg='yabloc_particle_filter') + '/config/predictor.param.yaml')
+
+    'graph_segment_param_path':
+        no description given
+        (default: FindPackageShare(pkg='yabloc_image_processing') + '/config/graph_segment.param.yaml')
+
+    'segment_filter_param_path':
+        no description given
+        (default: FindPackageShare(pkg='yabloc_image_processing') + '/config/segment_filter.param.yaml')
+
+    'undistort_param_path':
+        no description given
+        (default: FindPackageShare(pkg='yabloc_image_processing') + '/config/undistort.param.yaml')
+
+    'ground_server_param_path':
+        no description given
+        (default: FindPackageShare(pkg='yabloc_common') + '/config/ground_server.param.yaml')
+
+    'll2_decomposer_param_path':
+        no description given
+        (default: FindPackageShare(pkg='yabloc_common') + '/config/ll2_decomposer.param.yaml')
+
+    'model_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/yabloc_pose_initializer/saved_model/model_float32.pb')
+
+    'input_initialpose':
+        no description given
+        (default: '/initialpose3d')
+
+    'twist_cov_for_prediction':
+        no description given
+        (default: '/localization/twist_estimator/twist_with_covariance')
+
+    'input_projected_line_segments_cloud':
+        no description given
+        (default: '/localization/pose_estimator/yabloc/image_processing/projected_line_segments_cloud')
+
+    'input_ll2_road_marking':
+        no description given
+        (default: '/localization/pose_estimator/yabloc/map/ll2_road_marking')
+
+    'input_ll2_bounding_box':
+        no description given
+        (default: '/localization/pose_estimator/yabloc/map/ll2_bounding_box')
+
+    'resized_image':
+        no description given
+        (default: 'undistorted/image_raw')
+
+    'resized_info':
+        no description given
+        (default: 'undistorted/camera_info')
+
+    'input_pose':
+        no description given
+        (default: 'undistorted')
+
+    'validation':
+        no description given
+        (default: 'true')
+
+    'output_image_with_line_segments':
+        no description given
+        (default: 'image_with_line_segments')
+
+    'output_line_segments_cloud':
+        no description given
+        (default: 'line_segments_cloud')
+
+    'output_graph_segmented':
+        no description given
+        (default: 'graph_segmented')
+
+    'output_segmented_image':
+        no description given
+        (default: 'segmented_image')
+
+    'input_graph_segmented':
+        no description given
+        (default: 'graph_segmented')
+
+    'input_line_segments_cloud':
+        no description given
+        (default: 'line_segments_cloud')
+
+    'output_projected_line_segments_cloud':
+        no description given
+        (default: 'projected_line_segments_cloud')
+
+    'output_projected_image':
+        no description given
+        (default: 'projected_image')
+
+    'output_debug_line_segments':
+        no description given
+        (default: 'debug/line_segments_cloud')
+
+    'input_overlaid_pose':
+        
+
+    'output_image_with_colored_line_segments':
+        no description given
+        (default: 'image_with_colored_line_segments')
+
+    'input_particle_pose':
+        no description given
+        (default: '/localization/pose_twist_fusion_filter/pose')
+
+    'output_height':
+        no description given
+        (default: 'height')
+
+    'output_ground':
+        no description given
+        (default: 'ground')
+
+    'output_ground_markers':
+        no description given
+        (default: 'ground_markers')
+
+    'output_ground_status':
+        no description given
+        (default: 'ground_status')
+
+    'output_near_cloud':
+        no description given
+        (default: 'near_cloud')
+
+    'output_ll2_road_marking':
+        no description given
+        (default: 'll2_road_marking')
+
+    'output_ll2_sign_board':
+        no description given
+        (default: 'll2_sign_board')
+
+    'output_ll2_bounding_box':
+        no description given
+        (default: 'll2_bounding_box')
+
+    'output_sign_board_marker':
+        no description given
+        (default: 'sign_board_marker')
+
+    'input_vehicle_twist_with_covariance_topic':
+        input twist with covariance topic name from vehicle
+        (default: '/sensing/vehicle_velocity_converter/twist_with_covariance')
+
+    'input_imu_topic':
+        input imu topic name
+        (default: '/sensing/imu/imu_data')
+
+    'output_twist_raw_topic':
+        output raw twist topic name
+        (default: 'gyro_twist_raw')
+
+    'output_twist_with_covariance_raw_topic':
+        output raw twist with covariance topic name
+        (default: 'gyro_twist_with_covariance_raw')
+
+    'output_twist_topic':
+        output twist topic name
+        (default: 'gyro_twist')
+
+    'output_twist_with_covariance_topic':
+        output twist with covariance topic name
+        (default: 'gyro_twist_with_covariance')
+
+    'output_pose_with_cov_name':
+        no description given
+        (default: '/localization/pose_estimator/pose_with_covariance')
+
+    'output_twist_with_cov_name':
+        no description given
+        (default: '/localization/twist_estimator/twist_with_covariance')
+
+    'directory_with_related_launches':
+        no description given
+        (default: FindPackageShare(pkg='tier4_localization_launch') + '/launch/pose_twist_estimator/eagleye')
+
+    'use_eagleye_pose':
+        no description given
+        (default: 'true')
+
+    'use_eagleye_twist':
+        no description given
+        (default: 'true')
+
+    'enable_additional_rolling':
+        no description given
+        (default: 'false')
+
+    'use_multi_antenna_mode':
+        no description given
+        (default: 'false')
+
+    'use_rtk_dead_reckoning':
+        no description given
+        (default: 'false')
+
+    'use_rtk_heading':
+        no description given
+        (default: 'false')
+
+    'geo_pose_topic_name':*
+        no description given
+        (default: 'eagleye/geo_pose_with_covariance')
+
+    'output_geo_pose':
+        no description given
+        (default: 'eagleye/geo_pose_with_covariance')
+
+    'input_geo_pose':
+        no description given
+        (default: '/geo_pose_with_covariance')
+
+    'output_pose':
+        no description given
+        (default: '/pose_with_covariance')
+
+    'input_image':
+        no description given
+
+    'input_lanelet2_map':
+        no description given
+        (default: '~/input/lanelet2_map')
+
+    'input_camera_info':
+        no description given
+        (default: '~/input/camera_info')
+
+    'input_ekf_pose':
+        no description given
+        (default: '~/input/ekf_pose')
+
+    'output_pose_with_covariance':
+        no description given
+        (default: '~/output/pose_with_covariance')
+
+    'debug_image':
+        no description given
+        (default: '~/debug/image')
+
+    'debug_mapped_tag':
+        no description given
+        (default: '~/debug/mapped_tag')
+
+    'debug_detected_tag':
+        no description given
+        (default: '~/debug/detected_tag')
+
+    'group_namespace':
+        no description given
+        (default: 'lidar_marker_localizer')
+
+    'lidar_container_name':
+        container name of lidar used for lidar-marker localization
+        (default: '/pointcloud_preprocessor/pointcloud_container')
+
+    'use_intra_process':
+        use ROS 2 component container communication
+        (default: 'true')
+
+    'crop_box_filter_measurement_range_param_path':
+        no description given
+        (default: LaunchConfig('lidar_marker_localizer/pointcloud_preprocessor/crop_box_filter_measurement_range_param_path'))
+
+    'ring_filter_param_path':
+        no description given
+        (default: LaunchConfig('lidar_marker_localizer/pointcloud_preprocessor/ring_filter_param_path'))
+
+    'lidar_marker_localizer_param_path':
+        no description given
+        (default: LaunchConfig('lidar_marker_localizer/lidar_marker_localizer_param_path'))
+
+    'service_trigger_node_srv':
+        no description given
+        (default: '~/service/trigger_node_srv')
+
+    'pose_sources':
+        
+
+    'ndt_enabled':
+        no description given
+
+    'ekf_enabled':
+        no description given
+
+    'yabloc_enabled':
+        no description given
+
+    'stop_check_enabled':
+        no description given
+
+    'sub_gnss_pose_cov':
+        no description given
+        (default: 'sub_gnss_pose_cov')
+
+    'gnss_initial_pose_auto_fix_target':
+        no description given
+        (default: 'pointcloud_map')
+
+    'output/pointcloud':
+        final output topic name
+        (default: 'downsample/pointcloud')
+
+    'input_initial_pose_name':
+        no description given
+        (default: 'initialpose3d')
+
+    'input_trigger_node_service_name':
+        trigger node service
+        (default: 'trigger_node')
+
+    'input_pose_with_cov_name':
+        no description given
+        (default: 'in_pose_with_covariance')
+
+    'input_twist_with_cov_name':
+        no description given
+        (default: 'in_twist_with_covariance')
+
+    'output_odom_name':
+        no description given
+        (default: 'ekf_odom')
+
+    'output_pose_name':
+        no description given
+        (default: 'ekf_pose')
+
+    'output_pose_with_covariance_name':
+        no description given
+        (default: 'ekf_pose_with_covariance')
+
+    'output_biased_pose_name':
+        no description given
+        (default: 'ekf_biased_pose')
+
+    'output_biased_pose_with_covariance_name':
+        no description given
+        (default: 'ekf_biased_pose_with_covariance')
+
+    'output_twist_name':
+        no description given
+        (default: 'ekf_twist')
+
+    'output_twist_with_covariance_name':
+        no description given
+        (default: 'ekf_twist_with_covariance')
+
+    'output_processing_time_ms':
+        no description given
+        (default: 'debug/processing_time_ms')
+
+    'input_odom_name':
+        no description given
+        (default: 'ekf_odom')
+
+    'debug_stop_flag':
+        no description given
+        (default: 'debug/stop_flag')
+
+    'in_odom':
+        no description given
+        (default: 'in_odom')
+
+    'in_twist':
+        no description given
+        (default: 'in_twist')
+
+    'out_accel':
+        no description given
+        (default: 'out_accel')
+
+    'input_twist':
+        no description given
+        (default: '~/input/twist')
+
+    'input/odom':
+        no description given
+        (default: '/localization/kinematic_state')
+
+    'use_empty_dynamic_object_publisher':
+        if true, /perception/object_recognition/objects topic has an empty DynamicObjectArray
+        (default: 'false')
+
+    'use_traffic_light_recognition':
+        use traffic light recognition module, if false, traffic light recognition module will not be launched
+        (default: 'true')
+
+    'use_low_height_cropbox':
+        use low height crop filter in clustering
+        (default: 'false')
+
+    'use_vector_map':
+        use vector map in prediction
+        (default: 'true')
+
+    'use_pointcloud_map':
+        use pointcloud map in detection
+        (default: 'true')
+
+    'use_irregular_object_detector':
+        enable pipeline for small unknown object detection
+        (default: 'true')
+
+    'use_low_intensity_cluster_filter':
+        launch low_intensity_cluster_filter in clustering
+        (default: 'true')
+
+    'use_image_segmentation_based_filter':
+        launch image_segmentation_based_filter in clustering
+        (default: 'false')
+
+    'use_perception_online_evaluator':
+        launch perception online evaluator
+        (default: 'false')
+
+    'use_perception_analytics_publisher':
+        launch perception analytics publisher
+        (default: 'true')
+
+    'use_detection_by_tracker':
+        launch detection_by_tracker function
+        (default: 'true')
+
+    'use_radar_tracking_fusion':
+        if true, radar objects are merged in tracking module. Otherwise, radar objects are merged in detection module.
+        (default: 'true')
+
+    'use_object_filter':
+        launch object filter to filter-out detected object
+        (default: 'true')
+
+    'use_obstacle_segmentation_single_frame_filter':
+        use single frame filter at the ground segmentation
+        (default: 'false')
+
+    'use_obstacle_segmentation_time_series_filter':
+        use time series filter at the ground segmentation
+        (default: 'true')
+
+    'segmentation_pointcloud_fusion_camera_ids':
+        list of camera ids used for segmentation_pointcloud_fusion node, mainly using front camera
+        (default: '[0,2,4]')
+
+    'use_multi_channel_tracker_merger':
+        if true, multi channel tracker merger is used. Otherwise, merged object is used.
+        (default: 'true')
+
+    'tracker_publish_merged_objects':
+        no description given
+        (default: 'false')
+
+    'use_camera_vru_detector':
+        enable pipeline for camera VRU object detection
+        (default: 'false')
+
+    'camera_vru_detector_rois_ids':
+        list of ROIs ids used for detecting VRU.
+        (default: '[0]')
+
+    'occupancy_grid_map_method':
+        options: pointcloud_based, laserscan_based, multi_lidar_pointcloud_based
+        (default: 'pointcloud_based')
+
+    'occupancy_grid_map_updater':
+        options: binary_bayes_filter
+        (default: 'binary_bayes_filter')
+
+    'detected_objects_filter_method':
+        options: lanelet_filter, position_filter
+        (default: 'lanelet_filter')
+
+    'detected_objects_validation_method':
+        options: obstacle_pointcloud, occupancy_grid (must be used with laserscan_based_occupancy_grid_map)
+        (default: 'obstacle_pointcloud')
+
+    'lidar_detection_model':
+        If the model name is not declared, the default model in perception.launch.xml will be used
+        (default: 'centerpoint')
+
+    'ml_camera_lidar_merger_priority_mode':
+        priority mode for ml and camera_lidar merger, options: `0: Object0`, `1: Object1`, `2: ConfidenceBased`, `3: ClassBased`
+        (default: '0')
+
+    'input_pointcloud_for_traffic_light_occlusion_predictor':
+        input pointcloud topic for traffic_light_occlusion_predictor
+        (default: '/sensing/lidar/top/pointcloud_raw_ex')
+
+    'camera_2d_detector/model_path':
+        options `yolox-sPlus-T4-960x960-pseudo-finetune.onnx` if only detection is needed, `yolox-sPlus-opt-pseudoV2-T4-960x960-T4-seg16cls.onnx` if sematic segmentation is also needed
+        (default: LaunchConfig('data_path') + '/tensorrt_yolox/yolox-sPlus-opt-pseudoV2-T4-960x960-T4-seg16cls.onnx')
+
+    'camera_2d_detector/label_path':
+        label path
+        (default: LaunchConfig('data_path') + '/tensorrt_yolox/label.txt')
+
+    'camera_2d_detector/color_map_path':
+        color map path
+        (default: LaunchConfig('data_path') + '/tensorrt_yolox/semseg_color_map.csv')
+
+    'camera_2d_detector/roi_remap_path':
+        path to a definition file for remapping ROI classes
+        (default: FindPackageShare(pkg='autoware_launch') + '/config/perception/traffic_light_recognition/tensorrt_yolox/roi_label_remap.csv')
+
+    'camera_2d_detector/roi_to_semseg_remap_path':
+        path to a definition file for remapping ROI classes to semantic segmentation output classes
+        (default: FindPackageShare(pkg='autoware_launch') + '/config/perception/traffic_light_recognition/tensorrt_yolox/roi_to_semseg_label_remap.csv')
+
+    'traffic_light_recognition/camera_namespaces':
+        choose camera which use for traffic light recognition
+        (default: '[camera6, camera7]')
+
+    'traffic_light_recognition/high_accuracy_detection_type':
+        select high accuracy detector type for traffic light recognition: fine_detection or whole_image_detection
+        (default: 'fine_detection')
+
+    'traffic_light_recognition/classification/car/classifier_type':
+        0=HSVFilter, 1=CNN, 2=LAMPClassifier
+        (default: '1')
+
+    'traffic_light_recognition/classification/pedestrian/classifier_type':
+        0=HSVFilter, 1=CNN, 2=LampRecognizer
+        (default: '1')
+
+    'traffic_light_recognition/classification/car/label_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/traffic_light_classifier/lamp_labels.txt')
+
+    'traffic_light_recognition/classification/pedestrian/label_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/traffic_light_classifier/lamp_labels_ped.txt')
+
+    'traffic_light_recognition/classification/lamp_recognizer_ml_param_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/traffic_light_classifier/lamp_recognizer_ml.param.yaml')
+
+    'traffic_light_car_classifier_model':*
+        no description given
+        (default: 'traffic_light_classifier_mobilenetv2_batch_6.onnx')
+
+    'traffic_light_ped_classifier_model':*
+        no description given
+        (default: 'ped_traffic_light_classifier_mobilenetv2_batch_6.onnx')
+
+    'traffic_light_recognition/classification/car/model_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/traffic_light_classifier/' + LaunchConfig('traffic_light_car_classifier_model'))
+
+    'traffic_light_recognition/classification/pedestrian/model_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/traffic_light_classifier/' + LaunchConfig('traffic_light_ped_classifier_model'))
+
+    'object_recognition_detection_euclidean_cluster_param_path':
+        no description given
+
+    'object_recognition_detection_outlier_param_path':
+        no description given
+
+    'object_recognition_detection_object_lanelet_filter_param_path':
+        no description given
+
+    'object_recognition_detection_object_position_filter_param_path':
+        no description given
+
+    'object_recognition_detection_pointcloud_map_filter_param_path':
+        no description given
+
+    'object_recognition_prediction_map_based_prediction_param_path':
+        no description given
+
+    'object_recognition_detection_object_merger_data_association_matrix_param_path':
+        no description given
+
+    'ml_camera_lidar_object_association_merger_param_path':
+        no description given
+
+    'object_recognition_detection_object_merger_distance_threshold_list_path':
+        no description given
+
+    'object_recognition_detection_fusion_sync_param_path':
+        no description given
+
+    'object_recognition_detection_roi_cluster_fusion_param_path':
+        no description given
+
+    'object_recognition_detection_irregular_object_detector_param_path':
+        no description given
+
+    'object_recognition_detection_roi_detected_object_fusion_param_path':
+        no description given
+
+    'object_recognition_detection_near_range_camera_vru_param_path':
+        no description given
+
+    'object_recognition_detection_pointpainting_fusion_common_param_path':
+        no description given
+
+    'object_recognition_detection_lidar_model_param_path':
+        no description given
+
+    'object_recognition_detection_radar_lanelet_filtering_range_param_path':
+        no description given
+
+    'object_recognition_detection_object_sorter_radar_param_path':
+        no description given
+
+    'object_recognition_tracking_multi_object_tracker_data_association_matrix_param_path':
+        no description given
+
+    'object_recognition_tracking_multi_object_tracker_input_channels_param_path':
+        no description given
+
+    'object_recognition_tracking_multi_object_tracker_node_param_path':
+        no description given
+
+    'object_recognition_tracking_radar_tracked_object_sorter_param_path':
+        no description given
+
+    'object_recognition_tracking_radar_tracked_object_lanelet_filter_param_path':
+        no description given
+
+    'obstacle_segmentation_ground_segmentation_param_path':
+        no description given
+
+    'obstacle_segmentation_ground_segmentation_elevation_map_param_path':
+        no description given
+
+    'object_recognition_detection_obstacle_pointcloud_based_validator_param_path':
+        no description given
+
+    'object_recognition_detection_detection_by_tracker_param':
+        no description given
+
+    'occupancy_grid_map_param_path':
+        no description given
+
+    'occupancy_grid_map_updater_param_path':
+        no description given
+
+    'each_traffic_light_map_based_detector_param_path':
+        no description given
+
+    'traffic_light_fine_detector_param_path':
+        no description given
+
+    'yolox_traffic_light_detector_param_path':
+        no description given
+
+    'car_traffic_light_classifier_param_path':
+        no description given
+
+    'pedestrian_traffic_light_classifier_param_path':
+        no description given
+
+    'traffic_light_roi_visualizer_param_path':
+        no description given
+
+    'traffic_light_occlusion_predictor_param_path':
+        no description given
+
+    'traffic_light_multi_camera_fusion_param_path':
+        no description given
+
+    'traffic_light_arbiter_param_path':
+        no description given
+
+    'crosswalk_traffic_light_estimator_param_path':
+        no description given
+
+    'use_short_range_detection':
+        use short range detection for redundant VRU detection
+        (default: 'false')
+
+    'lidar_short_range_detection_model_type':
+        options: `centerpoint_short_range`. Valid choices are: ['centerpoint_short_range']
+        (default: 'centerpoint_short_range')
+
+    'lidar_short_range_detection_model_name':
+        options: `centerpoint_short_range`. Valid choices are: ['centerpoint_short_range', '']
+        (default: 'centerpoint_short_range')
+
+    'bevfusion_model_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/bevfusion')
+
+    'centerpoint_model_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/lidar_centerpoint')
+
+    'transfusion_model_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/lidar_transfusion')
+
+    'short_range_centerpoint_model_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/lidar_short_range_centerpoint')
+
+    'pointpainting_model_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/image_projection_based_fusion')
+
+    'input/pointcloud':
+        The topic will be used in the detection module
+        (default: '/sensing/lidar/concatenated/pointcloud')
+
+    'image_raw0':
+        image raw topic name
+        (default: '/sensing/camera/camera0/image_rect_color')
+
+    'camera_info0':
+        camera info topic name
+        (default: '/sensing/camera/camera0/camera_info')
+
+    'detection_rois0':
+        detection rois output topic name
+        (default: '/perception/object_recognition/detection/rois0')
+
+    'image_raw1':
+        no description given
+        (default: '/sensing/camera/camera1/image_rect_color')
+
+    'camera_info1':
+        no description given
+        (default: '/sensing/camera/camera1/camera_info')
+
+    'detection_rois1':
+        no description given
+        (default: '/perception/object_recognition/detection/rois1')
+
+    'image_raw2':
+        no description given
+        (default: '/sensing/camera/camera2/image_rect_color')
+
+    'camera_info2':
+        no description given
+        (default: '/sensing/camera/camera2/camera_info')
+
+    'detection_rois2':
+        no description given
+        (default: '/perception/object_recognition/detection/rois2')
+
+    'image_raw3':
+        no description given
+        (default: '/sensing/camera/camera3/image_rect_color')
+
+    'camera_info3':
+        no description given
+        (default: '/sensing/camera/camera3/camera_info')
+
+    'detection_rois3':
+        no description given
+        (default: '/perception/object_recognition/detection/rois3')
+
+    'image_raw4':
+        no description given
+        (default: '/sensing/camera/camera4/image_rect_color')
+
+    'camera_info4':
+        no description given
+        (default: '/sensing/camera/camera4/camera_info')
+
+    'detection_rois4':
+        no description given
+        (default: '/perception/object_recognition/detection/rois4')
+
+    'image_raw5':
+        no description given
+        (default: '/sensing/camera/camera5/image_rect_color')
+
+    'camera_info5':
+        no description given
+        (default: '/sensing/camera/camera5/camera_info')
+
+    'detection_rois5':
+        no description given
+        (default: '/perception/object_recognition/detection/rois5')
+
+    'image_raw6':
+        no description given
+        (default: '/sensing/camera/camera6/image_rect_color')
+
+    'camera_info6':
+        no description given
+        (default: '/sensing/camera/camera6/camera_info')
+
+    'detection_rois6':
+        no description given
+        (default: '/perception/object_recognition/detection/rois6')
+
+    'image_raw7':
+        no description given
+        (default: '/sensing/camera/camera7/image_rect_color')
+
+    'camera_info7':
+        no description given
+        (default: '/sensing/camera/camera7/camera_info')
+
+    'detection_rois7':
+        no description given
+        (default: '/perception/object_recognition/detection/rois7')
+
+    'image_raw8':
+        no description given
+        (default: '/sensing/camera/camera8/image_rect_color')
+
+    'camera_info8':
+        no description given
+        (default: '/sensing/camera/camera8/camera_info')
+
+    'detection_rois8':
+        no description given
+        (default: '/perception/object_recognition/detection/rois8')
+
+    'image_number':
+        choose image raw number(1-8)
+        (default: '6')
+
+    'image_topic_name':
+        image topic name options `image_rect_color`, `image_raw
+        (default: 'image_rect_color')
+
+    'input/concatenation_info':
+        no description given
+        (default: '/sensing/lidar/concatenated/pointcloud_info')
+
+    'objects_filter_method':
+        options: `lanelet_filter` or `position_filter`
+        (default: 'lanelet_filter')
+
+    'use_object_validator':
+        use obstacle_pointcloud based object validator
+        (default: 'true')
+
+    'objects_validation_method':
+        options: `obstacle_pointcloud` or `occupancy_grid`
+        (default: 'obstacle_pointcloud')
+
+    'use_cuda_ground_segmentation':
+        use cuda ground segmentation filter at the ground segmentation
+        (default: 'false')
+
+    'traffic_light_recognition/fusion_only':
+        no description given
+
+    'traffic_light_recognition/whole_image_detection/model_path':
+        no description given
+
+    'traffic_light_recognition/whole_image_detection/label_path':
+        no description given
+
+    'traffic_light_recognition/whole_image_detection/yolox_roi_label_remap_path':
+        no description given
+
+    'traffic_light_recognition/fine_detection/model_path':
+        no description given
+
+    'traffic_light_recognition/fine_detection/label_path':
+        no description given
+
+    'input/radar':
+        no description given
+        (default: '/sensing/radar/detected_objects')
+
+    'output/tracker_merged_objects':
+        no description given
+        (default: '/perception/object_recognition/detection/objects')
+
+    'downsample_perception_common_pointcloud':
+        no description given
+        (default: 'false')
+
+    'cuda_pointcloud_preprocessing':
+        no description given
+        (default: 'false')
+
+    'common_downsample_voxel_size_x':
+        no description given
+        (default: '0.05')
+
+    'common_downsample_voxel_size_y':
+        no description given
+        (default: '0.05')
+
+    'common_downsample_voxel_size_z':
+        no description given
+        (default: '0.05')
+
+    'base_frame':
+        no description given
+        (default: 'base_link')
+
+    'ogm_outlier_filter_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_occupancy_grid_map_outlier_filter') + '/config/occupancy_grid_map_outlier_filter.param.yaml')
+
+    'cuda_ground_segmentation_node_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_ground_segmentation_cuda') + '/config/cuda_scan_ground_segmentation_filter.param.yaml')
+
+    'input/obstacle_pointcloud':
+        no description given
+        (default: 'concatenated/pointcloud')
+
+    'input/raw_pointcloud':
+        no description given
+        (default: 'no_ground/oneshot/pointcloud')
+
+    'output':
+        no description given
+        (default: '/perception/occupancy_grid_map/map')
+
+    'input_obstacle_pointcloud':
+        subscribe obstacle pointcloud
+        (default: 'false')
+
+    'input_obstacle_and_raw_pointcloud':
+        subscribe both obstacle and raw pointcloud
+        (default: 'true')
+
+    'use_pointcloud_container':
+        no description given
+        (default: 'true')
+
+    'individual_container_name':
+        no description given
+        (default: 'occupancy_grid_map_container')
+
+    'updater_type':
+        no description given
+        (default: 'binary_bayes_filter')
+
+    'updater_param_file':
+        no description given
+        (default: PathJoinSubstitution('FindPackageShare(pkg='autoware_probabilistic_occupancy_grid_map'), 'config', 'binary_bayes_filter_updater.param.yaml''))
+
+    'output/laserscan':
+        no description given
+        (default: 'virtual_scan/laserscan')
+
+    'output/ray':
+        no description given
+        (default: 'virtual_scan/ray')
+
+    'output/stixel':
+        no description given
+        (default: 'virtual_scan/stixel')
+
+    'multi_lidar_fusion_config_file':
+        no description given
+        (default: PathJoinSubstitution('FindPackageShare(pkg='autoware_probabilistic_occupancy_grid_map'), 'config', 'multi_lidar_pointcloud_based_occupancy_grid_map.param.yaml''))
+
+    'lidar_detection_model_type':
+        One of: ['bevfusion', 'centerpoint', 'pointpainting', 'transfusion', 'apollo', 'clustering']
+
+    'lidar_detection_model_name':
+        options: `bevfusion_lidar`, `centerpoint`, `centerpoint_tiny`, `centerpoint_sigma`, `pointpainting`, `transfusion` (non-exhaustive)
+
+    'use_validator':
+        use obstacle_pointcloud based validator
+
+    'irregular_object_detector_fusion_camera_ids':
+        no description given
+        (default: '[0]')
+
+    'number_of_cameras':
+        no description given
+
+    'node/pointcloud_container':
+        no description given
+
+    'input/obstacle_segmentation/pointcloud':
+        no description given
+        (default: '/perception/obstacle_segmentation/pointcloud')
+
+    'input/camera0/image':
+        no description given
+
+    'input/camera0/info':
+        no description given
+
+    'input/camera0/rois':
+        no description given
+
+    'input/camera1/image':
+        no description given
+
+    'input/camera1/info':
+        no description given
+
+    'input/camera1/rois':
+        no description given
+
+    'input/camera2/image':
+        no description given
+
+    'input/camera2/info':
+        no description given
+
+    'input/camera2/rois':
+        no description given
+
+    'input/camera3/image':
+        no description given
+
+    'input/camera3/info':
+        no description given
+
+    'input/camera3/rois':
+        no description given
+
+    'input/camera4/image':
+        no description given
+
+    'input/camera4/info':
+        no description given
+
+    'input/camera4/rois':
+        no description given
+
+    'input/camera5/image':
+        no description given
+
+    'input/camera5/info':
+        no description given
+
+    'input/camera5/rois':
+        no description given
+
+    'input/camera6/image':
+        no description given
+
+    'input/camera6/info':
+        no description given
+
+    'input/camera6/rois':
+        no description given
+
+    'input/camera7/image':
+        no description given
+
+    'input/camera7/info':
+        no description given
+
+    'input/camera7/rois':
+        no description given
+
+    'input/camera8/image':
+        no description given
+
+    'input/camera8/info':
+        no description given
+
+    'input/camera8/rois':
+        no description given
+
+    'input/tracked_objects':
+        no description given
+        (default: '/perception/object_recognition/tracking/objects')
+
+    'output/objects':
+        no description given
+        (default: 'objects')
+
+    'sync_param_path':
+        no description given
+
+    'voxel_grid_based_euclidean_param_path':
+        no description given
+
+    'irregular_object_detector_param_path':
+        no description given
+
+    'ns':
+        current namespace
+
+    'input/pointcloud_map/pointcloud':
+        no description given
+
+    'output/ml_detector/objects':
+        no description given
+
+    'output/rule_detector/objects':
+        no description given
+
+    'output/clustering/cluster_objects':
+        no description given
+
+    'enable_2d_detection':
+        true: when 2d detection yolox model run the same machine, false: when it run in separate machine
+        (default: 'false')
+
+    'image_raw9':
+        no description given
+        (default: '/sensing/camera/camera9/image_raw')
+
+    'camera_index':
+        no description given
+        (default: '0')
+
+    'use_bytetrack':
+        use bytetrack for tracking, if false, only detection is performed
+        (default: 'true')
+
+    'enable_visualizer':
+        no description given
+        (default: 'false')
+
+    'tensorrt_yolox_ns':
+        no description given
+        (default: '')
+
+    'yolox_node_name':
+        no description given
+        (default: 'tensorrt_yolox')
+
+    'image_transport_decompressor_node_name':
+        no description given
+        (default: 'image_transport_decompressor_node')
+
+    'input/image':
+        no description given
+        (default: '/sensing/camera/camera0/image_rect_color')
+
+    'output/mask':
+        no description given
+        (default: '/perception/object_recognition/detection/mask0')
+
+    'yolox_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_tensorrt_yolox') + '/config/yolox_s_plus_opt.param.yaml')
+
+    'label_path':
+        label path
+        (default: LaunchConfig('data_path') + '/tensorrt_yolox/label.txt')
+
+    'semantic_segmentation_color_map_path':
+        color map path
+        (default: LaunchConfig('data_path') + '/tensorrt_yolox/semseg_color_map.csv')
+
+    'roi_remap_path':
+        color map path
+        (default: FindPackageShare(pkg='autoware_tensorrt_yolox') + '/config/roi_label_remap.csv')
+
+    'roi_to_semantic_segmentation_remap_path':
+        color map path
+        (default: FindPackageShare(pkg='autoware_tensorrt_yolox') + '/config/roi_to_semseg_label_remap.csv')
+
+    'use_decompress':
+        use image decompress
+        (default: 'true')
+
+    'build_only':
+        exit after trt engine is built
+        (default: 'false')
+
+    'decompress_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_image_transport_decompressor') + '/config/image_transport_decompressor.param.yaml')
+
+    'in_image':
+        no description given
+        (default: '/sensing/camera/camera0/image_rect_color')
+
+    'in_image_compressed':
+        no description given
+        (default: LaunchConfig('in_image') + '/compressed')
+
+    'detection_rect':
+        no description given
+        (default: '/perception/object_recognition/detection/rois0')
+
+    'tracked_rect':
+        no description given
+        (default: '/perception/object_recognition/detection/tracked/rois0')
+
+    'bytetrack_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_bytetrack') + '/config/bytetrack.param.yaml')
+
+    'bytetrack_visualizer_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_bytetrack') + '/config/bytetrack_visualizer.param.yaml')
+
+    'input/rois_number':
+        no description given
+        (default: '6')
+
+    'input/rois0':
+        no description given
+        (default: 'rois0')
+
+    'input/camera_info0':
+        no description given
+        (default: '/camera_info0')
+
+    'input/rois1':
+        no description given
+        (default: 'rois1')
+
+    'input/camera_info1':
+        no description given
+        (default: '/camera_info1')
+
+    'input/rois2':
+        no description given
+        (default: 'rois2')
+
+    'input/camera_info2':
+        no description given
+        (default: '/camera_info2')
+
+    'input/rois3':
+        no description given
+        (default: 'rois3')
+
+    'input/camera_info3':
+        no description given
+        (default: '/camera_info3')
+
+    'input/rois4':
+        no description given
+        (default: 'rois4')
+
+    'input/camera_info4':
+        no description given
+        (default: '/camera_info4')
+
+    'input/rois5':
+        no description given
+        (default: 'rois5')
+
+    'input/camera_info5':
+        no description given
+        (default: '/camera_info5')
+
+    'input/rois6':
+        no description given
+        (default: 'rois6')
+
+    'input/camera_info6':
+        no description given
+        (default: '/camera_info6')
+
+    'input/rois7':
+        no description given
+        (default: 'rois7')
+
+    'input/camera_info7':
+        no description given
+        (default: '/camera_info7')
+
+    'input/rois8':
+        no description given
+        (default: 'rois8')
+
+    'input/camera_info8':
+        no description given
+        (default: '/camera_info8')
+
+    'model_name':
+        options: `pointpainting`
+        (default: 'pointpainting')
+
+    'model_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_image_projection_based_fusion') + '/config/pointpainting.param.yaml')
+
+    'ml_package_param_path':
+        no description given
+        (default: LaunchConfig('model_path') + '/' + LaunchConfig('model_name') + '_ml_package.param.yaml')
+
+    'class_remapper_param_path':
+        no description given
+        (default: LaunchConfig('model_path') + '/detection_class_remapper.param.yaml')
+
+    'common_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_image_projection_based_fusion') + '/config/pointpainting_common.param.yaml')
+
+    'input_rois_number':
+        no description given
+        (default: LaunchConfig('input/rois_number'))
+
+    'input/image0':
+        no description given
+        (default: '/image_raw0')
+
+    'input/image1':
+        no description given
+        (default: '/image_raw1')
+
+    'input/image2':
+        no description given
+        (default: '/image_raw2')
+
+    'input/image3':
+        no description given
+        (default: '/image_raw3')
+
+    'input/image4':
+        no description given
+        (default: '/image_raw4')
+
+    'input/image5':
+        no description given
+        (default: '/image_raw5')
+
+    'input/image6':
+        no description given
+        (default: '/image_raw6')
+
+    'input/image7':
+        no description given
+        (default: '/image_raw7')
+
+    'input/image8':
+        no description given
+        (default: '/image_raw8')
+
+    'fusion_camera_ids':
+        no description given
+        (default: '[0]')
+
+    'segmentation_pointcloud_fusion_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_image_projection_based_fusion') + '/config/segmentation_pointcloud_fusion.param.yaml')
+
+    'input_map':
+        no description given
+        (default: '/map/pointcloud_map')
+
+    'output_clusters':
+        no description given
+        (default: 'clusters')
+
+    'ld_preload_value':
+        no description given
+        (default: '')
+
+    'container_package':
+        no description given
+        (default: 'rclcpp_components')
+
+    'container_executable':
+        no description given
+        (default: 'component_container')
+
+    'input/objects':
+        no description given
+        (default: 'labeled_clusters')
+
+    'input/clusters':
+        no description given
+        (default: 'clusters')
+
+    'output/clusters':
+        no description given
+        (default: 'labeled_clusters')
+
+    'low_intensity_cluster_filter_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_raindrop_cluster_filter') + '/config/low_intensity_cluster_filter.param.yaml')
+
+    'input':
+        no description given
+
+    'run_convex_hull_conversion':
+        no description given
+        (default: 'false')
+
+    'pipeline_ns':
+        pipeline namespace
+
+    'output_topic':
+        no description given
+        (default: '/perception/object_recognition/detection/irregular_object/clusters')
+
+    'output/short_range_objects':
+        no description given
+
+    'lidar_short_range_model_param_path':*
+        no description given
+        (default: FindPackageShare(pkg='autoware_lidar_centerpoint') + '/config')
+
+    'lidar_model_param_path':*
+        no description given
+        (default: FindPackageShare(pkg='autoware_bevfusion') + '/config')
+
+    'log_level':
+        no description given
+        (default: 'info')
+
+    'use_compressed_images':
+        use image_transport_decompressor
+        (default: 'false')
+
+    'bevfusion_camera_info0':
+        no description given
+        (default: '/sensing/camera/camera0/camera_info')
+
+    'bevfusion_camera_info1':
+        no description given
+        (default: '/sensing/camera/camera1/camera_info')
+
+    'bevfusion_camera_info2':
+        no description given
+        (default: '/sensing/camera/camera2/camera_info')
+
+    'bevfusion_camera_info3':
+        no description given
+        (default: '/sensing/camera/camera3/camera_info')
+
+    'bevfusion_camera_info4':
+        no description given
+        (default: '/sensing/camera/camera4/camera_info')
+
+    'bevfusion_camera_info5':
+        no description given
+        (default: '/sensing/camera/camera5/camera_info')
+
+    'bevfusion_image0':
+        no description given
+        (default: '/sensing/camera/camera0/image_rect_color')
+
+    'bevfusion_image1':
+        no description given
+        (default: '/sensing/camera/camera1/image_rect_color')
+
+    'bevfusion_image2':
+        no description given
+        (default: '/sensing/camera/camera2/image_rect_color')
+
+    'bevfusion_image3':
+        no description given
+        (default: '/sensing/camera/camera3/image_rect_color')
+
+    'bevfusion_image4':
+        no description given
+        (default: '/sensing/camera/camera4/image_rect_color')
+
+    'bevfusion_image5':
+        no description given
+        (default: '/sensing/camera/camera5/image_rect_color')
+
+    'model':
+        no description given
+        (default: 'model_128')
+
+    'base_name':*
+        no description given
+        (default: 'vlp-16')
+
+    'onnx_file':
+        no description given
+        (default: LaunchConfig('data_path') + '/lidar_apollo_instance_segmentation/' + LaunchConfig('base_name') + '.onnx')
+
+    'target_frame':
+        no description given
+        (default: 'base_link')
+
+    'precision':
+        no description given
+        (default: 'fp32')
+
+    'output/cluster_objects':
+        no description given
+
+    'object_sorter_param_path':
+        no description given
+        (default: LaunchConfig('object_recognition_detection_object_sorter_radar_param_path'))
+
+    'radar_lanelet_filtering_range_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_detected_object_validation') + '/config/object_lanelet_filter.param.yaml')
+
+    'vector_map_topic':
+        no description given
+        (default: '/map/vector_map')
+
+    'input/object':
+        no description given
+        (default: 'in_objects')
+
+    'output/object':
+        no description given
+        (default: 'out_objects')
+
+    'filtering_range_param':
+        no description given
+        (default: FindPackageShare(pkg='autoware_detected_object_validation') + '/config/object_lanelet_filter.param.yaml')
+
+    'bevdet_model_name':
+        no description given
+        (default: 'bevdet_one_lt_d')
+
+    'bevdet_model_path':
+        no description given
+        (default: LaunchConfig('data_path') + '/tensorrt_bevdet')
+
+    'input/img_front_left':
+        no description given
+        (default: '/nuscenes/CAM_FRONT_LEFT/image')
+
+    'input/img_front':
+        no description given
+        (default: '/nuscenes/CAM_FRONT/image')
+
+    'input/img_front_right':
+        no description given
+        (default: '/nuscenes/CAM_FRONT_RIGHT/image')
+
+    'input/img_back_left':
+        no description given
+        (default: '/nuscenes/CAM_BACK_LEFT/image')
+
+    'input/img_back':
+        no description given
+        (default: '/nuscenes/CAM_BACK/image')
+
+    'input/img_back_right':
+        no description given
+        (default: '/nuscenes/CAM_BACK_RIGHT/image')
+
+    'output/boxes':
+        no description given
+        (default: '/bboxes')
+
+    'output/bboxes':
+        no description given
+        (default: '/debug/markers_boxes')
+
+    'input/img_front_left/camera_info':
+        no description given
+        (default: '/nuscenes/CAM_FRONT_LEFT/camera_info')
+
+    'input/img_front/camera_info':
+        no description given
+        (default: '/nuscenes/CAM_FRONT/camera_info')
+
+    'input/img_front_right/camera_info':
+        no description given
+        (default: '/nuscenes/CAM_FRONT_RIGHT/camera_info')
+
+    'input/img_back_left/camera_info':
+        no description given
+        (default: '/nuscenes/CAM_BACK_LEFT/camera_info')
+
+    'input/img_back/camera_info':
+        no description given
+        (default: '/nuscenes/CAM_BACK/camera_info')
+
+    'input/img_back_right/camera_info':
+        no description given
+        (default: '/nuscenes/CAM_BACK_RIGHT/camera_info')
+
+    'model_config':
+        no description given
+        (default: FindPackageShare(pkg='autoware_tensorrt_bevdet') + '/config/bevdet_r50_4dlongterm_depth.yaml')
+
+    'input/initial_objects':
+        no description given
+        (default: '/perception/object_recognition/detection/clustering/objects_with_feature')
+
+    'detection_by_tracker_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_detection_by_tracker') + '/config/detection_by_tracker.param.yaml')
+
+    'bbox_object_locator_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_image_object_locator') + '/config/bbox_object_locator.param.yaml')
+
+    'rois_ids':
+        no description given
+        (default: '[0, 1]')
+
+    'output/rois0/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/bbox_object_locator/rois0/objects')
+
+    'output/rois1/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/bbox_object_locator/rois1/objects')
+
+    'output/rois2/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/bbox_object_locator/rois2/objects')
+
+    'output/rois3/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/bbox_object_locator/rois3/objects')
+
+    'output/rois4/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/bbox_object_locator/rois4/objects')
+
+    'output/rois5/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/bbox_object_locator/rois5/objects')
+
+    'output/rois6/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/bbox_object_locator/rois6/objects')
+
+    'output/rois7/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/bbox_object_locator/rois7/objects')
+
+    'input_topics':
+        no description given
+        (default: '['/input1', '/input2']')
+
+    'input_topic':
+        no description given
+        (default: '')
+
+    'input/detected_objects':
+        no description given
+        (default: '/perception/object_recognition/detection/objects')
+
+    'obstacle_pointcloud_based_validator_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_detected_object_validation') + '/config/obstacle_pointcloud_based_validator.param.yaml')
+
+    'input/laserscan':
+        no description given
+        (default: '/perception/occupancy_grid_map/virtual_scan/laserscan')
+
+    'input/occupancy_grid_map':
+        no description given
+        (default: '/perception/object_recognition/detection/validation/occupancy_grid_based/single_frame_occupancy_grid_map')
+
+    'occupancy_grid_based_validator_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_detected_object_validation') + '/config/occupancy_grid_based_validator_param_path.param.yaml')
+
+    'far_object_merger_sync_queue_size':
+        no description given
+        (default: '20')
+
+    'input/lidar_ml/objects':
+        no description given
+
+    'input/lidar_rule/objects':
+        no description given
+
+    'input/radar/objects':
+        no description given
+
+    'input/radar_far/objects':
+        no description given
+
+    'input/detection_by_tracker/objects':
+        no description given
+
+    'alpha_merger_priority_mode':
+        no description given
+        (default: '0')
+
+    'input/object0':
+        no description given
+        (default: 'object0')
+
+    'input/object1':
+        no description given
+        (default: 'object1')
+
+    'priority_mode':
+        0: Object0, 1: Object1, 2: Confidence
+        (default: '2')
+
+    'data_association_matrix_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_object_merger') + '/config/data_association_matrix.param.yaml')
+
+    'distance_threshold_list_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_object_merger') + '/config/overlapped_judge.param.yaml')
+
+    'object_association_merger_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_object_merger') + '/config/object_association_merger.param.yaml')
+
+    'input/radars':
+        no description given
+        (default: '~/input/radars')
+
+    'object_recognition_tracking_object_merger_data_association_matrix_param_path':
+        association param file for radar and lidar object merger
+
+    'object_recognition_tracking_object_merger_node_param_path':
+        node param file for radar and lidar object merger
+
+    'publish_merged_objects':
+        no description given
+
+    'input/merged_detection/channel':
+        no description given
+        (default: 'detected_objects')
+
+    'input/merged_detection/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/objects')
+
+    'input/lidar_dnn/channel':
+        no description given
+        (default: 'lidar_' + LaunchConfig('lidar_detection_model_type'))
+
+    'input/lidar_dnn/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/' + LaunchConfig('lidar_detection_model_type') + '/objects')
+
+    'input/lidar_dnn_validated/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/' + LaunchConfig('lidar_detection_model_type') + '/validation/objects')
+
+    'input/lidar_dnn_short_range/channel':
+        no description given
+        (default: 'lidar_' + LaunchConfig('lidar_short_range_detection_model_type'))
+
+    'input/lidar_dnn_short_range/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/' + LaunchConfig('lidar_short_range_detection_model_type') + '/objects')
+
+    'input/camera_lidar_rule_detector/channel':
+        no description given
+        (default: 'camera_lidar_fusion')
+
+    'input/camera_lidar_rule_detector/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/clustering/camera_lidar_fusion/objects')
+
+    'input/irregular_object_detector/channel':
+        no description given
+        (default: 'camera_lidar_fusion_irregular')
+
+    'input/irregular_object_detector/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/irregular_object/objects')
+
+    'input/tracker_based_detector/channel':
+        no description given
+        (default: 'detection_by_tracker')
+
+    'input/tracker_based_detector/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/detection_by_tracker/objects')
+
+    'input/radar/channel':
+        no description given
+        (default: 'radar')
+
+    'input/radar/far_objects':
+        no description given
+        (default: '/perception/object_recognition/detection/radar/far_objects')
+
+    'input/radar/tracked_objects':
+        no description given
+        (default: '/sensing/radar/tracked_objects')
+
+    'input/camera_only/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/camera_only/objects')
+
+    'input/camera_only/channel':
+        no description given
+        (default: 'camera_streampetr')
+
+    'input/camera_vru/channel':
+        no description given
+        (default: 'camera_vru')
+
+    'input/camera_vru/objects':
+        no description given
+        (default: '/perception/object_recognition/detection/camera_vru/objects')
+
+    'output/merged_objects':
+        no description given
+        (default: LaunchConfig('ns') + '/merged_objects')
+
+    'input/detection01/objects':
+        no description given
+        (default: 'input/objects01')
+
+    'input/detection02/objects':
+        no description given
+        (default: 'input/objects02')
+
+    'input/detection03/objects':
+        no description given
+        (default: 'input/objects03')
+
+    'input/detection04/objects':
+        no description given
+        (default: 'input/objects04')
+
+    'input/detection05/objects':
+        no description given
+        (default: 'input/objects05')
+
+    'input/detection06/objects':
+        no description given
+        (default: 'input/objects06')
+
+    'input/detection07/objects':
+        no description given
+        (default: 'input/objects07')
+
+    'input/detection08/objects':
+        no description given
+        (default: 'input/objects08')
+
+    'input/detection09/objects':
+        no description given
+        (default: 'input/objects09')
+
+    'input/detection10/objects':
+        no description given
+        (default: 'input/objects10')
+
+    'input/detection11/objects':
+        no description given
+        (default: 'input/objects11')
+
+    'input/detection12/objects':
+        no description given
+        (default: 'input/objects12')
+
+    'input/detection01/channel':
+        no description given
+        (default: 'none')
+
+    'input/detection02/channel':
+        no description given
+        (default: 'none')
+
+    'input/detection03/channel':
+        no description given
+        (default: 'none')
+
+    'input/detection04/channel':
+        no description given
+        (default: 'none')
+
+    'input/detection05/channel':
+        no description given
+        (default: 'none')
+
+    'input/detection06/channel':
+        no description given
+        (default: 'none')
+
+    'input/detection07/channel':
+        no description given
+        (default: 'none')
+
+    'input/detection08/channel':
+        no description given
+        (default: 'none')
+
+    'input/detection09/channel':
+        no description given
+        (default: 'none')
+
+    'input/detection10/channel':
+        no description given
+        (default: 'none')
+
+    'input/detection11/channel':
+        no description given
+        (default: 'none')
+
+    'input/detection12/channel':
+        no description given
+        (default: 'none')
+
+    'tracker_setting_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_multi_object_tracker') + '/config/multi_object_tracker_node.param.yaml')
+
+    'input_channels_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_multi_object_tracker') + '/config/input_channels.param.yaml')
+
+    'input/main_object':
+        no description given
+        (default: 'main_object')
+
+    'input/sub_object':
+        no description given
+        (default: 'sub_object')
+
+    'merge_options_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_tracking_object_merger') + '/config/decorative_tracker_merger_policy.param.yaml')
+
+    'node_param_file_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_tracking_object_merger') + '/config/decorative_tracker_merger.param.yaml')
+
+    'prediction_model_type':
+        prediction model type. Valid choices are: ['map_based', 'simpl']
+        (default: 'map_based')
+
+    'traffic_signals_topic':
+        no description given
+        (default: '/perception/traffic_light_recognition/traffic_signals')
+
+    'input/vector_map':
+        no description given
+        (default: '/map/vector_map')
+
+    'enable_image_decompressor':
+        enable image decompressor
+        (default: 'true')
+
+    'fusion_only':
+        no description given
+
+    'camera_namespaces':
+        no description given
+
+    'use_high_accuracy_detection':
+        no description given
+
+    'high_accuracy_detection_type':
+        no description given
+
+    'whole_image_detection/model_path':
+        no description given
+
+    'whole_image_detection/label_path':
+        no description given
+
+    'whole_image_detection/yolox_roi_label_remap_path':
+        no description given
+
+    'fine_detection/model_path':
+        no description given
+
+    'fine_detection/label_path':
+        no description given
+
+    'classification/car/model_path':
+        no description given
+
+    'classification/car/label_path':
+        no description given
+
+    'classification/lamp_recognizer_ml_param_path':
+        no description given
+
+    'classification/pedestrian/model_path':
+        no description given
+
+    'classification/pedestrian/label_path':
+        no description given
+
+    'classification/pedestrian/classifier_type':
+        no description given
+
+    'classification/car/classifier_type':
+        no description given
+
+    'input/route':
+        input route topic
+        (default: '/planning/mission_planning/route')
+
+    'internal/traffic_signals':
+        topic from traffic_light_multi_camera_fusion
+        (default: '/perception/traffic_light_recognition/internal/traffic_signals')
+
+    'external/traffic_signals':
+        topic from V2X
+        (default: '/perception/traffic_light_recognition/external/traffic_signals')
+
+    'judged/traffic_signals':
+        topic from traffic_light_arbiter
+        (default: '/perception/traffic_light_recognition/judged/traffic_signals')
+
+    'output/traffic_signals':
+        final output topic as traffic light recognition
+        (default: '/perception/traffic_light_recognition/traffic_signals')
+
+    'input/cloud':
+        no description given
+
+    'perception_traffic_signals':
+        no description given
+        (default: '/internal/traffic_signals')
+
+    'external_traffic_signals':
+        no description given
+        (default: '/external/traffic_signals')
+
+    'output_traffic_signals':
+        no description given
+        (default: '/traffic_light_arbiter/traffic_signals')
+
+    'input/traffic_signals':
+        no description given
+        (default: 'judged/traffic_signals')
+
+    'input/tl_state':
+        no description given
+        (default: 'traffic_signals')
+
+    'output/traffic_light':
+        no description given
+        (default: 'traffic_signals/markers')
+
+    'module_preset':
+        no description given
+        (default: 'default')
+
+    'planning_input_objects_topic_name':
+        no description given
+        (default: '/perception/object_recognition/objects')
+
+    'planning_input_pointcloud_topic_name':
+        no description given
+        (default: '/perception/obstacle_segmentation/pointcloud')
+
+    'mission_planner_param_path':
+        no description given
+
+    'freespace_planner_param_path':
+        no description given
+
+    'planning_validator_param_path':
+        no description given
+
+    'planning_validator_latency_checker_param_path':
+        no description given
+
+    'planning_validator_trajectory_checker_param_path':
+        no description given
+
+    'planning_validator_intersection_collision_checker_param_path':
+        no description given
+
+    'planning_validator_rear_collision_checker_param_path':
+        no description given
+
+    'launch_remaining_distance_time_calculator':
+        no description given
+        (default: 'false')
+
+    'input_objects_topic_name':
+        no description given
+
+    'input_pointcloud_topic_name':
+        no description given
+
+    'map_topic_name':
+        no description given
+        (default: '/map/vector_map')
+
+    'modified_goal_topic_name':
+        no description given
+        (default: '/planning/scenario_planning/modified_goal')
+
+    'route_topic_name':
+        no description given
+        (default: '/planning/route')
+
+    'route_state_topic_name':
+        no description given
+        (default: '/planning/route_state')
+
+    'clear_route_service_name':
+        no description given
+        (default: '/planning/clear_route')
+
+    'set_lanelet_route_service_name':
+        no description given
+        (default: '/planning/set_lanelet_route')
+
+    'set_waypoint_route_service_name':
+        no description given
+        (default: '/planning/set_waypoint_route')
+
+    'visualization_topic_name':
+        no description given
+        (default: '/planning/mission_planning/route_marker')
+
+    'echo_back_goal_pose_topic_name':
+        no description given
+        (default: '/planning/mission_planning/echo_back_goal_pose')
+
+    'input_lane_driving_trajectory':
+        no description given
+
+    'input_parking_trajectory':
+        no description given
+
+    'input_lanelet_map':
+        no description given
+
+    'input_route':
+        no description given
+
+    'input_operation_mode_state':
+        no description given
+
+    'is_parking_completed':
+        no description given
+
+    'output_scenario':
+        no description given
+
+    'output_trajectory':
+        no description given
+
+    'input_velocity_limit_from_api':
+        no description given
+        (default: '/planning/scenario_planning/max_velocity_default')
+
+    'input_velocity_limit_from_internal':
+        no description given
+        (default: '/planning/scenario_planning/max_velocity_candidates')
+
+    'input_velocity_limit_clear_command_from_internal':
+        no description given
+        (default: '/planning/scenario_planning/clear_velocity_limit')
+
+    'output_velocity_limit_from_selector':
+        no description given
+        (default: '/planning/scenario_planning/max_velocity')
+
+    'output_debug_string':
+        no description given
+        (default: '/planning/scenario_planning/external_velocity_limit_selector/debug')
+
+    'hazard_lights_selector_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_hazard_lights_selector') + '/config/hazard_lights_selector.param.yaml')
+
+    'input_hazard_lights_cmd_from_path_planner':
+        no description given
+        (default: '/planning/behavior_path_planner/hazard_lights_cmd')
+
+    'input_hazard_lights_cmd_from_mrm_operator':
+        no description given
+        (default: '/system/hazard_lights_cmd')
+
+    'output_hazard_lights_cmd':
+        no description given
+        (default: '/planning/hazard_lights_cmd')
+
+    'input_route_topic_name':
+        no description given
+        (default: '/planning/mission_planning/route')
+
+    'input_traffic_light_topic_name':
+        no description given
+        (default: '/perception/traffic_light_recognition/traffic_signals')
+
+    'input_virtual_traffic_light_topic_name':
+        no description given
+        (default: '/awapi/tmp/virtual_traffic_light_states')
+
+    'input_vector_map_topic_name':
+        no description given
+        (default: '/map/vector_map')
+
+    'input_pointcloud_map_topic_name':
+        no description given
+        (default: '/map/pointcloud_map')
+
+    'behavior_path_planner_type':
+        'behavior_path_planner' or 'path_generator'
+        (default: 'behavior_path_planner')
+
+    'launch_static_obstacle_avoidance':
+        no description given
+        (default: 'true')
+
+    'launch_avoidance_by_lane_change_module':
+        no description given
+        (default: 'true')
+
+    'launch_dynamic_obstacle_avoidance':
+        no description given
+        (default: 'true')
+
+    'launch_lane_change_right_module':
+        no description given
+        (default: 'true')
+
+    'launch_lane_change_left_module':
+        no description given
+        (default: 'true')
+
+    'launch_external_request_lane_change_right_module':
+        no description given
+        (default: 'true')
+
+    'launch_external_request_lane_change_left_module':
+        no description given
+        (default: 'true')
+
+    'launch_goal_planner_module':
+        no description given
+        (default: 'true')
+
+    'launch_start_planner_module':
+        no description given
+        (default: 'true')
+
+    'launch_sampling_planner_module':
+        no description given
+        (default: 'true')
+
+    'launch_side_shift_module':
+        no description given
+        (default: 'true')
+
+    'launch_bidirectional_traffic_module':
+        no description given
+        (default: 'true')
+
+    'launch_crosswalk_module':
+        no description given
+        (default: 'true')
+
+    'launch_walkway_module':
+        no description given
+        (default: 'true')
+
+    'launch_traffic_light_module':
+        no description given
+        (default: 'true')
+
+    'launch_intersection_module':
+        no description given
+        (default: 'true')
+
+    'launch_roundabout_module':
+        no description given
+        (default: 'true')
+
+    'launch_merge_from_private_module':
+        no description given
+        (default: 'true')
+
+    'launch_blind_spot_module':
+        no description given
+        (default: 'true')
+
+    'launch_detection_area_module':
+        no description given
+        (default: 'true')
+
+    'launch_virtual_traffic_light_module':
+        no description given
+        (default: 'true')
+
+    'launch_no_stopping_area_module':
+        no description given
+        (default: 'true')
+
+    'launch_stop_line_module':
+        no description given
+        (default: 'true')
+
+    'launch_occlusion_spot_module':
+        no description given
+        (default: 'true')
+
+    'launch_speed_bump_module':
+        no description given
+        (default: 'true')
+
+    'launch_no_drivable_lane_module':
+        no description given
+        (default: 'true')
+
+    'launch_module_list_end':
+        no description given
+        (default: '""]')
+
+    'behavior_path_planner_launch_modules':
+        no description given
+        (default: '[')
+
+    'behavior_velocity_planner_launch_modules':
+        no description given
+        (default: '[')
+
+    'interface_input_topic':
+        no description given
+        (default: '/planning/scenario_planning/lane_driving/behavior_planning/path')
+
+    'interface_output_topic':
+        no description given
+        (default: '/planning/scenario_planning/lane_driving/trajectory')
+
+    'launch_obstacle_stop_module':
+        no description given
+        (default: 'true')
+
+    'launch_obstacle_slow_down_module':
+        no description given
+        (default: 'true')
+
+    'launch_obstacle_cruise_module':
+        no description given
+        (default: 'true')
+
+    'launch_dynamic_obstacle_stop_module':
+        no description given
+        (default: 'true')
+
+    'launch_out_of_lane_module':
+        no description given
+        (default: 'true')
+
+    'launch_obstacle_velocity_limiter_module':
+        no description given
+        (default: 'true')
+
+    'launch_run_out_module':
+        no description given
+        (default: 'true')
+
+    'launch_boundary_departure_prevention_module':
+        no description given
+        (default: 'true')
+
+    'launch_road_user_stop_module':
+        no description given
+        (default: 'true')
+
+    'motion_velocity_planner_launch_modules':
+        no description given
+        (default: '[')
+
+    'diffusion_planner_param_path':
+        no description given
+
+    'trajectory_modifier_param_path':
+        no description given
+
+    'trajectory_optimizer_param_path':
+        no description given
+
+    'jerk_filtered_smoother_param_path':
+        no description given
+
+    'velocity_smoother_param_path':
+        no description given
+
+    'common_smoother_param_path':
+        no description given
+
+    'elastic_band_param_path':
+        no description given
+
+    'trajectory_point_fixer_param_path':
+        no description given
+
+    'trajectory_extender_param_path':
+        no description given
+
+    'trajectory_spline_smoother_param_path':
+        no description given
+
+    'trajectory_qp_smoother_param_path':
+        no description given
+
+    'trajectory_velocity_optimizer_param_path':
+        no description given
+
+    'trajectory_kinematic_feasibility_enforcer_param_path':
+        no description given
+
+    'trajectory_mpt_optimizer_param_path':
+        no description given
+
+    'output_trajectories':
+        no description given
+        (default: '~/output/trajectories')
+
+    'output_predicted_objects':
+        no description given
+        (default: '~/output/predicted_objects')
+
+    'debug/output_traffic_signal':
+        no description given
+        (default: '~/output/debug/traffic_signal')
+
+    'input_acceleration':
+        no description given
+        (default: '~/input/acceleration')
+
+    'input_traffic_signals':
+        no description given
+        (default: '~/input/traffic_signals')
+
+    'input_tracked_objects':
+        no description given
+        (default: '~/input/tracked_objects')
+
+    'input_vector_map':
+        no description given
+        (default: '~/input/vector_map')
+
+    'input_turn_indicators':
+        no description given
+        (default: '~/input/turn_indicators')
+
+    'input_candidate_trajectories':
+        no description given
+        (default: '/planning/diffusion_planner/candidate_trajectories')
+
+    'output_candidate_trajectories':
+        no description given
+        (default: '~/output/candidate_trajectories')
+
+    'input_traj':
+        no description given
+        (default: '/planning/diffusion_planner/trajectory')
+
+    'input_trajectories':
+        no description given
+        (default: '/planning/diffusion_planner/candidate_trajectories')
+
+    'input_external_velocity_limit_mps':
+        no description given
+        (default: '/planning/scenario_planning/max_velocity_default')
+
+    'output_traj':
+        no description given
+        (default: '/planning/trajectory')
+
+    'output_current_velocity_limit_mps':
+        no description given
+        (default: '/planning/scenario_planning/current_max_velocity')
+
+    'launch_latency_checker':
+        no description given
+        (default: 'true')
+
+    'launch_trajectory_checker':
+        no description given
+        (default: 'true')
+
+    'launch_intersection_collision_checker':
+        no description given
+        (default: 'true')
+
+    'launch_rear_collision_checker':
+        no description given
+        (default: 'true')
+
+    'launch_modules_list_end':
+        no description given
+        (default: '""]')
+
+    'planning_validator_launch_modules':
+        no description given
+        (default: '[')
+
+    'input_trajectory_topic_name':
+        no description given
+        (default: '/planning/scenario_planning/velocity_smoother/trajectory')
+
+    'input/odometry':
+        no description given
+        (default: '/localization/kinematic_state')
+
+    'input/acceleration':
+        no description given
+        (default: '/localization/acceleration')
+
+    'input/trajectory':
+        no description given
+        (default: '/planning/trajectory')
+
+    'input/reference_trajectory':
+        no description given
+        (default: '/planning/scenario_planning/lane_driving/motion_planning/path_optimizer/trajectory')
+
+    'input/modified_goal':
+        no description given
+        (default: '/planning/scenario_planning/modified_goal')
+
+    'input/map_topic':
+        no description given
+        (default: '/map/vector_map')
+
+    'input/route_topic':
+        no description given
+        (default: '/planning/mission_planning/route')
+
+    'input/turn_indicators_status':
+        no description given
+        (default: '/vehicle/status/turn_indicators_status')
+
+    'input/steering_status':
+        no description given
+        (default: '/vehicle/status/steering_status')
+
+    'remaining_distance_time_calculator_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_remaining_distance_time_calculator') + '/config/remaining_distance_time_calculator.param.yaml')
+
+    'input_scenario':
+        no description given
+        (default: '/planning/scenario_planning/scenario')
+
+    'lateral_controller_mode':
+        no description given
+        (default: 'mpc')
+
+    'longitudinal_controller_mode':
+        no description given
+        (default: 'pid')
+
+    'use_individual_control_param':
+        no description given
+        (default: 'false')
+
+    'use_aeb_autoware_state_check':
+        no description given
+        (default: 'true')
+
+    'control_input_objects_topic_name':
+        no description given
+        (default: '/perception/object_recognition/objects')
+
+    'control_input_pointcloud_topic_name':
+        no description given
+        (default: '/perception/obstacle_segmentation/pointcloud')
+
+    'trajectory_follower_mode':
+        no description given
+        (default: 'trajectory_follower_node')
+
+    'launch_external_cmd_selector':
+        no description given
+        (default: 'true')
+
+    'launch_external_cmd_converter':
+        no description given
+        (default: 'true')
+
+    'launch_lane_departure_checker':
+        no description given
+        (default: 'true')
+
+    'launch_control_validator':
+        no description given
+        (default: 'true')
+
+    'launch_autonomous_emergency_braking':
+        no description given
+        (default: 'true')
+
+    'launch_collision_detector':
+        no description given
+        (default: 'true')
+
+    'launch_obstacle_collision_checker':
+        no description given
+        (default: 'false')
+
+    'launch_predicted_path_checker':
+        no description given
+        (default: 'false')
+
+    'launch_control_evaluator':
+        no description given
+        (default: 'true')
+
+    'vehicle_param_file':
+        no description given
+
+    'nearest_search_param_path':
+        no description given
+
+    'trajectory_follower_node_param_path':
+        no description given
+
+    'lat_controller_param_path':
+        no description given
+
+    'lon_controller_param_path':
+        no description given
+
+    'vehicle_cmd_gate_param_path':
+        no description given
+
+    'lane_departure_checker_param_path':
+        no description given
+
+    'control_validator_param_path':
+        no description given
+
+    'operation_mode_transition_manager_param_path':
+        no description given
+
+    'shift_decider_param_path':
+        no description given
+
+    'obstacle_collision_checker_param_path':
+        no description given
+
+    'external_cmd_selector_param_path':
+        no description given
+
+    'aeb_param_path':
+        no description given
+
+    'predicted_path_checker_param_path':
+        no description given
+
+    'collision_detector_param_path':
+        no description given
+
+    'control_command_gate_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_control_command_gate') + '/config/default.param.yaml')
+
+    'output_control_cmd':
+        no description given
+        (default: '/control/command/control_cmd')
+
+    'output_gear_cmd':
+        no description given
+        (default: '/control/command/gear_cmd')
+
+    'output_turn_indicators_cmd':
+        no description given
+        (default: '/control/command/turn_indicators_cmd')
+
+    'output/control':
+        no description given
+        (default: '/control/command/control_cmd')
+
+    'output/gear':
+        no description given
+        (default: '/control/command/gear_cmd')
+
+    'output/turn_indicators':
+        no description given
+        (default: '/control/command/turn_indicators_cmd')
+
+    'output/hazard_lights':
+        no description given
+        (default: '/control/command/hazard_lights_cmd')
+
+    'inputs/main/control':
+        no description given
+        (default: '/control/trajectory_follower/control_cmd')
+
+    'inputs/main/gear':
+        no description given
+        (default: '/control/shift_decider/gear_cmd')
+
+    'inputs/main/hazard_lights':
+        no description given
+        (default: '/planning/hazard_lights_cmd')
+
+    'inputs/main/turn_indicators':
+        no description given
+        (default: '/planning/turn_indicators_cmd')
+
+    'target_container':
+        no description given
+
+    'service/select_external_command':
+        no description given
+        (default: '~/select_external_command')
+
+    'output/current_selector_mode':
+        no description given
+        (default: '~/current_selector_mode')
+
+    'input/local/pedals_cmd':
+        no description given
+        (default: '/external/local/pedals_cmd')
+
+    'input/local/steering_cmd':
+        no description given
+        (default: '/external/local/steering_cmd')
+
+    'input/local/heartbeat':
+        no description given
+        (default: '/external/local/heartbeat')
+
+    'input/local/gear_cmd':
+        no description given
+        (default: '/external/local/gear_cmd')
+
+    'input/local/turn_indicators_cmd':
+        no description given
+        (default: '/external/local/turn_indicators_cmd')
+
+    'input/local/hazard_lights_cmd':
+        no description given
+        (default: '/external/local/hazard_lights_cmd')
+
+    'input/remote/pedals_cmd':
+        no description given
+        (default: '/external/remote/pedals_cmd')
+
+    'input/remote/steering_cmd':
+        no description given
+        (default: '/external/remote/steering_cmd')
+
+    'input/remote/heartbeat':
+        no description given
+        (default: '/external/remote/heartbeat')
+
+    'input/remote/gear_cmd':
+        no description given
+        (default: '/external/remote/gear_cmd')
+
+    'input/remote/turn_indicators_cmd':
+        no description given
+        (default: '/external/remote/turn_indicators_cmd')
+
+    'input/remote/hazard_lights_cmd':
+        no description given
+        (default: '/external/remote/hazard_lights_cmd')
+
+    'output/pedals_cmd':
+        no description given
+        (default: '/external/selected/pedals_cmd')
+
+    'output/steering_cmd':
+        no description given
+        (default: '/external/selected/steering_cmd')
+
+    'output/heartbeat':
+        no description given
+        (default: '/external/selected/heartbeat')
+
+    'output/gear_cmd':
+        no description given
+        (default: '/external/selected/gear_cmd')
+
+    'output/turn_indicators_cmd':
+        no description given
+        (default: '/external/selected/turn_indicators_cmd')
+
+    'output/hazard_lights_cmd':
+        no description given
+        (default: '/external/selected/hazard_lights_cmd')
+
+    'csv_path_accel_map':
+        csv file path for accel map
+        (default: FindPackageShare(pkg='autoware_raw_vehicle_cmd_converter') + '/data/default/accel_map.csv')
+
+    'csv_path_brake_map':
+        csv file path for brake map
+        (default: FindPackageShare(pkg='autoware_raw_vehicle_cmd_converter') + '/data/default/brake_map.csv')
+
+    'ref_vel_gain':
+        gain for external command accel
+        (default: '3.0')
+
+    'timer_rate':
+        timer's update rate
+        (default: '10.0')
+
+    'wait_for_first_topic':
+        disable topic disruption detection until subscribing first topics
+        (default: 'true')
+
+    'control_command_timeout':
+        external control command timeout
+        (default: '1.0')
+
+    'emergency_stop_timeout':
+        emergency stop timeout for external heartbeat
+        (default: '3.0')
+
+    'in/pedals_cmd':
+        no description given
+        (default: '/external/selected/pedals_cmd')
+
+    'in/steering_cmd':
+        no description given
+        (default: '/external/selected/steering_cmd')
+
+    'in/gear_cmd':
+        no description given
+        (default: '/external/selected/gear_cmd')
+
+    'in/heartbeat':
+        no description given
+        (default: '/external/selected/heartbeat')
+
+    'in/current_gate_mode':
+        no description given
+        (default: '/control/current_gate_mode')
+
+    'in/odometry':
+        no description given
+        (default: '/localization/kinematic_state')
+
+    'out/control_cmd':
+        no description given
+        (default: '/external/selected/control_cmd')
+
+    'input/behavior_path':
+        no description given
+        (default: '/planning/scenario_planning/lane_driving/behavior_planning/path_with_lane_id')
+
+    'scenario_simulation':
+        no description given
+        (default: 'false')
+
+    'launch_default_adapi':
+        no description given
+        (default: 'true')
+
+    'launch_rviz_adaptors':
+        no description given
+        (default: 'true')
+
+    'launch_evaluation_adapter':
+        no description given
+        (default: 'false')
+
+    'default_adapi_param_path':
+        no description given
+        (default: FindPackageShare(pkg='autoware_default_adapi_universe') + '/config/default_adapi.param.yaml')
+
+    'rviz_initial_pose_auto_fix_target':
+        no description given
+        (default: 'pointcloud_map')
+
+* argument(s) which are only used if specific conditions occur

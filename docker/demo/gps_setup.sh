@@ -1,11 +1,17 @@
 #!/bin/bash
 # GPS Testing Docker Setup Script
-# This script prepares and runs the Husarion UGV with GPS in Docker
+# This script prepares and runs Husarion UGV GPS simulation + Autoware in Docker
 
 set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR"
+
+COMPOSE_ARGS=(
+    -f compose.simulation.gps.yaml
+    -f compose.perception.bridge.yaml
+    -f compose.autoware.yaml
+)
 
 # Color codes for output
 RED='\033[0;31m'
@@ -50,24 +56,50 @@ echo -e "${YELLOW}Creating GPS logs directory...${NC}"
 mkdir -p ./gps_logs
 echo -e "${GREEN}✓ GPS logs directory created at ./gps_logs${NC}\n"
 
+# Create Autoware data directories
+echo -e "${YELLOW}Creating Autoware directories...${NC}"
+mkdir -p ./autoware_map ./autoware_data
+echo -e "${GREEN}✓ Autoware directories ready (./autoware_map, ./autoware_data)${NC}\n"
+
+# Select DDS network interface for Autoware
+if [[ -z "${CYCLONE_IFACE:-}" ]]; then
+    CYCLONE_IFACE=$(ip route get 1.1.1.1 2>/dev/null | sed -n 's/.* dev \([^ ]*\).*/\1/p' | head -n 1)
+fi
+
+if [[ -n "${CYCLONE_IFACE:-}" ]]; then
+    export CYCLONE_IFACE
+    echo -e "${GREEN}✓ CYCLONE_IFACE=${CYCLONE_IFACE}${NC}\n"
+else
+    echo -e "${YELLOW}⚠ Warning: Could not auto-detect CYCLONE_IFACE. Using compose default.${NC}\n"
+fi
+
 # Cleanup old containers (if any)
 echo -e "${YELLOW}Cleaning up old containers...${NC}"
-docker compose -f compose.simulation.gps.yaml down 2>/dev/null || true
+docker compose "${COMPOSE_ARGS[@]}" down 2>/dev/null || true
 echo -e "${GREEN}✓ Cleanup complete${NC}\n"
 
-# Pull latest images
+# Pull latest images (only non-build services)
 echo -e "${YELLOW}Pulling latest Docker images...${NC}"
 echo -e "${BLUE}(This may take a few minutes)${NC}"
-if docker compose -f compose.simulation.gps.yaml pull; then
+if docker compose "${COMPOSE_ARGS[@]}" pull husarion_ugv_gazebo rviz gps_monitor autoware_topic_bridge; then
     echo -e "${GREEN}✓ Docker images updated${NC}\n"
 else
     echo -e "${RED}✗ Failed to pull Docker images${NC}"
     exit 1
 fi
 
+# Build local Autoware image
+echo -e "${YELLOW}Building local Autoware image...${NC}"
+if docker compose "${COMPOSE_ARGS[@]}" build autoware; then
+    echo -e "${GREEN}✓ Autoware image built${NC}\n"
+else
+    echo -e "${RED}✗ Failed to build Autoware image${NC}"
+    exit 1
+fi
+
 # Start containers
 echo -e "${YELLOW}Starting containers...${NC}"
-if docker compose -f compose.simulation.gps.yaml up -d; then
+if docker compose "${COMPOSE_ARGS[@]}" up -d; then
     echo -e "${GREEN}✓ Containers started${NC}\n"
 else
     echo -e "${RED}✗ Failed to start containers${NC}"
@@ -85,7 +117,7 @@ echo -e "\r${GREEN}✓ Initialization complete${NC}\n"
 
 # Check container status
 echo -e "${YELLOW}Checking container status...${NC}"
-docker compose -f compose.simulation.gps.yaml ps
+docker compose "${COMPOSE_ARGS[@]}" ps
 
 echo -e "\n${GREEN}========================================${NC}"
 echo -e "${GREEN}Setup Complete!${NC}"
@@ -102,15 +134,21 @@ echo -e "${BLUE}View GPS logs:${NC}"
 echo "  tail -f ./gps_logs/gps_status.log"
 echo ""
 echo -e "${BLUE}Stop containers:${NC}"
-echo "  docker compose -f compose.simulation.gps.yaml down"
+echo "  docker compose ${COMPOSE_ARGS[*]} down"
 echo ""
 echo -e "${BLUE}View all ROS topics:${NC}"
 echo "  docker exec -it husarion_ugv_gazebo ros2 topic list"
 echo ""
-echo -e "${BLUE}View container logs:${NC}"
-echo "  docker compose -f compose.simulation.gps.yaml logs -f husarion_ugv_gazebo"
+echo -e "${BLUE}View simulation logs:${NC}"
+echo "  docker compose ${COMPOSE_ARGS[*]} logs -f husarion_ugv_gazebo"
 echo ""
-echo -e "${BLUE}Get container shell:${NC}"
+echo -e "${BLUE}View Autoware logs:${NC}"
+echo "  docker compose ${COMPOSE_ARGS[*]} logs -f autoware"
+echo ""
+echo -e "${BLUE}Get Autoware shell:${NC}"
+echo "  docker exec -it autoware_universe bash"
+echo ""
+echo -e "${BLUE}Get simulation shell:${NC}"
 echo "  docker exec -it husarion_ugv_gazebo bash"
 echo ""
-echo -e "${YELLOW}For detailed documentation, see GPS_DOCKER_GUIDE.md${NC}\n"
+echo -e "${YELLOW}For detailed documentation, see GPS_DOCKER_GUIDE.md and ../README_AUTOWARE_GPU_GPS.md${NC}\n"
