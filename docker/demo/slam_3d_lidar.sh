@@ -35,7 +35,7 @@ ros2 run rtabmap_odom icp_odometry --ros-args \
   -p use_sim_time:=true \
   -p frame_id:="${BASE_FRAME}" \
   -p odom_frame_id:="${ODOM_FRAME}" \
-  -p publish_tf:=true \
+  -p publish_tf:=false \
   -p wait_imu_to_init:=false \
   -p deskewing:=false \
   -r scan_cloud:="${LIDAR_TOPIC}" \

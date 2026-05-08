@@ -27,7 +27,7 @@ ros2 launch autoware_launch autoware.launch.xml \
   launch_perception:=true \
   base_frame:=panther/base_link \
   perception_mode:=camera_lidar_fusion \
-  lidar_detection_model:=clustering \
+  lidar_detection_model:=centerpoint \
   input/pointcloud:=/sensing/lidar/top/pointcloud_raw \
   image_number:=1 \
   image_raw0:=/sensing/camera/front/image_raw \
