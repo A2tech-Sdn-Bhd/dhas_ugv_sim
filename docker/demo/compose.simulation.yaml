@@ -6,6 +6,7 @@ x-common-config: &common-config
     - ROBOT_MODEL_NAME=${ROBOT_MODEL_NAME:-panther}
     - ROBOT_NAMESPACE=${ROBOT_NAMESPACE:-${ROBOT_MODEL_NAME:-panther}}
     - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+    - IGN_IP=127.0.0.1
 
 x-cpu-config: &cpu-config
   env_file: .env.cpu
