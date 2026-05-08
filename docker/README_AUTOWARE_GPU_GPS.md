@@ -114,6 +114,20 @@ ros2 topic hz /sensing/camera/front/image_raw
 ros2 topic list | grep -E "perception|object_recognition|detection|tracked"
 ```
 
+## 7) Camera + LiDAR fusion launch helper
+
+From `docker/demo`:
+
+```bash
+./run_autoware_camera_lidar_fusion.sh
+```
+
+This starts Autoware perception in `camera_lidar_fusion` mode with bridged topics:
+
+- `/sensing/lidar/top/pointcloud_raw`
+- `/sensing/camera/front/image_raw`
+- `/sensing/camera/front/camera_info`
+
 ## Troubleshooting
 
 - DDS binds `lo` only -> set `CYCLONE_IFACE` to real NIC (for example `wlo1`), recreate container.

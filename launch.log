@@ -1,50 +1,112 @@
-1778124120.0128069 [INFO] [launch]: All log files can be found below /root/.ros/log/2026-05-07-03-22-00-006879-a2tech-99
-1778124120.0130413 [INFO] [launch]: Default logging verbosity is set to INFO
-1778124140.2777033 [ERROR] [launch]: Caught exception in launch (see debug for traceback): [Errno 2] No such file or directory: '/autoware_data/ml_models/lidar_centerpoint/centerpoint_tiny_ml_package.param.yaml'
-1778124140.3525796 [WARNING] [launch_ros.actions.load_composable_nodes]: Abandoning wait for the 'pointcloud_container/_container/load_node' service, due to shutdown.
-1778124141.0544713 [INFO] [component_container_mt-1]: process started with pid [115]
-1778124141.0547178 [INFO] [component_container-2]: process started with pid [117]
-1778124141.0548098 [INFO] [shape_estimation_node-3]: process started with pid [119]
-1778124141.0548649 [INFO] [roi_cluster_fusion_node-4]: process started with pid [121]
-1778124141.0549121 [INFO] [low_intensity_cluster_filter_node-5]: process started with pid [123]
-1778124141.0549548 [INFO] [shape_estimation_node-6]: process started with pid [125]
-1778124141.0549910 [INFO] [detected_object_feature_remover_node-7]: process started with pid [127]
-1778124141.0550299 [INFO] [roi_pointcloud_fusion_node-8]: process started with pid [129]
-1778124141.0550764 [INFO] [detected_object_feature_remover_node-9]: process started with pid [131]
-1778124141.0600512 [component_container_mt-1] 1778124140.376993 [0] component_: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
-1778124141.0601635 [component_container_mt-1] [INFO] [1778124140.472058866] [pointcloud_container]: Load Library: /opt/autoware/autoware_probabilistic_occupancy_grid_map/lib/libpointcloud_based_occupancy_grid_map.so
-1778124141.0602026 [component_container_mt-1] [INFO] [1778124140.650333304] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::occupancy_grid_map::PointcloudBasedOccupancyGridMapNode>
-1778124141.0602312 [component_container_mt-1] [INFO] [1778124140.650422416] [pointcloud_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<autoware::occupancy_grid_map::PointcloudBasedOccupancyGridMapNode>
-1778124141.0602558 [component_container_mt-1] [ERROR] [1778124140.841848015] [pointcloud_container]: Component constructor threw an exception: cudaErrorInsufficientDriver (35)@/opt/autoware/autoware_cuda_utils/include/autoware/cuda_utils/cuda_unique_ptr.hpp#L44: CUDA driver version is insufficient for CUDA runtime version
-1778124141.0602860 [component_container_mt-1] [INFO] [1778124140.850137038] [pointcloud_container]: Load Library: /opt/autoware/autoware_pointcloud_preprocessor/lib/libpointcloud_preprocessor_filter.so
-1778124141.0612519 [INFO] [component_container_mt-1]: sending signal 'SIGINT' to process[component_container_mt-1]
-1778124141.0622878 [INFO] [component_container-2]: sending signal 'SIGINT' to process[component_container-2]
-1778124141.0633786 [INFO] [shape_estimation_node-3]: sending signal 'SIGINT' to process[shape_estimation_node-3]
-1778124141.0639079 [INFO] [roi_cluster_fusion_node-4]: sending signal 'SIGINT' to process[roi_cluster_fusion_node-4]
-1778124141.0646284 [INFO] [low_intensity_cluster_filter_node-5]: sending signal 'SIGINT' to process[low_intensity_cluster_filter_node-5]
-1778124141.0653629 [INFO] [shape_estimation_node-6]: sending signal 'SIGINT' to process[shape_estimation_node-6]
-1778124141.0660560 [INFO] [detected_object_feature_remover_node-7]: sending signal 'SIGINT' to process[detected_object_feature_remover_node-7]
-1778124141.0670929 [INFO] [roi_pointcloud_fusion_node-8]: sending signal 'SIGINT' to process[roi_pointcloud_fusion_node-8]
-1778124141.0678706 [INFO] [detected_object_feature_remover_node-9]: sending signal 'SIGINT' to process[detected_object_feature_remover_node-9]
-1778124141.0690198 [component_container_mt-1] [INFO] [1778124141.061524537] [rclcpp]: signal_handler(SIGINT/SIGTERM)
-1778124141.0707703 [roi_pointcloud_fusion_node-8] [INFO] [1778124141.067248764] [rclcpp]: signal_handler(SIGINT/SIGTERM)
-1778124141.2397099 [INFO] [component_container-2]: process has finished cleanly [pid 117]
-1778124141.2908633 [INFO] [detected_object_feature_remover_node-7]: process has finished cleanly [pid 127]
-1778124141.2916582 [INFO] [detected_object_feature_remover_node-9]: process has finished cleanly [pid 131]
-1778124141.2948525 [INFO] [low_intensity_cluster_filter_node-5]: process has finished cleanly [pid 123]
-1778124141.3858535 [WARNING] [launch_ros.actions.load_composable_nodes]: Abandoning wait for the '/perception/object_recognition/detection/clustering/euclidean_cluster_container/_container/load_node' service response, due to shutdown.
-1778124141.4616406 [WARNING] [launch_ros.actions.load_composable_nodes]: Abandoning wait for the 'pointcloud_container/_container/load_node' service response, due to shutdown.
-1778124141.5102856 [roi_pointcloud_fusion_node-8] terminate called after throwing an instance of 'rclcpp::exceptions::RCLError'
-1778124141.5105407 [roi_pointcloud_fusion_node-8]   what():  failed to create guard condition: the given context is not valid, either rcl_init() was not called or rcl_shutdown() was called., at ./src/rcl/guard_condition.c:67
-1778124141.5207503 [component_container_mt-1] [INFO] [1778124141.520390898] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::ApproximateDownsampleFilterComponent>
-1778124141.5210118 [component_container_mt-1] [INFO] [1778124141.520415198] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::BlockageDiagComponent>
-1778124141.5211115 [component_container_mt-1] [INFO] [1778124141.520418623] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::CropBoxFilterComponent>
-1778124141.5212040 [component_container_mt-1] [INFO] [1778124141.520421203] [pointcloud_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::CropBoxFilterComponent>
-1778124141.5223882 [component_container_mt-1] [ERROR] [1778124141.522201929] [pointcloud_container]: Component constructor threw an exception: failed to create guard condition: the given context is not valid, either rcl_init() was not called or rcl_shutdown() was called., at ./src/rcl/guard_condition.c:67
-1778124141.5971694 [WARNING] [launch_ros.actions.load_composable_nodes]: Abandoning wait for the 'pointcloud_container/_container/load_node' service response, due to shutdown.
-1778124141.6056957 [WARNING] [launch_ros.actions.load_composable_nodes]: Abandoning wait for the 'pointcloud_container/_container/load_node' service response, due to shutdown.
-1778124141.6509326 [ERROR] [roi_pointcloud_fusion_node-8]: process has died [pid 129, exit code -6, cmd '/opt/autoware/autoware_image_projection_based_fusion/lib/autoware_image_projection_based_fusion/roi_pointcloud_fusion_node --ros-args -r __node:=roi_pointcloud_fusion -r __ns:=/perception/object_recognition/detection/irregular_object -p use_sim_time:=True -p wheel_radius:=0.383 -p wheel_width:=0.235 -p wheel_base:=2.79 -p wheel_tread:=1.64 -p front_overhang:=1.0 -p rear_overhang:=1.1 -p left_overhang:=0.128 -p right_overhang:=0.128 -p vehicle_height:=2.5 -p max_steer_angle:=0.7 -p use_sim_time:=True -p wheel_radius:=0.383 -p wheel_width:=0.235 -p wheel_base:=2.79 -p wheel_tread:=1.64 -p front_overhang:=1.0 -p rear_overhang:=1.1 -p left_overhang:=0.128 -p right_overhang:=0.128 -p vehicle_height:=2.5 -p max_steer_angle:=0.7 --params-file /tmp/launch_params_kaavedvm --params-file /tmp/launch_params_tkvdvii3 -r input:=obstacle_segmentation/pointcloud -r output:=clusters'].
-1778124141.6766870 [ERROR] [roi_cluster_fusion_node-4]: process has died [pid 121, exit code -6, cmd '/opt/autoware/autoware_image_projection_based_fusion/lib/autoware_image_projection_based_fusion/roi_cluster_fusion_node --ros-args -r __node:=roi_cluster_fusion -r __ns:=/perception/object_recognition/detection/clustering/camera_lidar_fusion -p use_sim_time:=True -p wheel_radius:=0.383 -p wheel_width:=0.235 -p wheel_base:=2.79 -p wheel_tread:=1.64 -p front_overhang:=1.0 -p rear_overhang:=1.1 -p left_overhang:=0.128 -p right_overhang:=0.128 -p vehicle_height:=2.5 -p max_steer_angle:=0.7 -p use_sim_time:=True -p wheel_radius:=0.383 -p wheel_width:=0.235 -p wheel_base:=2.79 -p wheel_tread:=1.64 -p front_overhang:=1.0 -p rear_overhang:=1.1 -p left_overhang:=0.128 -p right_overhang:=0.128 -p vehicle_height:=2.5 -p max_steer_angle:=0.7 --params-file /tmp/launch_params_rlukfs8e --params-file /opt/autoware/autoware_launch/share/autoware_launch/config/perception/object_recognition/detection/image_projection_based_fusion/roi_cluster_fusion.param.yaml --params-file /opt/autoware/autoware_launch/share/autoware_launch/config/perception/object_recognition/detection/image_projection_based_fusion/fusion_common.param.yaml --params-file /tmp/launch_params_o60l2laa --params-file /tmp/launch_params_d27e8iz7 --params-file /tmp/launch_params_8lwuqs1z --params-file /tmp/launch_params_o8ay22n3 --params-file /tmp/launch_params_zvcqcno_ --params-file /tmp/launch_params_dri3bfu5 --params-file /tmp/launch_params_dck8xon9 --params-file /tmp/launch_params_5mev9bsd --params-file /tmp/launch_params_e6npxypy --params-file /tmp/launch_params_csxeh3l6 --params-file /tmp/launch_params_5xufqi8r --params-file /tmp/launch_params_pkpvfj0u --params-file /tmp/launch_params_tgnmyunn --params-file /tmp/launch_params_g385oai0 --params-file /tmp/launch_params_ozysyg5p --params-file /tmp/launch_params_b2qh_84i --params-file /tmp/launch_params_u1fbzkr8 --params-file /tmp/launch_params_csvtt546 --params-file /tmp/launch_params_ddutk5ce --params-file /tmp/launch_params_qmrnpa52 --params-file /tmp/launch_params_7yqj3no1 --params-file /tmp/launch_params_zehckh7d --params-file /tmp/launch_params_d0_fclmd --params-file /tmp/launch_params_nn_p7zmx --params-file /tmp/launch_params_5uru3kpo --params-file /tmp/launch_params_kir4nq5w --params-file /tmp/launch_params_xkjuk360 -r input:=/perception/object_recognition/detection/clustering/clusters -r input/concatenation_info:=/sensing/lidar/concatenated/pointcloud_info -r output:=/perception/object_recognition/detection/clustering/camera_lidar_fusion/clusters'].
-1778124141.8145690 [INFO] [component_container_mt-1]: process has finished cleanly [pid 115]
-1778124141.9882953 [ERROR] [shape_estimation_node-3]: process has died [pid 119, exit code -6, cmd '/opt/autoware/autoware_shape_estimation/lib/autoware_shape_estimation/shape_estimation_node --ros-args -r __node:=shape_estimation -r __ns:=/perception/object_recognition/detection/clustering -p use_sim_time:=True -p wheel_radius:=0.383 -p wheel_width:=0.235 -p wheel_base:=2.79 -p wheel_tread:=1.64 -p front_overhang:=1.0 -p rear_overhang:=1.1 -p left_overhang:=0.128 -p right_overhang:=0.128 -p vehicle_height:=2.5 -p max_steer_angle:=0.7 -p use_sim_time:=True -p wheel_radius:=0.383 -p wheel_width:=0.235 -p wheel_base:=2.79 -p wheel_tread:=1.64 -p front_overhang:=1.0 -p rear_overhang:=1.1 -p left_overhang:=0.128 -p right_overhang:=0.128 -p vehicle_height:=2.5 -p max_steer_angle:=0.7 --params-file /tmp/launch_params_umub2tnn --params-file /tmp/launch_params__m00kcez -r input:=/perception/object_recognition/detection/clustering/clusters -r objects:=/perception/object_recognition/detection/clustering/objects_with_feature'].
-1778124142.0145478 [ERROR] [shape_estimation_node-6]: process has died [pid 125, exit code -6, cmd '/opt/autoware/autoware_shape_estimation/lib/autoware_shape_estimation/shape_estimation_node --ros-args -r __node:=shape_estimation -r __ns:=/perception/object_recognition/detection/clustering/camera_lidar_fusion -p use_sim_time:=True -p wheel_radius:=0.383 -p wheel_width:=0.235 -p wheel_base:=2.79 -p wheel_tread:=1.64 -p front_overhang:=1.0 -p rear_overhang:=1.1 -p left_overhang:=0.128 -p right_overhang:=0.128 -p vehicle_height:=2.5 -p max_steer_angle:=0.7 -p use_sim_time:=True -p wheel_radius:=0.383 -p wheel_width:=0.235 -p wheel_base:=2.79 -p wheel_tread:=1.64 -p front_overhang:=1.0 -p rear_overhang:=1.1 -p left_overhang:=0.128 -p right_overhang:=0.128 -p vehicle_height:=2.5 -p max_steer_angle:=0.7 --params-file /tmp/launch_params_bvx9lf31 --params-file /tmp/launch_params_p8dnn3pv -r input:=/perception/object_recognition/detection/clustering/camera_lidar_fusion/filtered/clusters -r objects:=/perception/object_recognition/detection/clustering/camera_lidar_fusion/objects_with_feature'].
+[INFO] [launch]: All log files can be found below /root/.ros/log/2026-05-07-08-12-01-477450-a2tech-4564
+[INFO] [launch]: Default logging verbosity is set to INFO
+1778141538.277094 [0]       ros2: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[INFO] [component_container_mt-1]: process started with pid [4630]
+[INFO] [component_container-2]: process started with pid [4632]
+[INFO] [shape_estimation_node-3]: process started with pid [4634]
+[INFO] [roi_cluster_fusion_node-4]: process started with pid [4636]
+[INFO] [low_intensity_cluster_filter_node-5]: process started with pid [4638]
+[INFO] [shape_estimation_node-6]: process started with pid [4640]
+[INFO] [detected_object_feature_remover_node-7]: process started with pid [4642]
+[INFO] [roi_pointcloud_fusion_node-8]: process started with pid [4644]
+[INFO] [detected_object_feature_remover_node-9]: process started with pid [4646]
+[INFO] [detection_by_tracker_node-10]: process started with pid [4648]
+[INFO] [obstacle_pointcloud_based_validator_node-11]: process started with pid [4650]
+[INFO] [object_lanelet_filter_node-12]: process started with pid [4652]
+[INFO] [multi_object_tracker_node-13]: process started with pid [4654]
+[INFO] [autoware_perception_analytics_publisher_node-14]: process started with pid [4656]
+[INFO] [rviz2-15]: process started with pid [4658]
+[detected_object_feature_remover_node-9] 1778141544.595079 [0] detected_o: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[component_container-2] 1778141544.614229 [0] component_: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[detected_object_feature_remover_node-7] 1778141544.615210 [0] detected_o: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[autoware_perception_analytics_publisher_node-14] 1778141544.628864 [0] autoware_p: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[component_container_mt-1] 1778141544.647242 [0] component_: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[obstacle_pointcloud_based_validator_node-11] 1778141544.712885 [0] obstacle_p: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[shape_estimation_node-6] 1778141544.731890 [0] shape_esti: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[shape_estimation_node-3] 1778141544.732261 [0] shape_esti: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[low_intensity_cluster_filter_node-5] 1778141544.733792 [0] low_intens: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[multi_object_tracker_node-13] 1778141544.757176 [0] multi_obje: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[shape_estimation_node-3] [INFO] [1778141544.774297864] [perception.object_recognition.detection.clustering.shape_estimation]: using boost shape estimation : 0
+[object_lanelet_filter_node-12] 1778141544.811171 [0] object_lan: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[shape_estimation_node-6] [INFO] [1778141544.837679961] [perception.object_recognition.detection.clustering.camera_lidar_fusion.shape_estimation]: using boost shape estimation : 0
+[detection_by_tracker_node-10] 1778141544.852559 [0] detection_: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[multi_object_tracker_node-13] [INFO] [1778141544.914863964] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing clustering input stream index 0
+[multi_object_tracker_node-13] [INFO] [1778141544.915033327] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing none input stream index 1
+[multi_object_tracker_node-13] [INFO] [1778141544.915062437] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing camera_lidar_fusion input stream index 2
+[multi_object_tracker_node-13] [INFO] [1778141544.915081241] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing camera_lidar_fusion_irregular input stream index 3
+[multi_object_tracker_node-13] [INFO] [1778141544.915096096] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing detection_by_tracker input stream index 4
+[multi_object_tracker_node-13] [INFO] [1778141544.915110072] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing none input stream index 5
+[multi_object_tracker_node-13] [INFO] [1778141544.915124454] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing none input stream index 6
+[multi_object_tracker_node-13] [INFO] [1778141544.915153751] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing camera_streampetr input stream index 7
+[multi_object_tracker_node-13] [INFO] [1778141544.915169389] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing none input stream index 8
+[multi_object_tracker_node-13] [INFO] [1778141544.915183173] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing none input stream index 9
+[multi_object_tracker_node-13] [INFO] [1778141544.915202986] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing none input stream index 10
+[multi_object_tracker_node-13] [INFO] [1778141544.915216519] [perception.object_recognition.tracking.multi_object_tracker]: InputManager::init Initializing none input stream index 11
+[component_container_mt-1] [INFO] [1778141544.923377382] [pointcloud_container]: Load Library: /opt/autoware/autoware_pointcloud_preprocessor/lib/libpointcloud_preprocessor_filter.so
+[component_container-2] [INFO] [1778141544.926837944] [perception.object_recognition.detection.clustering.euclidean_cluster_container]: Load Library: /opt/autoware/autoware_euclidean_cluster/lib/libautoware_euclidean_cluster_voxel_grid_node_core.so
+[rviz2-15] QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+[component_container-2] [INFO] [1778141545.018796989] [perception.object_recognition.detection.clustering.euclidean_cluster_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::euclidean_cluster::VoxelGridBasedEuclideanClusterNode>
+[component_container-2] [INFO] [1778141545.018943998] [perception.object_recognition.detection.clustering.euclidean_cluster_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<autoware::euclidean_cluster::VoxelGridBasedEuclideanClusterNode>
+[rviz2-15] 1778141545.020355 [0]      rviz2: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/perception/object_recognition/detection/clustering/euclidean_cluster' in container '/perception/object_recognition/detection/clustering/euclidean_cluster_container'
+[rviz2-15] MESA: error: Failed to query drm device.
+[rviz2-15] libGL error: glx: failed to create dri3 screen
+[rviz2-15] libGL error: failed to load driver: iris
+[rviz2-15] libGL error: failed to open /dev/dri/card1: No such file or directory
+[rviz2-15] libGL error: failed to load driver: iris
+[rviz2-15] MESA: error: Failed to query drm device.
+[rviz2-15] libGL error: glx: failed to create dri3 screen
+[rviz2-15] libGL error: failed to load driver: iris
+[rviz2-15] libGL error: failed to open /dev/dri/card1: No such file or directory
+[rviz2-15] libGL error: failed to load driver: iris
+[component_container_mt-1] [INFO] [1778141545.378037435] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::ApproximateDownsampleFilterComponent>
+[component_container_mt-1] [INFO] [1778141545.378098594] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::BlockageDiagComponent>
+[component_container_mt-1] [INFO] [1778141545.378105430] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::CropBoxFilterComponent>
+[component_container_mt-1] [INFO] [1778141545.378110463] [pointcloud_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::CropBoxFilterComponent>
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/perception/obstacle_segmentation/crop_box_filter' in container 'pointcloud_container'
+[component_container_mt-1] [INFO] [1778141545.412156383] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::ApproximateDownsampleFilterComponent>
+[component_container_mt-1] [INFO] [1778141545.412221139] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::BlockageDiagComponent>
+[component_container_mt-1] [INFO] [1778141545.412232427] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::CropBoxFilterComponent>
+[component_container_mt-1] [INFO] [1778141545.412240676] [pointcloud_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::CropBoxFilterComponent>
+[rviz2-15] [INFO] [1778141545.417367742] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-15] [INFO] [1778141545.417609728] [rviz2]: OpenGl version: 4.5 (GLSL 4.5)
+[roi_cluster_fusion_node-4] 1778141545.442902 [0] roi_cluste: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/perception/object_recognition/detection/irregular_object/crop_box_filter' in container 'pointcloud_container'
+[component_container_mt-1] [INFO] [1778141545.450193799] [pointcloud_container]: Load Library: /opt/autoware/autoware_probabilistic_occupancy_grid_map/lib/libpointcloud_based_occupancy_grid_map.so
+[roi_pointcloud_fusion_node-8] 1778141545.479471 [0] roi_pointc: config: //CycloneDDS/Domain/General: 'NetworkInterfaceAddress': deprecated element (CYCLONEDDS_URI+0 line 1)
+[component_container_mt-1] [INFO] [1778141545.523186982] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::occupancy_grid_map::PointcloudBasedOccupancyGridMapNode>
+[component_container_mt-1] [INFO] [1778141545.523266758] [pointcloud_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<autoware::occupancy_grid_map::PointcloudBasedOccupancyGridMapNode>
+[rviz2-15] [INFO] [1778141545.534758844] [rviz2]: Stereo is NOT SUPPORTED
+[roi_cluster_fusion_node-4] [INFO] [1778141545.576635818] [perception.object_recognition.detection.clustering.camera_lidar_fusion.roi_cluster_fusion]: Pedestrian size validation: enabled
+[roi_cluster_fusion_node-4] [WARN] [1778141545.602580721] [perception.object_recognition.detection.clustering.camera_lidar_fusion.roi_cluster_fusion]: Still initializing camera projector for ROI 0... please wait...
+[roi_cluster_fusion_node-4] [INFO] [1778141545.602630099] [perception.object_recognition.detection.clustering.camera_lidar_fusion.roi_cluster_fusion]: Camera projector initialization for ROI 0 finished.
+[rviz2-15] [WARN] [1778141546.814791412] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/perception/occupancy_grid_map/occupancy_grid_map_node' in container 'pointcloud_container'
+[component_container_mt-1] [INFO] [1778141547.326847860] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::ApproximateDownsampleFilterComponent>
+[component_container_mt-1] [INFO] [1778141547.326896544] [pointcloud_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<autoware::pointcloud_preprocessor::ApproximateDownsampleFilterComponent>
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/perception/object_recognition/detection/voxel_grid_downsample_filter' in container 'pointcloud_container'
+[component_container_mt-1] [INFO] [1778141547.348622876] [pointcloud_container]: Load Library: /opt/autoware/autoware_ground_segmentation/lib/libautoware_ground_segmentation.so
+[component_container_mt-1] [INFO] [1778141547.382328920] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::ground_segmentation::RANSACGroundFilterComponent>
+[component_container_mt-1] [INFO] [1778141547.382450253] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::ground_segmentation::RayGroundFilterComponent>
+[component_container_mt-1] [INFO] [1778141547.382462527] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::ground_segmentation::ScanGroundFilterComponent>
+[component_container_mt-1] [INFO] [1778141547.382470304] [pointcloud_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<autoware::ground_segmentation::ScanGroundFilterComponent>
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/perception/obstacle_segmentation/common_ground_filter' in container 'pointcloud_container'
+[component_container_mt-1] [INFO] [1778141547.466613911] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::ground_segmentation::RANSACGroundFilterComponent>
+[component_container_mt-1] [INFO] [1778141547.466692557] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::ground_segmentation::RayGroundFilterComponent>
+[component_container_mt-1] [INFO] [1778141547.466703831] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::ground_segmentation::ScanGroundFilterComponent>
+[component_container_mt-1] [INFO] [1778141547.466713780] [pointcloud_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<autoware::ground_segmentation::ScanGroundFilterComponent>
+[rviz2-15] [INFO] [1778141547.639379428] [rviz2]: Stereo is NOT SUPPORTED
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/perception/object_recognition/detection/irregular_object/ground_filter' in container 'pointcloud_container'
+[component_container_mt-1] [INFO] [1778141547.739988582] [pointcloud_container]: Load Library: /opt/autoware/autoware_occupancy_grid_map_outlier_filter/lib/libautoware_occupancy_grid_map_outlier_filter.so
+[component_container_mt-1] [INFO] [1778141547.744451596] [pointcloud_container]: Found class: rclcpp_components::NodeFactoryTemplate<autoware::occupancy_grid_map_outlier_filter::OccupancyGridMapOutlierFilterComponent>
+[component_container_mt-1] [INFO] [1778141547.745938302] [pointcloud_container]: Instantiate class: rclcpp_components::NodeFactoryTemplate<autoware::occupancy_grid_map_outlier_filter::OccupancyGridMapOutlierFilterComponent>
+[roi_pointcloud_fusion_node-8] [INFO] [1778141547.778426982] [perception.object_recognition.detection.irregular_object.roi_pointcloud_fusion]: Utilize advanced matching strategy for fusion nodes.
+[INFO] [launch_ros.actions.load_composable_nodes]: Loaded node '/perception/obstacle_segmentation/occupancy_grid_based_outlier_filter' in container 'pointcloud_container'
+[rviz2-15] [WARN] [1778141547.833668231] [PlanningFactorRvizPlugin]: Waiting for vehicle_info service...
+[component_container_mt-1] [WARN] [1778141550.221918417] [occupancy_grid_map_outlier_filter]: Lookup would require extrapolation into the past.  Requested time 1150.750000 but the earliest data is at time 1150.820000, when looking up transform from frame [base_link] to frame [map]
+[roi_cluster_fusion_node-4] [INFO] [1778141550.236460194] [perception.object_recognition.detection.clustering.camera_lidar_fusion.roi_cluster_fusion]: Utilize advanced matching strategy for fusion nodes.
+[object_lanelet_filter_node-12] [ERROR] [1778141550.584094345] [perception.object_recognition.detection.object_lanelet_filter]: No vector map received.
+[object_lanelet_filter_node-12] [ERROR] [1778141564.302652753] [perception.object_recognition.detection.object_lanelet_filter]: No vector map received.
+[object_lanelet_filter_node-12] [ERROR] [1778141578.285755621] [perception.object_recognition.detection.object_lanelet_filter]: No vector map received.
+
+

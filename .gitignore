@@ -51,3 +51,5 @@ COLCON_IGNORE
 .vscode
 .devcontainer
 __pycache__/
+
+docker/demo/autoware_data/
