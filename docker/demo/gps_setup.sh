@@ -81,7 +81,7 @@ echo -e "${GREEN}✓ Cleanup complete${NC}\n"
 # Pull latest images (only non-build services)
 echo -e "${YELLOW}Pulling latest Docker images...${NC}"
 echo -e "${BLUE}(This may take a few minutes)${NC}"
-if docker compose "${COMPOSE_ARGS[@]}" pull husarion_ugv_gazebo rviz gps_monitor autoware_topic_bridge; then
+if docker compose "${COMPOSE_ARGS[@]}" pull husarion_ugv_gazebo autoware_topic_bridge; then
     echo -e "${GREEN}✓ Docker images updated${NC}\n"
 else
     echo -e "${RED}✗ Failed to pull Docker images${NC}"

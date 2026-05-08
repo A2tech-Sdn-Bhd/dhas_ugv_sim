@@ -107,538 +107,124 @@
     </model>
 
     <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000</name>
-      <pose>7.53664 6.56036 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_1</name>
-      <pose>5.53664 6.56036 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2</name>
-      <pose>3.53664 6.56036 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_1</name>
-      <pose>1.38877 6.26609 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_2</name>
-      <pose>-0.828815 6.03045 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_3</name>
-      <pose>-3.21257 5.93457 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_4</name>
-      <pose>-5.40524 5.67391 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_5</name>
-      <pose>-7.64145 5.39817 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_6</name>
-      <pose>-9.7678 5.18059 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_7</name>
-      <pose>-12.0006 5.04234 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_8</name>
-      <pose>-14.4501 5.17221 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9</name>
-      <pose>-16.5114 4.89692 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_10</name>
-      <pose>8.61791 -8.20592 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_11</name>
-      <pose>6.35438 -8.41877 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_12</name>
-      <pose>3.87769 -8.49367 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_13</name>
-      <pose>1.63324 -8.87962 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_14</name>
-      <pose>-0.86012 -8.73757 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_15</name>
-      <pose>-3.43225 -8.7321 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_16</name>
-      <pose>-5.73845 -8.75022 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_17</name>
-      <pose>-8.20155 -8.81263 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_18</name>
-      <pose>-10.8594 -8.8804 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_19</name>
-      <pose>-13.7661 -8.70069 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_20</name>
-      <pose>-16.6359 -8.39854 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_21</name>
-      <pose>-19.1532 -8.51097 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_22</name>
-      <pose>-21.6699 -8.78836 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_23</name>
-      <pose>-24.0337 -9.35732 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_24</name>
-      <pose>-27.1625 -9.38087 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_25</name>
-      <pose>-29.9955 -9.90695 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_26</name>
-      <pose>-32.999 -10.6032 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_1</name>
-      <pose>-48.0492 -1.85645 0 0 0 -0.01605</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_2</name>
-      <pose>-48.2043 2.78542 0 0 0 -0.01605</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_3</name>
-      <pose>-48.4381 7.57914 0 0 0 -0.01605</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_4</name>
-      <pose>-48.7066 12.6747 0 0 0 -0.01605</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_5</name>
-      <pose>-48.9253 17.6093 0 0 0 -0.01605</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_6</name>
-      <pose>-49.1143 22.6621 0 0 0 -0.01605</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_7</name>
-      <pose>-49.5257 27.968 0 0 0 -0.01605</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_8_2</name>
-      <pose>-46.5548 31.3095 0 0 0 -1.64773</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_8_2_1</name>
-      <pose>-41.6274 31.2153 0 0 0 -1.64773</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_8_2_2</name>
-      <pose>-36.7408 31.1604 0 0 0 -1.64773</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_8_2_3</name>
-      <pose>-31.5215 31.0769 0 0 0 -1.64773</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_8_2_4</name>
-      <pose>-26.9068 31.2188 0 0 0 -1.64773</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_8_2_5</name>
-      <pose>-22.2103 31.6945 0 0 0 -1.64773</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_8_2_6</name>
-      <pose>-17.1213 31.0779 0 0 0 -1.64773</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_8_2_7</name>
-      <pose>-12.2616 31.1454 0 0 0 -1.64773</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_8_2_8</name>
-      <pose>-7.33183 31.1087 0 0 0 -1.64773</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_8_2_9</name>
-      <pose>-2.42751 30.7164 0 0 0 -1.64773</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_27_8_2_10</name>
-      <pose>2.43406 30.9618 0 0 0 -1.64773</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_1</name>
-      <pose>-19.2504 5.12653 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_2</name>
-      <pose>-22.4623 5.63939 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_3</name>
-      <pose>-25.6181 6.08242 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_4</name>
-      <pose>-28.7546 6.06764 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_5</name>
-      <pose>-31.0502 5.0771 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_6</name>
-      <pose>-33.6968 4.63315 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_7</name>
-      <pose>-36.3763 3.80051 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8</name>
-      <pose>4.84711 10.6792 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_9</name>
-      <pose>1.88613 10.9089 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_10</name>
-      <pose>-0.629244 10.9193 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_11</name>
-      <pose>-3.21015 11.1171 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_12</name>
-      <pose>-5.68729 10.9288 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_13</name>
-      <pose>-8.33875 10.102 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_14</name>
-      <pose>-10.9614 9.79128 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_15</name>
-      <pose>-12.9324 9.42635 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_16</name>
-      <pose>-15.6071 9.31354 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_17</name>
-      <pose>-18.4226 9.0816 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_18</name>
-      <pose>-21.4129 9.05798 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_19</name>
-      <pose>-24.6213 9.70134 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_20</name>
-      <pose>-28.4775 10.3984 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_21</name>
-      <pose>-32.0148 10.0245 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_22</name>
-      <pose>-34.5084 9.11542 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_23</name>
-      <pose>-37.1505 8.23597 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_24</name>
-      <pose>8.72405 9.9844 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_25</name>
-      <pose>11.7324 -7.99638 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_1</name>
-      <pose>-35.5688 -10.6177 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_2</name>
-      <pose>-38.4261 -10.5743 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_3</name>
-      <pose>-41.5862 -9.97072 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_4</name>
-      <pose>-44.9724 -8.7795 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_5</name>
-      <pose>-48.365 -7.48392 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_6</name>
-      <pose>14.1412 -6.53706 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_7</name>
-      <pose>16.2831 -3.67681 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_8</name>
-      <pose>17.9156 -0.55228 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_9</name>
-      <pose>18.888 3.11638 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_10</name>
-      <pose>20.2578 7.63413 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_11</name>
-      <pose>20.8724 11.0359 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_12</name>
-      <pose>21.4863 14.6955 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_13</name>
-      <pose>19.1384 18.8465 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_14</name>
-      <pose>15.1315 21.1026 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_15</name>
-      <pose>11.2278 23.8984 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
-      <name>prius_0000_2_9_8_16</name>
-      <pose>7.52796 26.3797 0 0 -0 0.6667</pose>
-      <static>true</static>
-    </include>
-    <include>
-      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid/3</uri>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
       <name>prius_0000_2_9_8_17</name>
-      <pose>4.37573 27.2583 0 0 -0 0.6667</pose>
-      <static>true</static>
+      <pose>4.37573 27.2583 0.012649 -0 0 1.7167</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_1</name>
+      <pose>5.0858 1.4144 0.012649 -0 0 0.6667</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_2</name>
+      <pose>2.01012 1.60713 0.012649 -0 0 0.6667</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_3</name>
+      <pose>-0.651022 1.49412 0.012649 -0 0 0.6667</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_4</name>
+      <pose>-3.78018 1.43965 0.01265 -0 0 0.6667</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_5</name>
+      <pose>-6.29654 1.01913 0.012649 -0 0 0.6667</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_6</name>
+      <pose>10.8759 7.85476 0.012649 -0 -0 0.181124</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_7</name>
+      <pose>11.49 2.6635 0.012649 -0 0 0.181124</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_8</name>
+      <pose>11.7111 -2.38291 0.012649 -0 0 0.181124</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_9</name>
+      <pose>11.7164 -7.36604 0.012649 -0 0 0.181124</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_10</name>
+      <pose>9.59429 -11.1857 0.01265 -0 -0 -1.36071</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_11</name>
+      <pose>5.22061 -11.2354 0.017518 0.003451 -0 -1.3607</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_12</name>
+      <pose>0.124132 -11.1225 0.012649 -0 0 -1.35712</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_13</name>
+      <pose>-5.01379 -11.0402 0.012649 -0 0 -1.35712</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_14</name>
+      <pose>-9.80895 -10.6276 0.012649 -0 0 -1.35712</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_15</name>
+      <pose>-13.7446 -6.69749 0.012649 -0 0 -3.07006</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_16</name>
+      <pose>-14.3901 -1.15019 0.012649 -0 0 -3.07006</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_17</name>
+      <pose>-14.5197 3.84405 0.012649 -0 0 -3.07006</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_18</name>
+      <pose>-14.6051 9.35177 0.012649 -0 0 -3.07006</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_11_1</name>
+      <pose>-11.5454 13.4887 0.012649 -0 -0 -1.36015</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_11_2</name>
+      <pose>-6.24178 12.0407 0.012649 -0 -0 -1.36015</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_11_3</name>
+      <pose>-0.776729 11.1851 0.01265 -0 -0 -1.36015</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_11_4</name>
+      <pose>4.42102 12.0481 0.012649 -1e-06 -0 -1.36015</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Prius Hybrid</uri>
+      <name>prius_0000_2_9_8_17_11_5</name>
+      <pose>9.7177 12.6348 0.012649 -1e-06 0 -1.36016</pose>
     </include>
     <!-- GUI camera: top-down aerial view -->
     <gui fullscreen="0">

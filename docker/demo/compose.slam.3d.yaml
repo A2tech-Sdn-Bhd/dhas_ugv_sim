@@ -1,0 +1,34 @@
+x-common-config: &common-config
+  network_mode: host
+  ipc: host
+  environment:
+    - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+    - ROBOT_MODEL_NAME=${ROBOT_MODEL_NAME:-panther}
+    - ROBOT_NAMESPACE=${ROBOT_NAMESPACE:-${ROBOT_MODEL_NAME:-panther}}
+    - ROS_DISTRO=${ROS_DISTRO:-humble}
+    - LIDAR_TOPIC=/${ROBOT_NAMESPACE:-${ROBOT_MODEL_NAME:-panther}}/lidar_3d/ouster/points
+    - BASE_FRAME=${ROBOT_NAMESPACE:-${ROBOT_MODEL_NAME:-panther}}/base_link
+    - ODOM_FRAME=${ROBOT_NAMESPACE:-${ROBOT_MODEL_NAME:-panther}}/odom
+    - SLAM_ODOM_TOPIC=/slam/odometry
+    - SLAM_DB_PATH=/autoware_data/slam/rtabmap.db
+
+x-cpu-config: &cpu-config
+  env_file: .env.cpu
+
+services:
+  slam_3d_lidar:
+    image: husarion/husarion-ugv-gazebo:humble-2.2.2-20250702
+    container_name: slam_3d_lidar
+    <<:
+      - *common-config
+      - *cpu-config
+    command: >
+      bash -lc "apt-get update &&
+      DEBIAN_FRONTEND=noninteractive apt-get install -y
+      ros-humble-rtabmap-ros ros-humble-topic-tools &&
+      bash /slam/slam_3d_lidar.sh"
+    volumes:
+      - ./slam_3d_lidar.sh:/slam/slam_3d_lidar.sh:ro
+      - ./autoware_data:/autoware_data:rw
+    restart: unless-stopped

@@ -43,46 +43,6 @@ services:
           log_level:=DEBUG
       "
 
-  rviz:
-    image: husarion/husarion-ugv-gazebo:humble-2.2.2-20250702
-    container_name: husarion_rviz
-    <<:
-      - *common-config
-      - *gpu-config
-    depends_on:
-      - husarion_ugv_gazebo
-    devices:
-      - /dev/dri:/dev/dri
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
-    command: >
-      bash -c "sleep 40 && ros2 launch husarion_ugv_description rviz.launch.py"
-
-  gps_monitor:
-    image: husarion/husarion-ugv-gazebo:humble-2.2.2-20250702
-    container_name: gps_monitor
-    <<:
-      - *common-config
-      - *gpu-config
-    depends_on:
-      - husarion_ugv_gazebo
-    volumes:
-      - gps_logs:/ros2_ws/gps_logs
-    command: >
-      bash -c "
-        sleep 10 &&
-        echo '=== GPS Monitor Started ===' &&
-        ros2 topic echo /gps/fix --no-arr > /ros2_ws/gps_logs/gps_fix.log 2>&1 &
-        ros2 topic echo /odometry/filtered --no-arr > /ros2_ws/gps_logs/odometry.log 2>&1 &
-        while true; do
-          echo '=== GPS Data Sample ===' >> /ros2_ws/gps_logs/gps_status.log
-          date >> /ros2_ws/gps_logs/gps_status.log
-          ros2 topic echo /gps/fix -1 2>/dev/null | head -20 >> /ros2_ws/gps_logs/gps_status.log
-          echo '---' >> /ros2_ws/gps_logs/gps_status.log
-          sleep 30
-        done
-      "
-
 volumes:
   gps_logs:
     driver: local
