@@ -46,6 +46,7 @@ ros2 run rtabmap_slam rtabmap --ros-args \
   -p use_sim_time:=true \
   -p frame_id:="${BASE_FRAME}" \
   -p map_frame_id:=map \
+  -p odom_frame_id:="${ODOM_FRAME}" \
   -p database_path:="${SLAM_DB_PATH}" \
   -p publish_tf:=true \
   -p subscribe_scan:=false \
@@ -53,14 +54,6 @@ ros2 run rtabmap_slam rtabmap --ros-args \
   -p subscribe_depth:=false \
   -p subscribe_rgb:=false \
   -p subscribe_odom_info:=false \
-  -p Reg/Strategy:=1 \
-  -p Icp/PointToPlane:=true \
-  -p Icp/VoxelSize:=0.2 \
-  -p Icp/CorrespondenceRatio:=0.2 \
-  -p Grid/FromDepth:=false \
-  -p Grid/RangeMax:=40.0 \
-  -p Mem/IncrementalMemory:=true \
-  -p Mem/InitWMWithAllNodes:=false \
   -r scan_cloud:="${LIDAR_TOPIC}" \
   -r odom:="${SLAM_ODOM_TOPIC}" &
 PID_RTABMAP=$!
@@ -74,4 +67,7 @@ cleanup() {
 
 trap cleanup EXIT INT TERM
 
-wait
+wait -n "$PID_ICP" "$PID_RTABMAP" "$PID_ODOM_RELAY"
+EXIT_CODE=$?
+echo "One SLAM process exited (code=${EXIT_CODE}). Stopping container." >&2
+exit "$EXIT_CODE"

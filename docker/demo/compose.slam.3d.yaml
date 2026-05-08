@@ -15,6 +15,8 @@ x-common-config: &common-config
 
 x-cpu-config: &cpu-config
   env_file: .env.cpu
+x-gpu-config: &gpu-config
+  env_file: .env.gpu
 
 services:
   slam_3d_lidar:
@@ -22,7 +24,7 @@ services:
     container_name: slam_3d_lidar
     <<:
       - *common-config
-      - *cpu-config
+      - *gpu-config
     command: >
       bash -lc "apt-get update &&
       DEBIAN_FRONTEND=noninteractive apt-get install -y
