@@ -4,6 +4,8 @@ set -euo pipefail
 
 ROBOT_NAMESPACE="${ROBOT_NAMESPACE:-panther}"
 ROS_DISTRO="${ROS_DISTRO:-humble}"
+ENABLE_BASE_LINK_ALIAS="${ENABLE_BASE_LINK_ALIAS:-true}"
+ENABLE_STATIC_MAP_TF="${ENABLE_STATIC_MAP_TF:-true}"
 
 if [[ -f "/opt/ros/${ROS_DISTRO}/setup.bash" ]]; then
   set +u
@@ -45,17 +47,30 @@ ros2 run topic_tools relay "/${ROBOT_NAMESPACE}/front_cam/depth/camera_info" "/s
 PID_DEPTH_INFO=$!
 
 # TF alias for non-namespaced Autoware configs expecting `base_link`.
-ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 \
-  "${ROBOT_NAMESPACE}/base_link" "base_link" &
-PID_BASE_LINK_ALIAS=$!
+PID_BASE_LINK_ALIAS=""
+if [[ "${ENABLE_BASE_LINK_ALIAS}" == "true" ]]; then
+  ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 \
+    "${ROBOT_NAMESPACE}/base_link" "base_link" &
+  PID_BASE_LINK_ALIAS=$!
+fi
 
 # Perception occupancy grid expects map frame in some launch profiles.
-ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 \
-  map "${ROBOT_NAMESPACE}/odom" &
-PID_MAP_ALIAS=$!
+PID_MAP_ALIAS=""
+if [[ "${ENABLE_STATIC_MAP_TF}" == "true" ]]; then
+  ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 \
+    map "${ROBOT_NAMESPACE}/odom" &
+  PID_MAP_ALIAS=$!
+fi
 
 cleanup() {
-  kill "$PID_LIDAR" "$PID_RGB_IMAGE" "$PID_RGB_INFO" "$PID_DEPTH_IMAGE" "$PID_DEPTH_INFO" "$PID_BASE_LINK_ALIAS" "$PID_MAP_ALIAS" 2>/dev/null || true
+  local pids=("$PID_LIDAR" "$PID_RGB_IMAGE" "$PID_RGB_INFO" "$PID_DEPTH_IMAGE" "$PID_DEPTH_INFO")
+  if [[ -n "$PID_BASE_LINK_ALIAS" ]]; then
+    pids+=("$PID_BASE_LINK_ALIAS")
+  fi
+  if [[ -n "$PID_MAP_ALIAS" ]]; then
+    pids+=("$PID_MAP_ALIAS")
+  fi
+  kill "${pids[@]}" 2>/dev/null || true
 }
 
 trap cleanup EXIT INT TERM
