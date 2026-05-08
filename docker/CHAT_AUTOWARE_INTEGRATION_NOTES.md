@@ -48,7 +48,7 @@ From `docker/demo`:
 
 ```bash
 xhost local:docker
-export CYCLONE_IFACE=wlo1
+export CYCLONE_IFACE=enp5s0
 export GZ_WORLD=/ros2_ws/worlds/parking_lot_world.sdf
 
 docker compose \

@@ -63,7 +63,7 @@ echo -e "${GREEN}✓ Autoware directories ready (./autoware_map, ./autoware_data
 
 # Select DDS network interface for Autoware
 if [[ -z "${CYCLONE_IFACE:-}" ]]; then
-    CYCLONE_IFACE=wlo1
+    CYCLONE_IFACE=$(ip route get 1.1.1.1 2>/dev/null | sed -n 's/.* dev \([^ ]*\).*/\1/p' | head -n 1)
 fi
 
 if [[ -n "${CYCLONE_IFACE:-}" ]]; then

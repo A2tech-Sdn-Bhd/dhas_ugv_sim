@@ -30,8 +30,8 @@ From repository root:
 cd docker/demo
 xhost local:docker
 
-# Use host NIC for CycloneDDS (example from this setup: wlo1)
-export CYCLONE_IFACE=wlo1
+# Use host NIC for CycloneDDS (example from this setup: enp5s0)
+export CYCLONE_IFACE=enp5s0
 export ROS_DOMAIN_ID=0
 
 docker compose \
@@ -130,7 +130,7 @@ This starts Autoware perception in `camera_lidar_fusion` mode with bridged topic
 
 ## Troubleshooting
 
-- DDS binds `lo` only -> set `CYCLONE_IFACE` to real NIC (for example `wlo1`), recreate container.
+- DDS binds `lo` only -> set `CYCLONE_IFACE` to real NIC (for example `enp5s0`), recreate container.
 - `cudaErrorInsufficientDriver` -> ensure container started with GPU (`gpus: all`) and `nvidia-smi` works inside `autoware_universe`.
 - `autoware_launch` not found -> source `/opt/autoware/setup.bash`.
 - ML file missing -> use clustering mode first or place artifacts in `autoware_data/ml_models`.
