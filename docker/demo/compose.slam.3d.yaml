@@ -20,17 +20,18 @@ x-gpu-config: &gpu-config
 
 services:
   slam_3d_lidar:
-    image: husarion/husarion-ugv-gazebo:humble-2.2.2-20250702
+    image: ${SLAM_RUNTIME_IMAGE:-local/slam-3d-lidar:humble}
+    build:
+      context: .
+      dockerfile: Dockerfile.slam.3d
+      args:
+        SLAM_BASE_IMAGE: ${SLAM_BASE_IMAGE:-husarion/husarion-ugv-gazebo:humble-2.2.2-20250702}
     container_name: slam_3d_lidar
     <<:
       - *common-config
       - *gpu-config
     command: >
-      bash -lc "apt-get update &&
-      DEBIAN_FRONTEND=noninteractive apt-get install -y
-      ros-humble-rtabmap-ros ros-humble-topic-tools &&
-      bash /slam/slam_3d_lidar.sh"
+      bash -lc "${SLAM_START_CMD:-sleep infinity}"
     volumes:
-      - ./slam_3d_lidar.sh:/slam/slam_3d_lidar.sh:ro
       - ./autoware_data:/autoware_data:rw
     restart: unless-stopped

@@ -1,0 +1,12 @@
+docker compose -f compose.slam.3d.yaml ps
+
+NAME                    IMAGE                                                COMMAND                  SERVICE                 CREATED          STATUS          PORTS
+autoware_topic_bridge   husarion/husarion-ugv-gazebo:humble-2.2.2-20250702   "/ros_entrypoint.sh …"   autoware_topic_bridge   17 minutes ago   Up 17 minutes   
+autoware_universe       local/autoware-universe:humble-gpu                   "/docker-entrypoint.…"   autoware                17 minutes ago   Up 17 minutes   
+husarion_ugv_gazebo     husarion/husarion-ugv-gazebo:humble-2.2.2-20250702   "/ros_entrypoint.sh …"   husarion_ugv_gazebo     17 minutes ago   Up 17 minutes   
+slam_3d_lidar           husarion/husarion-ugv-gazebo:humble-2.2.2-20250702   "/ros_entrypoint.sh …"   slam_3d_lidar           15 minutes ago   Up 15 minutes   
+┌─(~/Desktop/project/a2tech/dhas_ugv_sim/docker/demo)─────────────────────(ijud@ijud:pts/0)─┐
+└─(17:19:15 on humble-docker-autoware-lidar-camera)──> docker compose -f compose.slam.3d.yaml logs --tail=120 slam_3d_lidar
+
+slam_3d_lidar  | [INFO] [1778231946.354232482] [icp_odometry]: Odom: ratio=0.576648, std dev=0.000271m|0.000173rad, update time=0.070653s delay=0.035000s
+slam_3d_lidar  | [INFO] [1778231946.475536857] [icp_odometry]: Odom: ratio=0.576869, std dev=0.000266m|0.000173rad, update time=0.065193s delay=0.039000s

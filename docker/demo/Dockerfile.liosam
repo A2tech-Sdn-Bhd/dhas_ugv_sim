@@ -1,0 +1,62 @@
+FROM ros:humble-ros-base AS base
+
+# ── System dependencies ───────────────────────────────────────────────────────
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    # Build tools
+    build-essential \
+    cmake \
+    git \
+    python3-colcon-common-extensions \
+    python3-rosdep \
+    python3-vcstool \
+    # ROS packages available as debs (saves build time)
+    ros-humble-rmw-cyclonedds-cpp \
+    ros-humble-tf2-ros \
+    ros-humble-tf2-eigen \
+    ros-humble-pcl-ros \
+    ros-humble-pcl-conversions \
+    ros-humble-rosbag2 \
+    ros-humble-rosbag2-storage-mcap \
+    ros-humble-rosbag2-transport \
+    ros-humble-nav-msgs \
+    ros-humble-sensor-msgs \
+    ros-humble-geometry-msgs \
+    ros-humble-libg2o \
+    # PCL and Eigen
+    libpcl-dev \
+    libeigen3-dev \
+    # Python helpers
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+# ── Build lidarslam_ros2 from source ─────────────────────────────────────────
+# lidarslam_ros2 = ndt_omp_ros2 (fast NDT) + lidarslam_ros2 (SLAM graph)
+WORKDIR /slam_ws/src
+
+RUN git clone --depth 1 https://github.com/rsasaki0109/lidarslam_ros2.git && \
+    git clone --depth 1 https://github.com/rsasaki0109/ndt_omp_ros2.git
+
+WORKDIR /slam_ws
+
+# Install remaining rosdeps
+RUN rosdep update && \
+    rosdep install --from-paths src --ignore-src -r -y \
+      --rosdistro humble 2>/dev/null || true
+
+# Build all packages in the workspace
+RUN bash -lc "source /opt/ros/humble/setup.bash && \
+    colcon build \
+      --symlink-install \
+      --cmake-args -DCMAKE_BUILD_TYPE=Release"
+
+# ── Copy configs and scripts ──────────────────────────────────────────────────
+COPY lidarslam_config.yaml  /slam_ws/lidarslam_config.yaml
+COPY rosbag_record.sh        /slam_ws/rosbag_record.sh
+RUN chmod +x /slam_ws/rosbag_record.sh
+
+# Source both ROS and workspace in bashrc
+RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc && \
+    echo "source /slam_ws/install/setup.bash" >> /root/.bashrc
+
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["sleep infinity"]

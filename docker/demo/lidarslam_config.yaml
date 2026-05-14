@@ -1,0 +1,76 @@
+scan_matcher:
+  ros__parameters:
+    # ── Frames (overridden via launch args, kept here as fallback) ────────────
+    global_frame_id:  "map"
+    robot_frame_id:   "panther/base_link"
+    odom_frame_id:    "panther/odom"
+
+    # ── NDT scan matching ─────────────────────────────────────────────────────
+    registration_method: "NDT"
+    ndt_resolution:      2.0     # voxel size for NDT target map (metres)
+    ndt_num_threads:     4       # increase if host has more cores
+
+    # ── Input cloud pre-filter ────────────────────────────────────────────────
+    vg_size_for_input:   0.2     # voxel-downsample input cloud (metres)
+    vg_size_for_map:     0.1     # voxel-downsample local submap
+    use_min_max_filter:  true
+    scan_min_range:      1.0     # metres – ignore close returns
+    scan_max_range:      50.0    # metres – Ouster practical range
+
+    # ── Keyframe thresholds ───────────────────────────────────────────────────
+    trans_for_mapupdate: 1.0     # metres of travel before new keyframe
+    scan_period:         0.1     # seconds – match Ouster publish rate
+
+    # ── Map publish ───────────────────────────────────────────────────────────
+    map_publish_period:  10.0    # seconds between /map PointCloud2 publishes
+    num_targeted_cloud:  20      # number of recent keyframes in local submap
+
+    # ── Initial pose ──────────────────────────────────────────────────────────
+    set_initial_pose:    true
+    initial_pose_x:  0.0
+    initial_pose_y:  0.0
+    initial_pose_z:  0.0
+    initial_pose_qx: 0.0
+    initial_pose_qy: 0.0
+    initial_pose_qz: 0.0
+    initial_pose_qw: 1.0
+
+    # ── IMU / odometry priors ─────────────────────────────────────────────────
+    use_imu:  false
+    use_odom: false
+
+    debug_flag: false
+
+graph_based_slam:
+  ros__parameters:
+    # ── Backend NDT (for loop-closure re-matching) ────────────────────────────
+    registration_method:    "NDT"
+    ndt_resolution:         1.0
+    ndt_num_threads:        4
+    voxel_leaf_size:        0.2   # leaf size when saving the final PCD map
+
+    # ── Loop closure ─────────────────────────────────────────────────────────
+    loop_detection_period:        3000  # ms between loop candidate searches
+    threshold_loop_closure_score: 0.7   # NDT score threshold
+    distance_loop_closure:        15.0  # min metres between poses
+    range_of_searching_loop_closure: 20.0
+    search_submap_num:            2
+    max_loop_candidate_count:     3
+    loop_edge_dedup_index_window: 8
+    loop_max_translation_delta:   15.0
+    loop_max_rotation_delta_deg:  45.0
+    num_adjacent_pose_cnstraints: 5
+    use_save_map_in_loop:         true
+    adjacent_edge_info_weight:    1000.0
+
+    # ── GPS factor (disabled for simulation) ─────────────────────────────────
+    use_gnss:    false
+    gnss_topic:  "/panther/gps/fix"
+
+    # ── Map grid tiling (Autoware pointcloud_map_loader format) ──────────────
+    # Outputs: /maps/pointcloud_map/<x>_<y>.pcd + pointcloud_map_metadata.yaml
+    # Also writes: /maps/map.pcd (full map) + /maps/map_projector_info.yaml
+    map_grid_size_x: 20.0   # metres per tile (Autoware default)
+    map_grid_size_y: 20.0
+
+    debug_flag: false

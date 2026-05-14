@@ -1,0 +1,84 @@
+x-common-config: &common-config
+  network_mode: host
+  ipc: host
+  environment:
+    - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+    - ROBOT_NAMESPACE=${ROBOT_NAMESPACE:-panther}
+    - ROS_DISTRO=${ROS_DISTRO:-humble}
+
+services:
+  # ── Rosbag recorder ───────────────────────────────────────────────────────
+  # Record topics needed for lidarslam_ros2 offline processing.
+  rosbag_recorder:
+    image: local/lidarslam:humble
+    build:
+      context: .
+      dockerfile: Dockerfile.liosam
+    container_name: rosbag_recorder
+    <<: *common-config
+    entrypoint: ["/bin/bash", "-lc"]
+    command:
+      - |
+        source /opt/ros/humble/setup.bash && /slam_ws/rosbag_record.sh
+    volumes:
+      - ./rosbags:/rosbags:rw
+      - ./rosbag_record.sh:/slam_ws/rosbag_record.sh:ro
+    environment:
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+      - ROBOT_NAMESPACE=${ROBOT_NAMESPACE:-panther}
+      - BAG_OUTPUT_DIR=/rosbags
+      - BAG_PREFIX=${BAG_PREFIX:-panther_run}
+    restart: "no"
+
+  # ── lidarslam_ros2 (online – live alongside simulation) ───────────────────
+  # Subscribes to /panther/lidar_3d/ouster/points and builds a 3D PCD map
+  # in real time. Call the /map_save service to flush to disk when done.
+  lidarslam:
+    image: local/lidarslam:humble
+    build:
+      context: .
+      dockerfile: Dockerfile.liosam
+    container_name: lidarslam
+    <<: *common-config
+    entrypoint: ["/bin/bash", "-lc"]
+    command:
+      - |
+        source /opt/ros/humble/setup.bash && source /slam_ws/install/setup.bash && ros2 launch lidarslam lidarslam.launch.py main_param_dir:=/slam_ws/lidarslam_config.yaml input_cloud:=/${ROBOT_NAMESPACE:-panther}/lidar_3d/ouster/points robot_frame_id:=${ROBOT_NAMESPACE:-panther}/base_link odom_frame_id:=${ROBOT_NAMESPACE:-panther}/odom save_dir:=/maps use_rviz:=false use_sim_time:=${USE_SIM_TIME:-true}
+    volumes:
+      - ./lidarslam_config.yaml:/slam_ws/lidarslam_config.yaml:ro
+      - ./maps:/maps:rw
+    environment:
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+      - DISPLAY=${DISPLAY:-:0}
+      - USE_SIM_TIME=${USE_SIM_TIME:-true}
+    restart: unless-stopped
+
+  # ── Offline bag-replay + map-save ─────────────────────────────────────────
+  # Activate with:  docker compose -f compose.liosam.yaml --profile offline up
+  # Replays a recorded bag, runs lidarslam_ros2, then saves the PCD map.
+  lidarslam_offline:
+    image: local/lidarslam:humble
+    build:
+      context: .
+      dockerfile: Dockerfile.liosam
+    container_name: lidarslam_offline
+    <<: *common-config
+    profiles:
+      - offline
+    entrypoint: ["/bin/bash", "-lc"]
+    command:
+      - |
+        source /opt/ros/humble/setup.bash && source /slam_ws/install/setup.bash && BAG=$${BAG_FILE:-/rosbags/latest} && echo '[offline] Launching lidarslam_ros2...' && ros2 launch lidarslam lidarslam.launch.py main_param_dir:=/slam_ws/lidarslam_config.yaml input_cloud:=/$${ROBOT_NAMESPACE:-panther}/lidar_3d/ouster/points robot_frame_id:=$${ROBOT_NAMESPACE:-panther}/base_link odom_frame_id:=$${ROBOT_NAMESPACE:-panther}/odom save_dir:=/maps use_rviz:=false use_sim_time:=true & SLAM_PID=$$! && sleep 5 && echo '[offline] Replaying bag: '"$$BAG" && ros2 bag play $$BAG --clock --delay 1.0 && echo '[offline] Bag finished. Saving map...' && ros2 service call /map_save std_srvs/srv/Empty {} && sleep 3 && echo '[offline] Done. Autoware map saved to /maps/' && ls -lh /maps/ && kill $$SLAM_PID || true
+    volumes:
+      - ./lidarslam_config.yaml:/slam_ws/lidarslam_config.yaml:ro
+      - ./rosbags:/rosbags:ro
+      - ./maps:/maps:rw
+    environment:
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+      - BAG_FILE=${BAG_FILE:-/rosbags/latest}
+      - ROBOT_NAMESPACE=${ROBOT_NAMESPACE:-panther}
+    restart: "no"
