@@ -18,10 +18,15 @@ class LidarPointTypeAdapter(Node):
         out_topic = self.declare_parameter(
             "output_topic", "/sensing/lidar/top/pointcloud_raw"
         ).get_parameter_value().string_value
+        self._output_frame = self.declare_parameter(
+            "output_frame", "velodyne_top"
+        ).get_parameter_value().string_value
 
         self._sub = self.create_subscription(PointCloud2, in_topic, self._cb, 10)
         self._pub = self.create_publisher(PointCloud2, out_topic, 10)
-        self.get_logger().info(f"Adapting point cloud: {in_topic} -> {out_topic}")
+        self.get_logger().info(
+            f"Adapting point cloud: {in_topic} -> {out_topic} ({self._output_frame})"
+        )
 
     def _cb(self, msg: PointCloud2) -> None:
         fields = {f.name: (f.offset, f.datatype) for f in msg.fields}
@@ -84,6 +89,7 @@ class LidarPointTypeAdapter(Node):
 
         out = PointCloud2()
         out.header = msg.header
+        out.header.frame_id = self._output_frame
         out.height = msg.height
         out.width = msg.width
         out.fields = [

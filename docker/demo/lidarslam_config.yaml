@@ -18,12 +18,16 @@ scan_matcher:
     scan_max_range:      50.0    # metres – Ouster practical range
 
     # ── Keyframe thresholds ───────────────────────────────────────────────────
-    trans_for_mapupdate: 1.0     # metres of travel before new keyframe
+    trans_for_mapupdate: 0.2     # metres of travel before new keyframe
     scan_period:         0.1     # seconds – match Ouster publish rate
 
     # ── Map publish ───────────────────────────────────────────────────────────
-    map_publish_period:  10.0    # seconds between /map PointCloud2 publishes
+    map_publish_period:  1.0     # seconds between /map PointCloud2 publishes
     num_targeted_cloud:  20      # number of recent keyframes in local submap
+
+    # Simulated LiDAR can produce large fitness jumps between sparse updates; keep mapping alive.
+    reject_fitness_ratio: 0.0
+    reject_fitness_only_ratio: 0.0
 
     # ── Initial pose ──────────────────────────────────────────────────────────
     set_initial_pose:    true

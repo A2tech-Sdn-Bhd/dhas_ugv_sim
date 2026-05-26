@@ -28,20 +28,26 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - gps_logs:/ros2_ws/gps_logs
+      - ../../free_space_centering:/ros2_ws/src/free_space_centering:ro
+      - ../../gps_coordinate_logger:/ros2_ws/src/gps_coordinate_logger:ro
       - ../../husarion_ugv_gazebo/launch/simulation.launch.py:/ros2_ws/install/husarion_ugv_gazebo/share/husarion_ugv_gazebo/launch/simulation.launch.py:ro
       - ../../husarion_ugv/package.xml:/ros2_ws/install/husarion_ugv/share/husarion_ugv/package.xml:ro
       - ../../husarion_ugv_description/config/components.yaml:/ros2_ws/install/husarion_ugv_description/share/husarion_ugv_description/config/components.yaml:ro
       - ../../worlds:/ros2_ws/worlds:ro
     command: >
-      bash -c "
-        apt-get update &&
-        apt-get install -y ros-humble-rqt-image-view &&
-        ros2 launch husarion_ugv_gazebo simulation.launch.py \
-          gz_world:=${GZ_WORLD:-/ros2_ws/worlds/parking_lot.sdf} \
-          fuse_gps:=True \
-          localization_mode:=enu \
-          log_level:=DEBUG
-      "
+      bash -lc "apt-get update &&
+      apt-get install -y  python3-colcon-common-extensions &&
+      source /opt/ros/humble/setup.bash &&
+      if [ -f /ros2_ws/src/free_space_centering/package.xml ]; then
+        cd /ros2_ws &&
+        colcon build --packages-select free_space_centering gps_coordinate_logger &&
+        source /ros2_ws/install/setup.bash;
+      fi &&
+      __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia ros2 launch husarion_ugv_gazebo simulation.launch.py
+      gz_world:=${GZ_WORLD:-/ros2_ws/worlds/parking_lot_world_ori.sdf}
+      fuse_gps:=True
+      localization_mode:=enu
+      log_level:=DEBUG"
 
 volumes:
   gps_logs:

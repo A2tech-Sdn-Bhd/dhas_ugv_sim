@@ -64,7 +64,7 @@ def generate_launch_description():
     gz_world = LaunchConfiguration("gz_world")
     declare_gz_world_arg = DeclareLaunchArgument(
         "gz_world",
-        default_value="/ros2_ws/worlds/parking_lot_world_ori.sdf",
+        default_value="/home/a2tech/dhas_simu_ws/src/dhas_ugv_sim/worlds/parking_lot_world_ori.sdf",
         description="Absolute path to SDF world file.",
     )
     namespaced_gz_gui = ReplaceString(

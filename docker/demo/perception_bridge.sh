@@ -31,7 +31,8 @@ echo "Starting Autoware perception relays for namespace: ${ROBOT_NAMESPACE}"
 python3 /bridge/lidar_point_type_adapter.py \
   --ros-args \
   -p input_topic:="/${ROBOT_NAMESPACE}/lidar_3d/ouster/points" \
-  -p output_topic:="/sensing/lidar/top/pointcloud_raw" &
+  -p output_topic:="/sensing/lidar/top/pointcloud_raw" \
+  -p output_frame:="velodyne_top" &
 PID_LIDAR=$!
 
 ros2 run topic_tools relay "/${ROBOT_NAMESPACE}/front_cam/color/image_raw" "/sensing/camera/front/image_raw" &

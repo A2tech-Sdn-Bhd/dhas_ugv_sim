@@ -7,7 +7,7 @@ x-common-config: &common-config
     - ROBOT_NAMESPACE=${ROBOT_NAMESPACE:-${ROBOT_MODEL_NAME:-panther}}
     - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
     - ENABLE_BASE_LINK_ALIAS=${ENABLE_BASE_LINK_ALIAS:-true}
-    - ENABLE_STATIC_MAP_TF=${ENABLE_STATIC_MAP_TF:-false}
+    - ENABLE_STATIC_MAP_TF=${ENABLE_STATIC_MAP_TF:-true}
 
 x-cpu-config: &cpu-config
   env_file: .env.cpu

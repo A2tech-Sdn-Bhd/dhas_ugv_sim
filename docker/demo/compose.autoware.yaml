@@ -30,7 +30,7 @@ services:
       - *gpu-config
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - ./autoware_map:/autoware_map:rw
+      - ../../autoware_map:/autoware_map:rw
       - ./autoware_data:/autoware_data:rw
       - ../../:/dhas_ugv_sim:ro
     command: >
