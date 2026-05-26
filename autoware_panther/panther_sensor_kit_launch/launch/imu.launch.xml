@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
   <arg name="launch_driver" default="false"/>
+  <arg name="input_imu_topic" default="/panther/imu/data"/>
+  <arg name="output_imu_topic" default="/sensing/imu/imu_data"/>
+
+  <node pkg="topic_tools" exec="relay" name="panther_imu_relay" output="screen"
+    args="$(var input_imu_topic) $(var output_imu_topic)"/>
 </launch>
