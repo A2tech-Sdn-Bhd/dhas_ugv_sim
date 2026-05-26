@@ -20,8 +20,8 @@ services:
   autoware:
     image: ${AUTOWARE_RUNTIME_IMAGE:-local/autoware-universe:humble-gpu}
     build:
-      context: .
-      dockerfile: Dockerfile.autoware
+      context: ../..
+      dockerfile: docker/demo/Dockerfile.autoware
       args:
         AUTOWARE_BASE_IMAGE: ${AUTOWARE_IMAGE:-ghcr.io/autowarefoundation/autoware:universe-cuda-humble}
     container_name: autoware_universe

@@ -6,27 +6,15 @@ docker exec -it autoware_universe bash -lc '
 set +u
 source /opt/ros/humble/setup.bash
 source /opt/autoware/setup.bash
+source /autoware_panther/install/setup.bash
 set -u
-
-PYTHONDONTWRITEBYTECODE=1 python3 /dhas_ugv_sim/docker/demo/panther_autoware_vehicle_bridge.py \
-  --ros-args \
-  -p odom_topic:=/panther/odometry/wheels \
-  -p gps_fix_topic:=/panther/gps/fix \
-  -p base_frame:=base_link \
-  -p gnss_frame:=gnss_base_link &
-VEHICLE_BRIDGE_PID=$!
-
-ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 \
-  base_link gnss_base_link &
-GNSS_TF_PID=$!
-
-trap "kill ${VEHICLE_BRIDGE_PID} ${GNSS_TF_PID} 2>/dev/null || true" EXIT INT TERM
 
 ros2 launch autoware_launch autoware.launch.xml \
   map_path:=/autoware_map \
   data_path:=/autoware_data/ml_models \
-  vehicle_model:=sample_vehicle \
-  sensor_model:=sample_sensor_kit \
+  vehicle_model:=panther_vehicle \
+  sensor_model:=panther_sensor_kit \
+  vehicle_id:=panther \
   use_sim_time:=true \
   is_simulation:=true \
   launch_vehicle:=true \
@@ -39,7 +27,7 @@ ros2 launch autoware_launch autoware.launch.xml \
   launch_sensing:=true \
   launch_sensing_driver:=false \
   launch_perception:=true \
-  base_frame:=panther/base_link \
+  base_frame:=base_link \
   input_pointcloud:=/sensing/lidar/top/pointcloud_raw \
   input_imu_topic:=/panther/imu/data \
   perception_mode:=camera_lidar_fusion \

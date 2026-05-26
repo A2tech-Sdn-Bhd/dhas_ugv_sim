@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="vehicle_id" default="$(env VEHICLE_ID panther)"/>
+  <arg name="raw_vehicle_cmd_converter_param_path" default=""/>
+  <arg name="initial_engage_state" default="false"/>
+  <arg name="robot_namespace" default="$(env ROBOT_NAMESPACE panther)"/>
+  <arg name="base_frame" default="base_link"/>
+  <arg name="gnss_frame" default="gnss_base_link"/>
+  <arg name="control_cmd_topic" default="/control/command/control_cmd"/>
+  <arg name="cmd_vel_topic" default="/$(var robot_namespace)/cmd_vel"/>
+
+  <node pkg="panther_vehicle_launch" exec="panther_autoware_vehicle_bridge.py" name="panther_autoware_vehicle_bridge" output="screen">
+    <param name="odom_topic" value="/$(var robot_namespace)/odometry/wheels"/>
+    <param name="gps_fix_topic" value="/$(var robot_namespace)/gps/fix"/>
+    <param name="control_cmd_topic" value="$(var control_cmd_topic)"/>
+    <param name="cmd_vel_topic" value="$(var cmd_vel_topic)"/>
+    <param name="base_frame" value="$(var base_frame)"/>
+    <param name="gnss_frame" value="$(var gnss_frame)"/>
+  </node>
+</launch>

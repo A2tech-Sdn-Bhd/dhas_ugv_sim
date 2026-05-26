@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="launch_driver" default="false"/>
+
+  <group>
+    <push-ros-namespace namespace="gnss"/>
+
+    <include file="$(find-pkg-share autoware_gnss_poser)/launch/gnss_poser.launch.xml">
+      <arg name="input_topic_fix" value="/sensing/gnss/fix"/>
+      <arg name="input_topic_orientation" value="/autoware_orientation"/>
+      <arg name="output_topic_gnss_pose" value="pose"/>
+      <arg name="output_topic_gnss_pose_cov" value="pose_with_covariance"/>
+      <arg name="output_topic_gnss_fixed" value="fixed"/>
+      <arg name="use_gnss_ins_orientation" value="false"/>
+    </include>
+  </group>
+</launch>
